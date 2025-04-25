@@ -37,7 +37,8 @@ class MaskedAutoencoderViT(nn.Module):
         self.pos_embed = nn.Parameter(torch.zeros(1, num_patches + 1, embed_dim), requires_grad=False)  # fixed sin-cos embedding
 
         self.blocks = nn.ModuleList([
-            Block(embed_dim, num_heads, mlp_ratio, qkv_bias=True, qk_scale=None, norm_layer=norm_layer)
+            # Block(embed_dim, num_heads, mlp_ratio, qkv_bias=True, qk_scale=None, norm_layer=norm_layer)
+            Block(embed_dim, num_heads, mlp_ratio, qkv_bias=True, norm_layer=norm_layer)
             for i in range(depth)])
         self.norm = norm_layer(embed_dim)
         # --------------------------------------------------------------------------
@@ -51,7 +52,7 @@ class MaskedAutoencoderViT(nn.Module):
         self.decoder_pos_embed = nn.Parameter(torch.zeros(1, num_patches + 1, decoder_embed_dim), requires_grad=False)  # fixed sin-cos embedding
 
         self.decoder_blocks = nn.ModuleList([
-            Block(decoder_embed_dim, decoder_num_heads, mlp_ratio, qkv_bias=True, qk_scale=None, norm_layer=norm_layer)
+            Block(decoder_embed_dim, decoder_num_heads, mlp_ratio, qkv_bias=True, norm_layer=norm_layer)
             for i in range(decoder_depth)])
 
         self.decoder_norm = norm_layer(decoder_embed_dim)
@@ -62,9 +63,8 @@ class MaskedAutoencoderViT(nn.Module):
 
         self.initialize_weights()
 
+    # sin, cosに基づき位置埋め込みを初期化
     def initialize_weights(self):
-        # initialization
-        # initialize (and freeze) pos_embed by sin-cos embedding
         pos_embed = get_2d_sincos_pos_embed(self.pos_embed.shape[-1], int(self.patch_embed.num_patches**.5), cls_token=True)
         self.pos_embed.data.copy_(torch.from_numpy(pos_embed).float().unsqueeze(0))
 
@@ -92,6 +92,7 @@ class MaskedAutoencoderViT(nn.Module):
             nn.init.constant_(m.bias, 0)
             nn.init.constant_(m.weight, 1.0)
 
+    # 入力画像をパッチに分割
     def patchify(self, imgs):
         """
         imgs: (N, 3, H, W)
@@ -106,6 +107,7 @@ class MaskedAutoencoderViT(nn.Module):
         x = x.reshape(shape=(imgs.shape[0], h * w, p**2 * 3))
         return x
 
+    # パッチを元の画像に戻す
     def unpatchify(self, x):
         """
         x: (N, L, patch_size**2 *3)
@@ -120,6 +122,7 @@ class MaskedAutoencoderViT(nn.Module):
         imgs = x.reshape(shape=(x.shape[0], 3, h * p, h * p))
         return imgs
 
+    # ランダムマスキング
     def random_masking(self, x, mask_ratio):
         """
         Perform per-sample random masking by per-sample shuffling.
@@ -147,6 +150,7 @@ class MaskedAutoencoderViT(nn.Module):
 
         return x_masked, mask, ids_restore
 
+    # 入力画像→エンコーダ→潜在表現
     def forward_encoder(self, x, mask_ratio):
         # embed patches
         x = self.patch_embed(x)
@@ -169,6 +173,7 @@ class MaskedAutoencoderViT(nn.Module):
 
         return x, mask, ids_restore
 
+    # 潜在表現→デコーダ→復元画像
     def forward_decoder(self, x, ids_restore):
         # embed tokens
         x = self.decoder_embed(x)
@@ -195,6 +200,7 @@ class MaskedAutoencoderViT(nn.Module):
 
         return x
 
+    # MSE lossの計算
     def forward_loss(self, imgs, pred, mask):
         """
         imgs: [N, 3, H, W]
@@ -213,13 +219,14 @@ class MaskedAutoencoderViT(nn.Module):
         loss = (loss * mask).sum() / mask.sum()  # mean loss on removed patches
         return loss
 
+    # モデル全体の準伝搬
     def forward(self, imgs, mask_ratio=0.75):
         latent, mask, ids_restore = self.forward_encoder(imgs, mask_ratio)
         pred = self.forward_decoder(latent, ids_restore)  # [N, L, p*p*3]
         loss = self.forward_loss(imgs, pred, mask)
         return loss, pred, mask
 
-
+# モデルの定義
 def mae_vit_base_patch16_dec512d8b(**kwargs):
     model = MaskedAutoencoderViT(
         patch_size=16, embed_dim=768, depth=12, num_heads=12,

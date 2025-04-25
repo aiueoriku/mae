@@ -1,0 +1,5 @@
+data
+*.pth
+visualizations
+*.out
+output_dir

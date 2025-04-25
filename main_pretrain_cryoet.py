@@ -15,6 +15,7 @@ import numpy as np
 import os
 import time
 from pathlib import Path
+from datetime import datetime, timedelta  # タイムスタンプ用
 
 import torch
 import torch.backends.cudnn as cudnn
@@ -24,7 +25,6 @@ import torchvision.datasets as datasets
 
 import timm
 
-# assert timm.__version__ == "0.3.2"  # version check
 import timm.optim.optim_factory as optim_factory
 
 import util.misc as misc
@@ -33,21 +33,22 @@ from util.misc import NativeScalerWithGradNormCount as NativeScaler
 import models_mae
 
 from engine_pretrain import train_one_epoch
+from cryo_dataset_pretrain import MRC2DDataset  # 新しいデータセットクラスをインポート
 
 
 def get_args_parser():
     parser = argparse.ArgumentParser('MAE pre-training', add_help=False)
-    parser.add_argument('--batch_size', default=64, type=int,
+    parser.add_argument('--batch_size', default=32, type=int,
                         help='Batch size per GPU (effective batch size is batch_size * accum_iter * # gpus')
     parser.add_argument('--epochs', default=400, type=int)
     parser.add_argument('--accum_iter', default=1, type=int,
                         help='Accumulate gradient iterations (for increasing the effective batch size under memory constraints)')
 
     # Model parameters
-    parser.add_argument('--model', default='mae_vit_large_patch16', type=str, metavar='MODEL',
+    parser.add_argument('--model', default='mae_vit_base_patch16', type=str, metavar='MODEL',
                         help='Name of model to train')
 
-    parser.add_argument('--input_size', default=224, type=int,
+    parser.add_argument('--input_size', default=32, type=int,
                         help='images input size')
 
     parser.add_argument('--mask_ratio', default=0.75, type=float,
@@ -72,8 +73,10 @@ def get_args_parser():
                         help='epochs to warmup LR')
 
     # Dataset parameters
-    parser.add_argument('--data_path', default='/datasets01/imagenet_full_size/061417/', type=str,
+    parser.add_argument('--data_path', default='../dataset/model_0', type=str,
                         help='dataset path')
+    parser.add_argument('--use_all_tomograms', action='store_true',
+                        help='Use all tomograms from model_0 to model_9')
 
     parser.add_argument('--output_dir', default='./output_dir',
                         help='path where to save, empty for no saving')
@@ -119,18 +122,44 @@ def main(args):
 
     cudnn.benchmark = True
 
-    # simple augmentation
-    transform_train = transforms.Compose([
-            transforms.RandomResizedCrop(args.input_size, scale=(0.2, 1.0), interpolation=3),  # 3 is bicubic
-            transforms.RandomHorizontalFlip(),
-            transforms.ToTensor(),
-            transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])])
-    dataset_train = datasets.ImageFolder(os.path.join(args.data_path, 'train'), transform=transform_train)
-    print(dataset_train)
+    # タイムスタンプ付きの出力ディレクトリを作成
+    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+    args.output_dir = os.path.join(args.output_dir, f"run_{timestamp}")
+    os.makedirs(args.output_dir, exist_ok=True)
+    print(f"Output directory: {args.output_dir}")
 
-    if True:  # args.distributed:
-        num_tasks = misc.get_world_size()
-        global_rank = misc.get_rank()
+    # データセットの読み込み
+    transform_train = transforms.Compose([
+        transforms.RandomResizedCrop(224, scale=(0.2, 1.0), interpolation=3, antialias=True),  # antialias=Trueを追加
+        transforms.RandomHorizontalFlip()
+    ])
+
+    if args.use_all_tomograms:
+        datasets_list = []
+        base_data_path = os.path.dirname(args.data_path)  # ../dataset を基準ディレクトリに設定
+        for i in range(10):  # model_0 から model_9 まで
+            dataset_path = os.path.join(base_data_path, f'model_{i}', 'grandmodel.mrc')
+            datasets_list.append(MRC2DDataset(
+                mrc_path=dataset_path,
+                slice_axis=0,
+                transform=transform_train,
+                normalize=True
+            ))
+        dataset_train = torch.utils.data.ConcatDataset(datasets_list)
+    else:
+        dataset_train = MRC2DDataset(
+            mrc_path=os.path.join(args.data_path, 'grandmodel.mrc'),  # MRCファイルのパス
+            slice_axis=0,  # スライス軸
+            transform=transform_train,
+            normalize=True
+        )
+
+    print(f"Loaded dataset with {len(dataset_train)} slices.")
+
+    # サンプラーの設定
+    num_tasks = misc.get_world_size()
+    global_rank = misc.get_rank()  # global_rankを初期化
+    if args.distributed:
         sampler_train = torch.utils.data.DistributedSampler(
             dataset_train, num_replicas=num_tasks, rank=global_rank, shuffle=True
         )
@@ -138,14 +167,15 @@ def main(args):
     else:
         sampler_train = torch.utils.data.RandomSampler(dataset_train)
 
-    if global_rank == 0 and args.log_dir is not None:
+    if global_rank == 0 and args.log_dir is not None:  # global_rankが常に定義されている
         os.makedirs(args.log_dir, exist_ok=True)
         log_writer = SummaryWriter(log_dir=args.log_dir)
     else:
         log_writer = None
 
     data_loader_train = torch.utils.data.DataLoader(
-        dataset_train, sampler=sampler_train,
+        dataset_train, 
+        sampler=sampler_train,
         batch_size=args.batch_size,
         num_workers=args.num_workers,
         pin_memory=args.pin_mem,
@@ -176,7 +206,12 @@ def main(args):
         model_without_ddp = model.module
     
     # following timm: set wd as 0 for bias and norm layers
-    param_groups = optim_factory.param_groups_weight_decay(model_without_ddp, weight_decay=args.weight_decay)
+    # param_groups = optim_factory.param_groups_weight_decay(model_without_ddp, weight_decay=args.weight_decay)
+    # 手動でパラメーターグループを作成
+    param_groups = [
+        {"params": [p for n, p in model_without_ddp.named_parameters() if "bias" not in n and "norm" not in n], "weight_decay": args.weight_decay},
+        {"params": [p for n, p in model_without_ddp.named_parameters() if "bias" in n or "norm" in n], "weight_decay": 0.0},
+    ]
     optimizer = torch.optim.AdamW(param_groups, lr=args.lr, betas=(0.9, 0.95))
     print(optimizer)
     loss_scaler = NativeScaler()
@@ -185,12 +220,17 @@ def main(args):
 
     print(f"Start training for {args.epochs} epochs")
     start_time = time.time()
+    log_stats = []
     for epoch in range(args.start_epoch, args.epochs):
         if args.distributed:
             data_loader_train.sampler.set_epoch(epoch)
         train_stats = train_one_epoch(
-            model, data_loader_train,
-            optimizer, device, epoch, loss_scaler,
+            model, 
+            data_loader_train,
+            optimizer, 
+            device, 
+            epoch, 
+            loss_scaler,
             log_writer=log_writer,
             args=args
         )
@@ -199,18 +239,44 @@ def main(args):
                 args=args, model=model, model_without_ddp=model_without_ddp, optimizer=optimizer,
                 loss_scaler=loss_scaler, epoch=epoch)
 
-        log_stats = {**{f'train_{k}': v for k, v in train_stats.items()},
-                        'epoch': epoch,}
+        log_stats.append({**{f'train_{k}': v for k, v in train_stats.items()},
+                          'epoch': epoch,})
+
+        # ロス関数のプロットを保存
+        if misc.is_main_process():
+            plot_loss(log_stats, args.output_dir)
 
         if args.output_dir and misc.is_main_process():
             if log_writer is not None:
                 log_writer.flush()
             with open(os.path.join(args.output_dir, "log.txt"), mode="a", encoding="utf-8") as f:
-                f.write(json.dumps(log_stats) + "\n")
+                f.write(json.dumps(log_stats[-1]) + "\n")
 
     total_time = time.time() - start_time
-    total_time_str = str(datetime.timedelta(seconds=int(total_time)))
+    total_time_str = str(timedelta(seconds=int(total_time)))
     print('Training time {}'.format(total_time_str))
+
+
+def plot_loss(log_stats, output_dir):
+    """
+    ロス関数のプロットを保存する関数。
+    """
+    import matplotlib.pyplot as plt
+
+    epochs = [stat['epoch'] for stat in log_stats]
+    train_losses = [stat['train_loss'] for stat in log_stats]
+
+    plt.figure()
+    plt.plot(epochs, train_losses, label="Train Loss")
+    plt.xlabel("Epoch")
+    plt.ylabel("Loss")
+    plt.title("Training Loss Over Epochs")
+    plt.legend()
+    plt.grid(True)
+
+    save_path = os.path.join(output_dir, "loss_plot.png")
+    plt.savefig(save_path)
+    plt.close()
 
 
 if __name__ == '__main__':
