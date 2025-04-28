@@ -34,6 +34,7 @@ import models_mae
 
 from engine_pretrain import train_one_epoch
 from cryo_dataset_pretrain import MRC2DDataset  # 新しいデータセットクラスをインポート
+import wandb  # wandbをインポート
 
 
 def get_args_parser():
@@ -103,12 +104,21 @@ def get_args_parser():
     parser.add_argument('--dist_on_itp', action='store_true')
     parser.add_argument('--dist_url', default='env://',
                         help='url used to set up distributed training')
+    parser.add_argument('--input_file', default='reconstruction.mrc', type=str,
+                        choices=['reconstruction.mrc', 'grandmodel.mrc'])
+    parser.add_argument('--target_file', default='grandmodel.mrc', type=str,
+                        choices=['reconstruction.mrc', 'grandmodel.mrc'])
 
     return parser
 
 
 def main(args):
     misc.init_distributed_mode(args)
+
+    # wandbの初期化
+    if misc.is_main_process():
+        wandb.init(project="2dmae_cryo-et", config=vars(args))
+        wandb.run.name = f"run_{datetime.now().strftime('%Y%m%d_%H%M%S')}"
 
     print('job dir: {}'.format(os.path.dirname(os.path.realpath(__file__))))
     print("{}".format(args).replace(', ', ',\n'))
@@ -138,23 +148,28 @@ def main(args):
         datasets_list = []
         base_data_path = os.path.dirname(args.data_path)  # ../dataset を基準ディレクトリに設定
         for i in range(10):  # model_0 から model_9 まで
-            dataset_path = os.path.join(base_data_path, f'model_{i}', 'grandmodel.mrc')
+            input_path = os.path.join(base_data_path, f'model_{i}', args.input_file)
+            target_path = os.path.join(base_data_path, f'model_{i}', args.target_file)
             datasets_list.append(MRC2DDataset(
-                mrc_path=dataset_path,
+                input_mrc_path=input_path,
+                target_mrc_path=target_path,
                 slice_axis=0,
                 transform=transform_train,
                 normalize=True
             ))
         dataset_train = torch.utils.data.ConcatDataset(datasets_list)
     else:
+        input_path = os.path.join(args.data_path, args.input_file)
+        target_path = os.path.join(args.data_path, args.target_file)
         dataset_train = MRC2DDataset(
-            mrc_path=os.path.join(args.data_path, 'grandmodel.mrc'),  # MRCファイルのパス
-            slice_axis=0,  # スライス軸
+            input_mrc_path=input_path,
+            target_mrc_path=target_path,
+            slice_axis=0,
             transform=transform_train,
             normalize=True
         )
-
     print(f"Loaded dataset with {len(dataset_train)} slices.")
+    # import pdb; pdb.set_trace()
 
     # サンプラーの設定
     num_tasks = misc.get_world_size()
@@ -242,6 +257,10 @@ def main(args):
         log_stats.append({**{f'train_{k}': v for k, v in train_stats.items()},
                           'epoch': epoch,})
 
+        # wandbにログを記録
+        if misc.is_main_process():
+            wandb.log(log_stats[-1])
+
         # ロス関数のプロットを保存
         if misc.is_main_process():
             plot_loss(log_stats, args.output_dir)
@@ -255,6 +274,10 @@ def main(args):
     total_time = time.time() - start_time
     total_time_str = str(timedelta(seconds=int(total_time)))
     print('Training time {}'.format(total_time_str))
+
+    # wandbの終了
+    if misc.is_main_process():
+        wandb.finish()
 
 
 def plot_loss(log_stats, output_dir):

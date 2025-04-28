@@ -7,7 +7,8 @@ from torchvision import transforms
 import copy
 
 class MRC2DDataset(Dataset):
-    def __init__(self, mrc_path, slice_axis=0, transform=None, normalize=True):
+    # def __init__(self, mrc_path, slice_axis=0, transform=None, normalize=True):
+    def __init__(self, input_mrc_path, target_mrc_path, slice_axis=0, transform=None, normalize=True):
         """
         2Dスライスを取得するためのMRCデータセットクラス。
 
@@ -17,29 +18,49 @@ class MRC2DDataset(Dataset):
             transform (callable, optional): データ変換処理。
             normalize (bool): 標準化を行うかどうか。
         """
-        self.mrc_path = copy.copy(mrc_path)
+        # self.mrc_path = copy.copy(mrc_path)
+        self.input_mrc_path = input_mrc_path
+        self.target_mrc_path = target_mrc_path
+        
         self.slice_axis = slice_axis
         self.transform = transform
         self.normalize = normalize
 
-        # MRCファイルを読み込む
-        with mrcfile.open(mrc_path, permissive=True) as mrc:
-            self.data = mrc.data  # 3Dデータ (z, y, x)
-            print(f"[DEBUG __init__] Loaded MRC file: shape={self.data.shape}, "
-                  f"min={self.data.min()}, max={self.data.max()}, mean={self.data.mean():.4f}, std={self.data.std():.4f}")
-
-        # 標準化
+        # 入力データを読み込む
+        with mrcfile.open(input_mrc_path, permissive=True) as mrc:
+            self.input_data = mrc.data
         if self.normalize:
-            self.data = (self.data - self.data.mean()) / self.data.std()
-            print(f"[DEBUG __init__] Normalized data: mean={self.data.mean():.4f}, std={self.data.std():.4f}")
+            self.input_data = (self.input_data - self.input_data.mean()) / self.input_data.std()
+
+        # ターゲットデータを読み込む
+        with mrcfile.open(target_mrc_path, permissive=True) as mrc:
+            self.target_data = mrc.data
+        if self.normalize:
+            self.target_data = (self.target_data - self.target_data.mean()) / self.target_data.std()
+             
+        # # MRCファイルを読み込む
+        # with mrcfile.open(mrc_path, permissive=True) as mrc:
+        #     self.data = mrc.data  # 3Dデータ (z, y, x)
+        #     print(f"[DEBUG __init__] Loaded MRC file: shape={self.data.shape}, "
+        #           f"min={self.data.min()}, max={self.data.max()}, mean={self.data.mean():.4f}, std={self.data.std():.4f}")
+
+        # # 標準化
+        # if self.normalize:
+        #     self.data = (self.data - self.data.mean()) / self.data.std()
+        #     print(f"[DEBUG __init__] Normalized data: mean={self.data.mean():.4f}, std={self.data.std():.4f}")
 
 
-        # 指定された軸でスライス
-        self.slices = np.moveaxis(self.data, self.slice_axis, 0)
-        print(f"[DEBUG __init__] Sliced data along axis {self.slice_axis}: shape={self.slices.shape}")
+        # # 指定された軸でスライス
+        # self.input_slices = np.moveaxis(self.data, self.slice_axis, 0)
+        # print(f"[DEBUG __init__] Sliced data along axis {self.slice_axis}: shape={self.input_slices.shape}")
+
+        # スライス
+        self.input_slices = np.moveaxis(self.input_data, self.slice_axis, 0)
+        self.target_slices = np.moveaxis(self.target_data, self.slice_axis, 0)
 
     def __len__(self):
-        return len(self.slices) * 4
+        # return len(self.input_slices) * 4
+        return len(self.input_slices) * 4
 
     def __getitem__(self, idx):
         """
@@ -49,36 +70,78 @@ class MRC2DDataset(Dataset):
             idx (int): スライスのインデックス。
 
         Returns:
-            tuple: (torch.Tensor, int) 分割されたスライスの1つとダミーラベル。
+            tuple: (入力スライス, ターゲットスライス, ダミーラベル)
         """
         slice_idx = idx // 4
         sub_idx = idx % 4
-        slice_2d = self.slices[slice_idx]
-
+        # slice_2d = self.input_slices[slice_idx]
+        # 入力スライスとターゲットスライスを取得
+        input_slice_2d = self.input_slices[slice_idx]
+        target_slice_2d = self.target_slices[slice_idx]
+        
+        # # 縦横を半分に分割
+        # h, w = slice_2d.shape
+        # h_half, w_half = h // 2, w // 2
         # 縦横を半分に分割
-        h, w = slice_2d.shape
+        h, w = input_slice_2d.shape
         h_half, w_half = h // 2, w // 2
-        sub_slices = [
-            slice_2d[:h_half, :w_half],  # 左上
-            slice_2d[:h_half, w_half:],  # 右上
-            slice_2d[h_half:, :w_half],  # 左下
-            slice_2d[h_half:, w_half:]   # 右下
-        ]
+        
+        # sub_slices = [
+        #     slice_2d[:h_half, :w_half],  # 左上
+        #     slice_2d[:h_half, w_half:],  # 右上
+        #     slice_2d[h_half:, :w_half],  # 左下
+        #     slice_2d[h_half:, w_half:]   # 右下
+        # ]
 
-        sub_slice = sub_slices[sub_idx]
+        # sub_slice = sub_slices[sub_idx]
+
+        # # チャンネル次元を追加 (H, W) -> (1, H, W)
+        # sub_slice = np.expand_dims(sub_slice, axis=0)
+
+        # # 1チャンネルを3チャンネルに変換 (1, H, W) -> (3, H, W)
+        # sub_slice = np.repeat(sub_slice, 3, axis=0)
+        # 入力スライスの分割
+        input_sub_slices = [
+            input_slice_2d[:h_half, :w_half],  # 左上
+            input_slice_2d[:h_half, w_half:],  # 右上
+            input_slice_2d[h_half:, :w_half],  # 左下
+            input_slice_2d[h_half:, w_half:]   # 右下
+        ]
+        input_sub_slice = input_sub_slices[sub_idx]
+
+        # ターゲットスライスの分割
+        target_sub_slices = [
+            target_slice_2d[:h_half, :w_half],  # 左上
+            target_slice_2d[:h_half, w_half:],  # 右上
+            target_slice_2d[h_half:, :w_half],  # 左下
+            target_slice_2d[h_half:, w_half:]   # 右下
+        ]
+        target_sub_slice = target_sub_slices[sub_idx]
 
         # チャンネル次元を追加 (H, W) -> (1, H, W)
-        sub_slice = np.expand_dims(sub_slice, axis=0)
+        input_sub_slice = np.expand_dims(input_sub_slice, axis=0)
+        target_sub_slice = np.expand_dims(target_sub_slice, axis=0)
 
         # 1チャンネルを3チャンネルに変換 (1, H, W) -> (3, H, W)
-        sub_slice = np.repeat(sub_slice, 3, axis=0)
-
+        input_sub_slice = np.repeat(input_sub_slice, 3, axis=0)
+        target_sub_slice = np.repeat(target_sub_slice, 3, axis=0)
+        
+        # # データ変換を適用
+        # if self.transform:
+        #     sub_slice = self.transform(torch.tensor(sub_slice, dtype=torch.float32))
         # データ変換を適用
         if self.transform:
-            sub_slice = self.transform(torch.tensor(sub_slice, dtype=torch.float32))
+            # 同じ transform を input と target に適用
+            seed = torch.seed()  # ランダムシードを固定
+            torch.manual_seed(seed)
+            input_sub_slice = self.transform(torch.tensor(input_sub_slice, dtype=torch.float32))
+            torch.manual_seed(seed)
+            target_sub_slice = self.transform(torch.tensor(target_sub_slice, dtype=torch.float32))
 
         # ダミーラベルとして0を返す
-        return sub_slice, 0
+        dummy_label = 0
+
+        return input_sub_slice, target_sub_slice, dummy_label
 
     def get_all_slices(self):
         """
@@ -88,8 +151,8 @@ class MRC2DDataset(Dataset):
             list[torch.Tensor]: 分割された全スライスのリスト。
         """
         all_slices = []
-        for idx in range(len(self.slices)):
-            slice_2d = self.slices[idx]
+        for idx in range(len(self.input_slices)):
+            slice_2d = self.input_slices[idx]
 
             # 縦横を半分に分割
             h, w = slice_2d.shape
@@ -110,16 +173,24 @@ class MRC2DDataset(Dataset):
         return all_slices
 
 # if __name__ == "__main__":
-#     # ../dataset/model_0/grandmodel.mrc を読み込む
-#     mrc_path = "../dataset/model_0/grandmodel.mrc"
-#     dataset = MRC2DDataset(mrc_path, slice_axis=0, normalize=True)
+#     # ../dataset/model_0/input/reconstruction.mrc と ../dataset/model_0/grandmodel.mrc を読み込む
+#     input_mrc_path = "../dataset/model_0/reconstruction.mrc"
+#     target_mrc_path = "../dataset/model_0/grandmodel.mrc"
+    
+#     # データセットを初期化
+#     dataset = MRC2DDataset(input_mrc_path=input_mrc_path, 
+#                            target_mrc_path=target_mrc_path, 
+#                            slice_axis=0, 
+#                            normalize=True)
 
 #     # データセットの長さを確認
 #     print(f"Dataset length: {len(dataset)}")
 
 #     # 最初のスライスを取得して形状を確認
-#     first_slice = dataset[0]
-#     print(f"First slice shape: {first_slice.shape}")
+#     input_slice, target_slice, dummy_label = dataset[0]
+#     print(f"Input slice shape: {input_slice.shape}")
+#     print(f"Target slice shape: {target_slice.shape}")
+#     print(f"Dummy label: {dummy_label}")
 
 #     # 全スライスを取得して確認
 #     all_slices = dataset.get_all_slices()

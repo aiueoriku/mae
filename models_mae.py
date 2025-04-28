@@ -201,13 +201,12 @@ class MaskedAutoencoderViT(nn.Module):
         return x
 
     # MSE lossの計算
-    def forward_loss(self, imgs, pred, mask):
+    def forward_loss(self, target, pred, mask):
         """
-        imgs: [N, 3, H, W]
+        target: [N, L, p*p*3]
         pred: [N, L, p*p*3]
-        mask: [N, L], 0 is keep, 1 is remove, 
+        mask: [N, L], 0 is keep, 1 is remove
         """
-        target = self.patchify(imgs)
         if self.norm_pix_loss:
             mean = target.mean(dim=-1, keepdim=True)
             var = target.var(dim=-1, keepdim=True)
@@ -220,10 +219,11 @@ class MaskedAutoencoderViT(nn.Module):
         return loss
 
     # モデル全体の準伝搬
-    def forward(self, imgs, mask_ratio=0.75):
-        latent, mask, ids_restore = self.forward_encoder(imgs, mask_ratio)
+    def forward(self, input, target, mask_ratio=0.75):
+        latent, mask, ids_restore = self.forward_encoder(input, mask_ratio)
         pred = self.forward_decoder(latent, ids_restore)  # [N, L, p*p*3]
-        loss = self.forward_loss(imgs, pred, mask)
+        target_patches = self.patchify(target)  # ターゲットをパッチ化
+        loss = self.forward_loss(target_patches, pred, mask)
         return loss, pred, mask
 
 # モデルの定義
