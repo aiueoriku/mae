@@ -125,7 +125,8 @@ def train_one_epoch(model: torch.nn.Module,
             loss, y, mask = model(inputs, targets, mask_ratio=args.mask_ratio)
             
             if data_iter_step == 0 and epoch % 10 == 0:
-                for i in range(0, 2000, 100): # 20枚の画像を取得
+                dataset_size = len(data_loader.dataset) 
+                for i in range(0, min(dataset_size, 2000), 100): # 20枚の画像を取得
                     fixed_sample, fixed_target, _ = data_loader.dataset[i]  # データセットから直接取得
                     fixed_sample = fixed_sample.unsqueeze(0).to(device)  # バッチ次元を追加してGPUに送る
                     fixed_target = fixed_target.unsqueeze(0).to(device)
