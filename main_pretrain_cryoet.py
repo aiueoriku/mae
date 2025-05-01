@@ -118,6 +118,7 @@ def main(args):
     # wandbの初期化
     if misc.is_main_process():
         wandb.init(project="2dmae_cryo-et", config=vars(args))
+        # wandb.init(project="2dmae_cryo-et-line-masking", config=vars(args))
         wandb.run.name = f"run_{datetime.now().strftime('%Y%m%d_%H%M%S')}"
 
     print('job dir: {}'.format(os.path.dirname(os.path.realpath(__file__))))

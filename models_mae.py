@@ -150,6 +150,66 @@ class MaskedAutoencoderViT(nn.Module):
 
         return x_masked, mask, ids_restore
 
+    
+
+    def line_masking(self, x: torch.Tensor, mask_ratio: float):
+        """
+        行（横線）単位でパッチをマスクする．
+        入出力は random_masking と同じ．
+        x: [N, L, D]  (L = H*H を想定)
+        """
+        import math, torch
+        
+        N, L, D = x.shape
+        H = int(math.sqrt(L))
+        assert H * H == L, "L は正方数である必要がある．"
+
+        # マスク行数（小数点以下切り捨て）
+        num_mask_lines = int(math.floor(H * mask_ratio))
+        num_mask_lines = min(max(num_mask_lines, 0), H)
+
+        len_keep = L - num_mask_lines * H                # 残すパッチ総数
+        full_range = torch.arange(L, device=x.device)    # [0,1,…,L-1]
+
+        ids_keep_all, ids_mask_all, mask_all, ids_restore_all = [], [], [], []
+
+        for n in range(N):
+            perm = torch.randperm(H, device=x.device)
+            masked_rows = perm[:num_mask_lines]
+            keep_rows   = perm[num_mask_lines:]
+
+            ids_mask = (masked_rows.unsqueeze(1) * H + torch.arange(H, device=x.device)).flatten()
+            ids_keep = (keep_rows  .unsqueeze(1) * H + torch.arange(H, device=x.device)).flatten()
+
+            # ----- それぞれ蓄積 -----
+            ids_keep_all.append(ids_keep)
+            ids_mask_all.append(ids_mask)
+
+            # バイナリマスク
+            mask_n = torch.ones(L, device=x.device)
+            mask_n[ids_keep] = 0
+            mask_all.append(mask_n)
+
+            # 復元インデックス
+            ids_seq = torch.cat([ids_keep, ids_mask], dim=0)      # [L]
+            ids_restore_n = torch.empty_like(ids_seq)
+            ids_restore_n[ids_seq] = full_range                   # 逆写像
+            ids_restore_all.append(ids_restore_n)
+
+        # ----- バッチ次元をまとめて張り付け -----
+        ids_keep_all   = torch.stack(ids_keep_all,   dim=0)       # [N, len_keep]
+        mask_all       = torch.stack(mask_all,       dim=0)       # [N, L]
+        ids_restore_all= torch.stack(ids_restore_all,dim=0)       # [N, L]
+
+        # gather．インデックスを [N,len_keep,1]→[N,len_keep,D] に複製
+        x_masked = torch.gather(
+            x, 1,
+            ids_keep_all.unsqueeze(-1).repeat(1, 1, D)            # [N,len_keep,D]
+        )
+
+        return x_masked, mask_all, ids_restore_all
+
+
     # 入力画像→エンコーダ→潜在表現
     def forward_encoder(self, x, mask_ratio):
         # embed patches
@@ -160,6 +220,10 @@ class MaskedAutoencoderViT(nn.Module):
 
         # masking: length -> length * mask_ratio
         x, mask, ids_restore = self.random_masking(x, mask_ratio)
+        
+        # line masking
+        # x, mask, ids_restore = self.line_masking(x, mask_ratio)
+
 
         # append cls token
         cls_token = self.cls_token + self.pos_embed[:, :1, :]
@@ -229,7 +293,9 @@ class MaskedAutoencoderViT(nn.Module):
 # モデルの定義
 def mae_vit_base_patch16_dec512d8b(**kwargs):
     model = MaskedAutoencoderViT(
-        patch_size=16, embed_dim=768, depth=12, num_heads=12,
+        # patch_size=8, # experiment
+        patch_size=16, 
+        embed_dim=768, depth=12, num_heads=12,
         decoder_embed_dim=512, decoder_depth=8, decoder_num_heads=16,
         mlp_ratio=4, norm_layer=partial(nn.LayerNorm, eps=1e-6), **kwargs)
     return model
