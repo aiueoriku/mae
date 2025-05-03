@@ -131,9 +131,14 @@ class MaskedAutoencoderViT(nn.Module):
         """
         N, L, D = x.shape  # batch, length, dim
         len_keep = int(L * (1 - mask_ratio))
-        
+
+        if mask_ratio == 0:  # mask_ratio=0の場合
+            mask = torch.zeros([N, L], device=x.device)  # 全てのパッチを保持(=0)
+            ids_restore = torch.arange(L, device=x.device).unsqueeze(0).repeat(N, 1)
+            return x, mask, ids_restore
+
         noise = torch.rand(N, L, device=x.device)  # noise in [0, 1]
-        
+
         # sort noise for each sample
         ids_shuffle = torch.argsort(noise, dim=1)  # ascend: small is keep, large is remove
         ids_restore = torch.argsort(ids_shuffle, dim=1)
@@ -279,7 +284,10 @@ class MaskedAutoencoderViT(nn.Module):
         loss = (pred - target) ** 2
         loss = loss.mean(dim=-1)  # [N, L], mean loss per patch
 
-        loss = (loss * mask).sum() / mask.sum()  # mean loss on removed patches
+        if mask.sum() == 0:  # mask_ratio=0が有効な場合
+            loss = loss.mean()  # 全てのパッチで平均
+        else:
+            loss = (loss * mask).sum() / mask.sum()  # マスクされたパッチで平均化
         return loss
 
     # モデル全体の準伝搬
