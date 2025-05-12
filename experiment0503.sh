@@ -1,4 +1,5 @@
-# !/bin/bash
+#!/bin/bash
+set -e
 
 ### Mask Ratio=0
 
