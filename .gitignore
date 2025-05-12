@@ -3,4 +3,5 @@ data
 visualizations
 *.out
 output_dir
+output_cryoppp
 wandb
