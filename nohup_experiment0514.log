@@ -1,0 +1,1630 @@
+nohup: ignoring input
+/mnt/ssd1/riku/mae/.venv/lib/python3.10/site-packages/timm/optim/optim_factory.py:7: FutureWarning: Importing from timm.optim.optim_factory is deprecated, please import via timm.optim
+  warnings.warn(f"Importing from {__name__} is deprecated, please import via timm.optim", FutureWarning)
+wandb: Currently logged in as: riku359 (riku359-keio-university-global-page) to https://api.wandb.ai. Use `wandb login --relogin` to force relogin
+wandb: Tracking run with wandb version 0.19.10
+wandb: Run data is saved locally in /mnt/ssd1/riku/mae/wandb/run-20250514_112514-hinprj6e
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run polar-moon-9
+wandb: ⭐️ View project at https://wandb.ai/riku359-keio-university-global-page/2dmae_cryoppp-random-crop-preprocess
+wandb: 🚀 View run at https://wandb.ai/riku359-keio-university-global-page/2dmae_cryoppp-random-crop-preprocess/runs/hinprj6e
+Not using distributed mode
+[11:25:15.087522] job dir: /mnt/ssd1/riku/mae
+[11:25:15.087953] Namespace(batch_size=256,
+epochs=100,
+accum_iter=1,
+model='mae_vit_base_patch16',
+mask_ratio=0.75,
+norm_pix_loss=False,
+weight_decay=0.05,
+lr=1e-05,
+blr=0.001,
+min_lr=0.0,
+warmup_epochs=40,
+root_path='../../../ssd2/riku/cryoppp/',
+data_ids=['10077'],
+output_dir='./output_cryoppp',
+log_dir='./output_cryoppp',
+device='cuda',
+seed=0,
+resume='',
+start_epoch=0,
+num_workers=10,
+pin_mem=True,
+world_size=1,
+local_rank=-1,
+dist_on_itp=False,
+dist_url='env://',
+distributed=False)
+[11:33:29.549084] <torch.utils.data.dataset.ConcatDataset object at 0x7f1e987962f0>
+[11:33:31.880337] Model = MaskedAutoencoderViT(
+  (patch_embed): PatchEmbed(
+    (proj): Conv2d(3, 768, kernel_size=(16, 16), stride=(16, 16))
+    (norm): Identity()
+  )
+  (blocks): ModuleList(
+    (0-11): 12 x Block(
+      (norm1): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+      (attn): Attention(
+        (qkv): Linear(in_features=768, out_features=2304, bias=True)
+        (q_norm): Identity()
+        (k_norm): Identity()
+        (attn_drop): Dropout(p=0.0, inplace=False)
+        (proj): Linear(in_features=768, out_features=768, bias=True)
+        (proj_drop): Dropout(p=0.0, inplace=False)
+      )
+      (ls1): Identity()
+      (drop_path1): Identity()
+      (norm2): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+      (mlp): Mlp(
+        (fc1): Linear(in_features=768, out_features=3072, bias=True)
+        (act): GELU(approximate='none')
+        (drop1): Dropout(p=0.0, inplace=False)
+        (norm): Identity()
+        (fc2): Linear(in_features=3072, out_features=768, bias=True)
+        (drop2): Dropout(p=0.0, inplace=False)
+      )
+      (ls2): Identity()
+      (drop_path2): Identity()
+    )
+  )
+  (norm): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+  (decoder_embed): Linear(in_features=768, out_features=512, bias=True)
+  (decoder_blocks): ModuleList(
+    (0-7): 8 x Block(
+      (norm1): LayerNorm((512,), eps=1e-06, elementwise_affine=True)
+      (attn): Attention(
+        (qkv): Linear(in_features=512, out_features=1536, bias=True)
+        (q_norm): Identity()
+        (k_norm): Identity()
+        (attn_drop): Dropout(p=0.0, inplace=False)
+        (proj): Linear(in_features=512, out_features=512, bias=True)
+        (proj_drop): Dropout(p=0.0, inplace=False)
+      )
+      (ls1): Identity()
+      (drop_path1): Identity()
+      (norm2): LayerNorm((512,), eps=1e-06, elementwise_affine=True)
+      (mlp): Mlp(
+        (fc1): Linear(in_features=512, out_features=2048, bias=True)
+        (act): GELU(approximate='none')
+        (drop1): Dropout(p=0.0, inplace=False)
+        (norm): Identity()
+        (fc2): Linear(in_features=2048, out_features=512, bias=True)
+        (drop2): Dropout(p=0.0, inplace=False)
+      )
+      (ls2): Identity()
+      (drop_path2): Identity()
+    )
+  )
+  (decoder_norm): LayerNorm((512,), eps=1e-06, elementwise_affine=True)
+  (decoder_pred): Linear(in_features=512, out_features=768, bias=True)
+)
+[11:33:31.880737] base lr: 1.00e-05
+[11:33:31.881047] actual lr: 1.00e-05
+[11:33:31.881275] accumulate grad iterations: 1
+[11:33:31.881481] effective batch size: 256
+[11:33:31.883454] AdamW (
+Parameter Group 0
+    amsgrad: False
+    betas: (0.9, 0.95)
+    capturable: False
+    differentiable: False
+    eps: 1e-08
+    foreach: None
+    fused: None
+    lr: 1e-05
+    maximize: False
+    weight_decay: 0.05
+
+Parameter Group 1
+    amsgrad: False
+    betas: (0.9, 0.95)
+    capturable: False
+    differentiable: False
+    eps: 1e-08
+    foreach: None
+    fused: None
+    lr: 1e-05
+    maximize: False
+    weight_decay: 0.0
+)
+[11:33:31.883788] Start training for 100 epochs
+[11:33:31.885695] log_dir: ./output_cryoppp
+/mnt/ssd1/riku/mae/engine_pretrain.py:47: UserWarning: To copy construct from a tensor, it is recommended to use sourceTensor.clone().detach() or sourceTensor.clone().detach().requires_grad_(True), rather than torch.tensor(sourceTensor).
+  x = torch.tensor(img)
+[11:34:25.529903] Epoch: [0]  [0/2]  eta: 0:01:47  lr: 0.000000  loss: 1.0837 (1.0837)  time: 53.6432  data: 47.0842  max mem: 13821
+[11:34:25.945482] Epoch: [0]  [1/2]  eta: 0:00:27  lr: 0.000000  loss: 1.0785 (1.0811)  time: 27.0285  data: 23.5422  max mem: 14680
+[11:34:26.002557] Epoch: [0] Total time: 0:00:54 (27.0583 s / it)
+[11:34:26.643993] Averaged stats: lr: 0.000000  loss: 1.0785 (1.0811)
+[11:34:31.460331] log_dir: ./output_cryoppp
+[11:35:19.642276] Epoch: [1]  [0/2]  eta: 0:01:36  lr: 0.000000  loss: 1.0804 (1.0804)  time: 48.1802  data: 47.7759  max mem: 14680
+[11:35:20.028404] Epoch: [1]  [1/2]  eta: 0:00:24  lr: 0.000000  loss: 1.0756 (1.0780)  time: 24.2824  data: 23.8880  max mem: 14680
+[11:35:20.130238] Epoch: [1] Total time: 0:00:48 (24.3348 s / it)
+[11:35:20.130882] Averaged stats: lr: 0.000000  loss: 1.0756 (1.0780)
+[11:35:20.136287] log_dir: ./output_cryoppp
+[11:36:08.222727] Epoch: [2]  [0/2]  eta: 0:01:36  lr: 0.000001  loss: 1.0673 (1.0673)  time: 48.0847  data: 47.6810  max mem: 14680
+[11:36:08.607705] Epoch: [2]  [1/2]  eta: 0:00:24  lr: 0.000001  loss: 1.0623 (1.0648)  time: 24.2342  data: 23.8405  max mem: 14680
+[11:36:08.694407] Epoch: [2] Total time: 0:00:48 (24.2788 s / it)
+[11:36:08.694830] Averaged stats: lr: 0.000001  loss: 1.0623 (1.0648)
+[11:36:08.697918] log_dir: ./output_cryoppp
+[11:36:57.107408] Epoch: [3]  [0/2]  eta: 0:01:36  lr: 0.000001  loss: 1.0498 (1.0498)  time: 48.4079  data: 47.9998  max mem: 14680
+[11:36:57.822955] Epoch: [3]  [1/2]  eta: 0:00:24  lr: 0.000001  loss: 1.0341 (1.0419)  time: 24.5610  data: 24.1635  max mem: 14680
+[11:36:57.916071] Epoch: [3] Total time: 0:00:49 (24.6089 s / it)
+[11:36:57.916720] Averaged stats: lr: 0.000001  loss: 1.0341 (1.0419)
+[11:36:57.921091] log_dir: ./output_cryoppp
+[11:37:45.665357] Epoch: [4]  [0/2]  eta: 0:01:35  lr: 0.000001  loss: 1.0254 (1.0254)  time: 47.7428  data: 47.3431  max mem: 14680
+[11:37:46.052410] Epoch: [4]  [1/2]  eta: 0:00:24  lr: 0.000001  loss: 1.0077 (1.0166)  time: 24.0642  data: 23.6716  max mem: 14680
+[11:37:46.158397] Epoch: [4] Total time: 0:00:48 (24.1184 s / it)
+[11:37:46.159306] Averaged stats: lr: 0.000001  loss: 1.0077 (1.0166)
+[11:37:46.163651] log_dir: ./output_cryoppp
+[11:38:34.569157] Epoch: [5]  [0/2]  eta: 0:01:36  lr: 0.000001  loss: 0.9835 (0.9835)  time: 48.4039  data: 47.9971  max mem: 14680
+[11:38:34.954217] Epoch: [5]  [1/2]  eta: 0:00:24  lr: 0.000001  loss: 0.9646 (0.9741)  time: 24.3939  data: 23.9986  max mem: 14680
+[11:38:35.047063] Epoch: [5] Total time: 0:00:48 (24.4415 s / it)
+[11:38:35.048103] Averaged stats: lr: 0.000001  loss: 0.9646 (0.9741)
+[11:38:35.054420] log_dir: ./output_cryoppp
+[11:39:23.375064] Epoch: [6]  [0/2]  eta: 0:01:36  lr: 0.000002  loss: 0.9429 (0.9429)  time: 48.3189  data: 47.9139  max mem: 14680
+[11:39:23.822144] Epoch: [6]  [1/2]  eta: 0:00:24  lr: 0.000002  loss: 0.9186 (0.9307)  time: 24.3823  data: 23.9872  max mem: 14680
+[11:39:23.924610] Epoch: [6] Total time: 0:00:48 (24.4348 s / it)
+[11:39:23.925168] Averaged stats: lr: 0.000002  loss: 0.9186 (0.9307)
+[11:39:23.929590] log_dir: ./output_cryoppp
+[11:40:14.304484] Epoch: [7]  [0/2]  eta: 0:01:40  lr: 0.000002  loss: 0.8964 (0.8964)  time: 50.3731  data: 49.9679  max mem: 14680
+[11:40:14.788245] Epoch: [7]  [1/2]  eta: 0:00:25  lr: 0.000002  loss: 0.8751 (0.8857)  time: 25.4278  data: 25.0320  max mem: 14680
+[11:40:14.880948] Epoch: [7] Total time: 0:00:50 (25.4754 s / it)
+[11:40:14.881846] Averaged stats: lr: 0.000002  loss: 0.8751 (0.8857)
+[11:40:14.888284] log_dir: ./output_cryoppp
+[11:41:03.429718] Epoch: [8]  [0/2]  eta: 0:01:37  lr: 0.000002  loss: 0.8514 (0.8514)  time: 48.5399  data: 48.1283  max mem: 14680
+[11:41:03.814222] Epoch: [8]  [1/2]  eta: 0:00:24  lr: 0.000002  loss: 0.8258 (0.8386)  time: 24.4615  data: 24.0642  max mem: 14680
+[11:41:03.911997] Epoch: [8] Total time: 0:00:49 (24.5117 s / it)
+[11:41:03.913070] Averaged stats: lr: 0.000002  loss: 0.8258 (0.8386)
+[11:41:03.917994] log_dir: ./output_cryoppp
+[11:41:52.698574] Epoch: [9]  [0/2]  eta: 0:01:37  lr: 0.000002  loss: 0.7995 (0.7995)  time: 48.7790  data: 48.3707  max mem: 14680
+[11:41:53.082697] Epoch: [9]  [1/2]  eta: 0:00:24  lr: 0.000002  loss: 0.7795 (0.7895)  time: 24.5808  data: 24.1854  max mem: 14680
+[11:41:53.185240] Epoch: [9] Total time: 0:00:49 (24.6334 s / it)
+[11:41:53.185752] Averaged stats: lr: 0.000002  loss: 0.7795 (0.7895)
+[11:41:53.189113] log_dir: ./output_cryoppp
+[11:42:46.112904] Epoch: [10]  [0/2]  eta: 0:01:45  lr: 0.000003  loss: 0.7649 (0.7649)  time: 52.9222  data: 48.4670  max mem: 14680
+[11:42:46.501927] Epoch: [10]  [1/2]  eta: 0:00:26  lr: 0.000003  loss: 0.7360 (0.7504)  time: 26.6550  data: 24.2335  max mem: 14680
+[11:42:46.599804] Epoch: [10] Total time: 0:00:53 (26.7051 s / it)
+[11:42:46.875702] Averaged stats: lr: 0.000003  loss: 0.7360 (0.7504)
+[11:42:46.878855] log_dir: ./output_cryoppp
+[11:43:35.078512] Epoch: [11]  [0/2]  eta: 0:01:36  lr: 0.000003  loss: 0.7122 (0.7122)  time: 48.1982  data: 47.7934  max mem: 14680
+[11:43:35.464985] Epoch: [11]  [1/2]  eta: 0:00:24  lr: 0.000003  loss: 0.7012 (0.7067)  time: 24.2917  data: 23.8968  max mem: 14680
+[11:43:35.556085] Epoch: [11] Total time: 0:00:48 (24.3384 s / it)
+[11:43:35.556972] Averaged stats: lr: 0.000003  loss: 0.7012 (0.7067)
+[11:43:35.562143] log_dir: ./output_cryoppp
+[11:44:24.137752] Epoch: [12]  [0/2]  eta: 0:01:37  lr: 0.000003  loss: 0.6803 (0.6803)  time: 48.5740  data: 48.1687  max mem: 14680
+[11:44:24.523544] Epoch: [12]  [1/2]  eta: 0:00:24  lr: 0.000003  loss: 0.6648 (0.6726)  time: 24.4792  data: 24.0844  max mem: 14680
+[11:44:24.618695] Epoch: [12] Total time: 0:00:49 (24.5280 s / it)
+[11:44:24.619697] Averaged stats: lr: 0.000003  loss: 0.6648 (0.6726)
+[11:44:24.625051] log_dir: ./output_cryoppp
+[11:45:12.796842] Epoch: [13]  [0/2]  eta: 0:01:36  lr: 0.000003  loss: 0.6399 (0.6399)  time: 48.1704  data: 47.7646  max mem: 14680
+[11:45:13.564165] Epoch: [13]  [1/2]  eta: 0:00:24  lr: 0.000003  loss: 0.6275 (0.6337)  time: 24.4679  data: 24.0721  max mem: 14680
+[11:45:13.651714] Epoch: [13] Total time: 0:00:49 (24.5131 s / it)
+[11:45:13.652410] Averaged stats: lr: 0.000003  loss: 0.6275 (0.6337)
+[11:45:13.657949] log_dir: ./output_cryoppp
+[11:46:01.913397] Epoch: [14]  [0/2]  eta: 0:01:36  lr: 0.000004  loss: 0.6199 (0.6199)  time: 48.2535  data: 47.8457  max mem: 14680
+[11:46:02.306564] Epoch: [14]  [1/2]  eta: 0:00:24  lr: 0.000004  loss: 0.6042 (0.6120)  time: 24.3226  data: 23.9229  max mem: 14680
+[11:46:02.404786] Epoch: [14] Total time: 0:00:48 (24.3731 s / it)
+[11:46:02.405202] Averaged stats: lr: 0.000004  loss: 0.6042 (0.6120)
+[11:46:02.408177] log_dir: ./output_cryoppp
+[11:46:50.763282] Epoch: [15]  [0/2]  eta: 0:01:36  lr: 0.000004  loss: 0.5837 (0.5837)  time: 48.3536  data: 47.9425  max mem: 14680
+[11:46:51.154949] Epoch: [15]  [1/2]  eta: 0:00:24  lr: 0.000004  loss: 0.5711 (0.5774)  time: 24.3720  data: 23.9713  max mem: 14680
+[11:46:51.255085] Epoch: [15] Total time: 0:00:48 (24.4233 s / it)
+[11:46:51.255534] Averaged stats: lr: 0.000004  loss: 0.5711 (0.5774)
+[11:46:51.261604] log_dir: ./output_cryoppp
+[11:47:40.939373] Epoch: [16]  [0/2]  eta: 0:01:39  lr: 0.000004  loss: 0.5599 (0.5599)  time: 49.6762  data: 49.2670  max mem: 14680
+[11:47:41.331517] Epoch: [16]  [1/2]  eta: 0:00:25  lr: 0.000004  loss: 0.5440 (0.5520)  time: 25.0335  data: 24.6336  max mem: 14680
+[11:47:41.427506] Epoch: [16] Total time: 0:00:50 (25.0826 s / it)
+[11:47:41.428320] Averaged stats: lr: 0.000004  loss: 0.5440 (0.5520)
+[11:47:41.433319] log_dir: ./output_cryoppp
+[11:48:30.250242] Epoch: [17]  [0/2]  eta: 0:01:37  lr: 0.000004  loss: 0.5330 (0.5330)  time: 48.8152  data: 48.4128  max mem: 14680
+[11:48:30.641816] Epoch: [17]  [1/2]  eta: 0:00:24  lr: 0.000004  loss: 0.5137 (0.5233)  time: 24.6027  data: 24.2064  max mem: 14680
+[11:48:30.734439] Epoch: [17] Total time: 0:00:49 (24.6503 s / it)
+[11:48:30.735274] Averaged stats: lr: 0.000004  loss: 0.5137 (0.5233)
+[11:48:30.741124] log_dir: ./output_cryoppp
+[11:49:19.138022] Epoch: [18]  [0/2]  eta: 0:01:36  lr: 0.000005  loss: 0.5112 (0.5112)  time: 48.3951  data: 47.9887  max mem: 14680
+[11:49:19.525096] Epoch: [18]  [1/2]  eta: 0:00:24  lr: 0.000005  loss: 0.4986 (0.5049)  time: 24.3905  data: 23.9944  max mem: 14680
+[11:49:19.616760] Epoch: [18] Total time: 0:00:48 (24.4375 s / it)
+[11:49:19.617168] Averaged stats: lr: 0.000005  loss: 0.4986 (0.5049)
+[11:49:19.620130] log_dir: ./output_cryoppp
+[11:50:08.209138] Epoch: [19]  [0/2]  eta: 0:01:37  lr: 0.000005  loss: 0.4854 (0.4854)  time: 48.5874  data: 48.1816  max mem: 14680
+[11:50:08.595878] Epoch: [19]  [1/2]  eta: 0:00:24  lr: 0.000005  loss: 0.4797 (0.4826)  time: 24.4863  data: 24.0908  max mem: 14680
+[11:50:08.692209] Epoch: [19] Total time: 0:00:49 (24.5358 s / it)
+[11:50:08.692644] Averaged stats: lr: 0.000005  loss: 0.4797 (0.4826)
+[11:50:08.695761] log_dir: ./output_cryoppp
+[11:51:01.105900] Epoch: [20]  [0/2]  eta: 0:01:44  lr: 0.000005  loss: 0.4629 (0.4629)  time: 52.4088  data: 47.9765  max mem: 14680
+[11:51:01.494927] Epoch: [20]  [1/2]  eta: 0:00:26  lr: 0.000005  loss: 0.4602 (0.4615)  time: 26.3983  data: 23.9883  max mem: 14680
+[11:51:01.595652] Epoch: [20] Total time: 0:00:52 (26.4498 s / it)
+[11:51:01.872942] Averaged stats: lr: 0.000005  loss: 0.4602 (0.4615)
+[11:51:06.503733] log_dir: ./output_cryoppp
+[11:51:54.630702] Epoch: [21]  [0/2]  eta: 0:01:36  lr: 0.000005  loss: 0.4576 (0.4576)  time: 48.1251  data: 47.7166  max mem: 14680
+[11:51:55.082201] Epoch: [21]  [1/2]  eta: 0:00:24  lr: 0.000005  loss: 0.4491 (0.4533)  time: 24.2875  data: 23.8889  max mem: 14680
+[11:51:55.183957] Epoch: [21] Total time: 0:00:48 (24.3399 s / it)
+[11:51:55.184752] Averaged stats: lr: 0.000005  loss: 0.4491 (0.4533)
+[11:51:55.191078] log_dir: ./output_cryoppp
+[11:52:44.162851] Epoch: [22]  [0/2]  eta: 0:01:37  lr: 0.000005  loss: 0.4326 (0.4326)  time: 48.9699  data: 48.5658  max mem: 14680
+[11:52:44.547940] Epoch: [22]  [1/2]  eta: 0:00:24  lr: 0.000006  loss: 0.4274 (0.4300)  time: 24.6768  data: 24.2829  max mem: 14680
+[11:52:44.653754] Epoch: [22] Total time: 0:00:49 (24.7310 s / it)
+[11:52:44.654513] Averaged stats: lr: 0.000006  loss: 0.4274 (0.4300)
+[11:52:44.660456] log_dir: ./output_cryoppp
+[11:53:33.081343] Epoch: [23]  [0/2]  eta: 0:01:36  lr: 0.000006  loss: 0.4219 (0.4219)  time: 48.4194  data: 48.0085  max mem: 14680
+[11:53:33.467287] Epoch: [23]  [1/2]  eta: 0:00:24  lr: 0.000006  loss: 0.4171 (0.4195)  time: 24.4019  data: 24.0043  max mem: 14680
+[11:53:33.553940] Epoch: [23] Total time: 0:00:48 (24.4466 s / it)
+[11:53:33.554799] Averaged stats: lr: 0.000006  loss: 0.4171 (0.4195)
+[11:53:33.559701] log_dir: ./output_cryoppp
+[11:54:22.477414] Epoch: [24]  [0/2]  eta: 0:01:37  lr: 0.000006  loss: 0.4048 (0.4048)  time: 48.9163  data: 48.5082  max mem: 14680
+[11:54:22.867977] Epoch: [24]  [1/2]  eta: 0:00:24  lr: 0.000006  loss: 0.4048 (0.4054)  time: 24.6529  data: 24.2541  max mem: 14680
+[11:54:22.955874] Epoch: [24] Total time: 0:00:49 (24.6979 s / it)
+[11:54:22.956298] Averaged stats: lr: 0.000006  loss: 0.4048 (0.4054)
+[11:54:22.959343] log_dir: ./output_cryoppp
+[11:55:14.436095] Epoch: [25]  [0/2]  eta: 0:01:42  lr: 0.000006  loss: 0.3980 (0.3980)  time: 51.4753  data: 51.0678  max mem: 14680
+[11:55:14.822268] Epoch: [25]  [1/2]  eta: 0:00:25  lr: 0.000006  loss: 0.3877 (0.3928)  time: 25.9300  data: 25.5339  max mem: 14680
+[11:55:14.911772] Epoch: [25] Total time: 0:00:51 (25.9761 s / it)
+[11:55:14.912191] Averaged stats: lr: 0.000006  loss: 0.3877 (0.3928)
+[11:55:14.917706] log_dir: ./output_cryoppp
+[11:56:04.172130] Epoch: [26]  [0/2]  eta: 0:01:38  lr: 0.000007  loss: 0.3727 (0.3727)  time: 49.2527  data: 48.8450  max mem: 14680
+[11:56:04.561779] Epoch: [26]  [1/2]  eta: 0:00:24  lr: 0.000007  loss: 0.3727 (0.3752)  time: 24.8203  data: 24.4226  max mem: 14680
+[11:56:04.668178] Epoch: [26] Total time: 0:00:49 (24.8750 s / it)
+[11:56:04.669026] Averaged stats: lr: 0.000007  loss: 0.3727 (0.3752)
+[11:56:04.675955] log_dir: ./output_cryoppp
+[11:56:53.581020] Epoch: [27]  [0/2]  eta: 0:01:37  lr: 0.000007  loss: 0.3717 (0.3717)  time: 48.9034  data: 48.4940  max mem: 14680
+[11:56:53.969423] Epoch: [27]  [1/2]  eta: 0:00:24  lr: 0.000007  loss: 0.3654 (0.3685)  time: 24.6452  data: 24.2471  max mem: 14680
+[11:56:54.061960] Epoch: [27] Total time: 0:00:49 (24.6927 s / it)
+[11:56:54.062453] Averaged stats: lr: 0.000007  loss: 0.3654 (0.3685)
+[11:56:54.065620] log_dir: ./output_cryoppp
+[11:57:43.236462] Epoch: [28]  [0/2]  eta: 0:01:38  lr: 0.000007  loss: 0.3626 (0.3626)  time: 49.1692  data: 48.7612  max mem: 14680
+[11:57:43.626355] Epoch: [28]  [1/2]  eta: 0:00:24  lr: 0.000007  loss: 0.3537 (0.3581)  time: 24.7789  data: 24.3806  max mem: 14680
+[11:57:43.722304] Epoch: [28] Total time: 0:00:49 (24.8282 s / it)
+[11:57:43.722823] Averaged stats: lr: 0.000007  loss: 0.3537 (0.3581)
+[11:57:43.726013] log_dir: ./output_cryoppp
+[11:58:33.088475] Epoch: [29]  [0/2]  eta: 0:01:38  lr: 0.000007  loss: 0.3475 (0.3475)  time: 49.3610  data: 48.9528  max mem: 14680
+[11:58:33.475728] Epoch: [29]  [1/2]  eta: 0:00:24  lr: 0.000007  loss: 0.3444 (0.3460)  time: 24.8735  data: 24.4764  max mem: 14680
+[11:58:33.572218] Epoch: [29] Total time: 0:00:49 (24.9229 s / it)
+[11:58:33.572666] Averaged stats: lr: 0.000007  loss: 0.3444 (0.3460)
+[11:58:33.576137] log_dir: ./output_cryoppp
+[11:59:26.845712] Epoch: [30]  [0/2]  eta: 0:01:46  lr: 0.000008  loss: 0.3448 (0.3448)  time: 53.2683  data: 48.7158  max mem: 14680
+[11:59:27.233331] Epoch: [30]  [1/2]  eta: 0:00:26  lr: 0.000008  loss: 0.3290 (0.3369)  time: 26.8273  data: 24.3579  max mem: 14680
+[11:59:27.328008] Epoch: [30] Total time: 0:00:53 (26.8758 s / it)
+[11:59:27.583630] Averaged stats: lr: 0.000008  loss: 0.3290 (0.3369)
+[11:59:27.586837] log_dir: ./output_cryoppp
+[12:00:16.895584] Epoch: [31]  [0/2]  eta: 0:01:38  lr: 0.000008  loss: 0.3335 (0.3335)  time: 49.3071  data: 48.8983  max mem: 14680
+[12:00:17.285229] Epoch: [31]  [1/2]  eta: 0:00:24  lr: 0.000008  loss: 0.3257 (0.3296)  time: 24.8476  data: 24.4492  max mem: 14680
+[12:00:17.382066] Epoch: [31] Total time: 0:00:49 (24.8974 s / it)
+[12:00:17.383081] Averaged stats: lr: 0.000008  loss: 0.3257 (0.3296)
+[12:00:17.388985] log_dir: ./output_cryoppp
+[12:01:05.848019] Epoch: [32]  [0/2]  eta: 0:01:36  lr: 0.000008  loss: 0.3210 (0.3210)  time: 48.4573  data: 48.0531  max mem: 14680
+[12:01:06.232498] Epoch: [32]  [1/2]  eta: 0:00:24  lr: 0.000008  loss: 0.3210 (0.3227)  time: 24.4203  data: 24.0266  max mem: 14680
+[12:01:06.326264] Epoch: [32] Total time: 0:00:48 (24.4683 s / it)
+[12:01:06.327190] Averaged stats: lr: 0.000008  loss: 0.3210 (0.3227)
+[12:01:06.332883] log_dir: ./output_cryoppp
+[12:01:54.446535] Epoch: [33]  [0/2]  eta: 0:01:36  lr: 0.000008  loss: 0.3141 (0.3141)  time: 48.1117  data: 47.7026  max mem: 14680
+[12:01:54.938693] Epoch: [33]  [1/2]  eta: 0:00:24  lr: 0.000008  loss: 0.3099 (0.3120)  time: 24.3010  data: 23.9023  max mem: 14680
+[12:01:55.129075] Epoch: [33] Total time: 0:00:48 (24.3979 s / it)
+[12:01:55.129634] Averaged stats: lr: 0.000008  loss: 0.3099 (0.3120)
+[12:01:55.134314] log_dir: ./output_cryoppp
+[12:02:45.226196] Epoch: [34]  [0/2]  eta: 0:01:40  lr: 0.000008  loss: 0.3084 (0.3084)  time: 50.0903  data: 49.6851  max mem: 14680
+[12:02:45.611320] Epoch: [34]  [1/2]  eta: 0:00:25  lr: 0.000009  loss: 0.2987 (0.3036)  time: 25.2370  data: 24.8426  max mem: 14680
+[12:02:45.711647] Epoch: [34] Total time: 0:00:50 (25.2885 s / it)
+[12:02:45.712177] Averaged stats: lr: 0.000009  loss: 0.2987 (0.3036)
+[12:02:45.715792] log_dir: ./output_cryoppp
+[12:03:34.223982] Epoch: [35]  [0/2]  eta: 0:01:37  lr: 0.000009  loss: 0.2962 (0.2962)  time: 48.5069  data: 48.0938  max mem: 14680
+[12:03:34.613852] Epoch: [35]  [1/2]  eta: 0:00:24  lr: 0.000009  loss: 0.2962 (0.2966)  time: 24.4476  data: 24.0470  max mem: 14680
+[12:03:34.701070] Epoch: [35] Total time: 0:00:48 (24.4924 s / it)
+[12:03:34.701888] Averaged stats: lr: 0.000009  loss: 0.2962 (0.2966)
+[12:03:34.706428] log_dir: ./output_cryoppp
+[12:04:22.890047] Epoch: [36]  [0/2]  eta: 0:01:36  lr: 0.000009  loss: 0.2991 (0.2991)  time: 48.1819  data: 47.7768  max mem: 14680
+[12:04:23.393035] Epoch: [36]  [1/2]  eta: 0:00:24  lr: 0.000009  loss: 0.2893 (0.2942)  time: 24.3418  data: 23.9429  max mem: 14680
+[12:04:23.488289] Epoch: [36] Total time: 0:00:48 (24.3907 s / it)
+[12:04:23.488714] Averaged stats: lr: 0.000009  loss: 0.2893 (0.2942)
+[12:04:23.491895] log_dir: ./output_cryoppp
+[12:05:12.159802] Epoch: [37]  [0/2]  eta: 0:01:37  lr: 0.000009  loss: 0.2923 (0.2923)  time: 48.6658  data: 48.2622  max mem: 14680
+[12:05:12.547297] Epoch: [37]  [1/2]  eta: 0:00:24  lr: 0.000009  loss: 0.2765 (0.2844)  time: 24.5257  data: 24.1312  max mem: 14680
+[12:05:12.639662] Epoch: [37] Total time: 0:00:49 (24.5737 s / it)
+[12:05:12.640387] Averaged stats: lr: 0.000009  loss: 0.2765 (0.2844)
+[12:05:12.645512] log_dir: ./output_cryoppp
+[12:06:01.458372] Epoch: [38]  [0/2]  eta: 0:01:37  lr: 0.000010  loss: 0.2809 (0.2809)  time: 48.8108  data: 48.4069  max mem: 14680
+[12:06:01.845617] Epoch: [38]  [1/2]  eta: 0:00:24  lr: 0.000010  loss: 0.2772 (0.2791)  time: 24.5981  data: 24.2035  max mem: 14680
+[12:06:01.944181] Epoch: [38] Total time: 0:00:49 (24.6491 s / it)
+[12:06:01.944893] Averaged stats: lr: 0.000010  loss: 0.2772 (0.2791)
+[12:06:01.950146] log_dir: ./output_cryoppp
+[12:06:50.750687] Epoch: [39]  [0/2]  eta: 0:01:37  lr: 0.000010  loss: 0.2708 (0.2708)  time: 48.7988  data: 48.3868  max mem: 14680
+[12:06:51.139633] Epoch: [39]  [1/2]  eta: 0:00:24  lr: 0.000010  loss: 0.2684 (0.2696)  time: 24.5932  data: 24.1935  max mem: 14680
+[12:06:51.231531] Epoch: [39] Total time: 0:00:49 (24.6404 s / it)
+[12:06:51.232591] Averaged stats: lr: 0.000010  loss: 0.2684 (0.2696)
+[12:06:51.239082] log_dir: ./output_cryoppp
+[12:07:43.916799] Epoch: [40]  [0/2]  eta: 0:01:45  lr: 0.000010  loss: 0.2709 (0.2709)  time: 52.6761  data: 48.2151  max mem: 14680
+[12:07:44.303932] Epoch: [40]  [1/2]  eta: 0:00:26  lr: 0.000010  loss: 0.2633 (0.2671)  time: 26.5310  data: 24.1076  max mem: 14680
+[12:07:44.404934] Epoch: [40] Total time: 0:00:53 (26.5826 s / it)
+[12:07:44.674551] Averaged stats: lr: 0.000010  loss: 0.2633 (0.2671)
+[12:07:49.790849] log_dir: ./output_cryoppp
+[12:08:38.074481] Epoch: [41]  [0/2]  eta: 0:01:36  lr: 0.000010  loss: 0.2609 (0.2609)  time: 48.2821  data: 47.8735  max mem: 14680
+[12:08:38.466011] Epoch: [41]  [1/2]  eta: 0:00:24  lr: 0.000010  loss: 0.2593 (0.2601)  time: 24.3361  data: 23.9368  max mem: 14680
+[12:08:38.563859] Epoch: [41] Total time: 0:00:48 (24.3864 s / it)
+[12:08:38.564366] Averaged stats: lr: 0.000010  loss: 0.2593 (0.2601)
+[12:08:38.567663] log_dir: ./output_cryoppp
+[12:09:26.932893] Epoch: [42]  [0/2]  eta: 0:01:36  lr: 0.000010  loss: 0.2596 (0.2596)  time: 48.3637  data: 47.9490  max mem: 14680
+[12:09:27.321589] Epoch: [42]  [1/2]  eta: 0:00:24  lr: 0.000010  loss: 0.2528 (0.2562)  time: 24.3756  data: 23.9745  max mem: 14680
+[12:09:27.410411] Epoch: [42] Total time: 0:00:48 (24.4212 s / it)
+[12:09:27.410944] Averaged stats: lr: 0.000010  loss: 0.2528 (0.2562)
+[12:09:27.415588] log_dir: ./output_cryoppp
+[12:10:16.583072] Epoch: [43]  [0/2]  eta: 0:01:38  lr: 0.000010  loss: 0.2626 (0.2626)  time: 49.1656  data: 48.7544  max mem: 14680
+[12:10:17.148774] Epoch: [43]  [1/2]  eta: 0:00:24  lr: 0.000010  loss: 0.2514 (0.2570)  time: 24.8650  data: 24.4640  max mem: 14680
+[12:10:17.272385] Epoch: [43] Total time: 0:00:49 (24.9282 s / it)
+[12:10:17.272982] Averaged stats: lr: 0.000010  loss: 0.2514 (0.2570)
+[12:10:17.277993] log_dir: ./output_cryoppp
+[12:11:05.470276] Epoch: [44]  [0/2]  eta: 0:01:36  lr: 0.000010  loss: 0.2492 (0.2492)  time: 48.1905  data: 47.7897  max mem: 14680
+[12:11:05.859445] Epoch: [44]  [1/2]  eta: 0:00:24  lr: 0.000010  loss: 0.2488 (0.2490)  time: 24.2890  data: 23.8949  max mem: 14680
+[12:11:05.967084] Epoch: [44] Total time: 0:00:48 (24.3443 s / it)
+[12:11:05.967973] Averaged stats: lr: 0.000010  loss: 0.2488 (0.2490)
+[12:11:05.973115] log_dir: ./output_cryoppp
+[12:11:54.338386] Epoch: [45]  [0/2]  eta: 0:01:36  lr: 0.000010  loss: 0.2418 (0.2418)  time: 48.3637  data: 47.9580  max mem: 14680
+[12:11:54.722218] Epoch: [45]  [1/2]  eta: 0:00:24  lr: 0.000010  loss: 0.2418 (0.2432)  time: 24.3732  data: 23.9790  max mem: 14680
+[12:11:54.818558] Epoch: [45] Total time: 0:00:48 (24.4226 s / it)
+[12:11:54.818994] Averaged stats: lr: 0.000010  loss: 0.2418 (0.2432)
+[12:11:54.824559] log_dir: ./output_cryoppp
+[12:12:43.094110] Epoch: [46]  [0/2]  eta: 0:01:36  lr: 0.000010  loss: 0.2387 (0.2387)  time: 48.2679  data: 47.8653  max mem: 14680
+[12:12:43.482239] Epoch: [46]  [1/2]  eta: 0:00:24  lr: 0.000010  loss: 0.2387 (0.2407)  time: 24.3275  data: 23.9327  max mem: 14680
+[12:12:43.575221] Epoch: [46] Total time: 0:00:48 (24.3751 s / it)
+[12:12:43.576147] Averaged stats: lr: 0.000010  loss: 0.2387 (0.2407)
+[12:12:43.580800] log_dir: ./output_cryoppp
+[12:13:31.745722] Epoch: [47]  [0/2]  eta: 0:01:36  lr: 0.000010  loss: 0.2305 (0.2305)  time: 48.1558  data: 47.7517  max mem: 14680
+[12:13:32.132264] Epoch: [47]  [1/2]  eta: 0:00:24  lr: 0.000010  loss: 0.2305 (0.2376)  time: 24.2705  data: 23.8759  max mem: 14680
+[12:13:32.228773] Epoch: [47] Total time: 0:00:48 (24.3199 s / it)
+[12:13:32.229489] Averaged stats: lr: 0.000010  loss: 0.2305 (0.2376)
+[12:13:32.234302] log_dir: ./output_cryoppp
+[12:14:20.369625] Epoch: [48]  [0/2]  eta: 0:01:36  lr: 0.000010  loss: 0.2422 (0.2422)  time: 48.1335  data: 47.7271  max mem: 14680
+[12:14:20.760963] Epoch: [48]  [1/2]  eta: 0:00:24  lr: 0.000010  loss: 0.2353 (0.2387)  time: 24.2613  data: 23.8636  max mem: 14680
+[12:14:20.876268] Epoch: [48] Total time: 0:00:48 (24.3207 s / it)
+[12:14:20.876950] Averaged stats: lr: 0.000010  loss: 0.2353 (0.2387)
+[12:14:20.882215] log_dir: ./output_cryoppp
+[12:15:09.144647] Epoch: [49]  [0/2]  eta: 0:01:36  lr: 0.000009  loss: 0.2314 (0.2314)  time: 48.2607  data: 47.8581  max mem: 14680
+[12:15:09.535628] Epoch: [49]  [1/2]  eta: 0:00:24  lr: 0.000009  loss: 0.2314 (0.2331)  time: 24.3247  data: 23.9291  max mem: 14680
+[12:15:09.629413] Epoch: [49] Total time: 0:00:48 (24.3733 s / it)
+[12:15:09.630279] Averaged stats: lr: 0.000009  loss: 0.2314 (0.2331)
+[12:15:09.641270] log_dir: ./output_cryoppp
+[12:16:02.406527] Epoch: [50]  [0/2]  eta: 0:01:45  lr: 0.000009  loss: 0.2307 (0.2307)  time: 52.7638  data: 47.7561  max mem: 14680
+[12:16:02.794092] Epoch: [50]  [1/2]  eta: 0:00:26  lr: 0.000009  loss: 0.2303 (0.2305)  time: 26.5750  data: 23.8781  max mem: 14680
+[12:16:02.906056] Epoch: [50] Total time: 0:00:53 (26.6321 s / it)
+[12:16:03.227149] Averaged stats: lr: 0.000009  loss: 0.2303 (0.2305)
+[12:16:03.230255] log_dir: ./output_cryoppp
+[12:16:51.476411] Epoch: [51]  [0/2]  eta: 0:01:36  lr: 0.000009  loss: 0.2264 (0.2264)  time: 48.2445  data: 47.8296  max mem: 14680
+[12:16:51.868826] Epoch: [51]  [1/2]  eta: 0:00:24  lr: 0.000009  loss: 0.2264 (0.2272)  time: 24.3173  data: 23.9149  max mem: 14680
+[12:16:51.970549] Epoch: [51] Total time: 0:00:48 (24.3700 s / it)
+[12:16:51.971498] Averaged stats: lr: 0.000009  loss: 0.2264 (0.2272)
+[12:16:51.977228] log_dir: ./output_cryoppp
+[12:17:40.525099] Epoch: [52]  [0/2]  eta: 0:01:37  lr: 0.000009  loss: 0.2287 (0.2287)  time: 48.5458  data: 48.1330  max mem: 14680
+[12:17:40.916014] Epoch: [52]  [1/2]  eta: 0:00:24  lr: 0.000009  loss: 0.2188 (0.2238)  time: 24.4671  data: 24.0665  max mem: 14680
+[12:17:41.007836] Epoch: [52] Total time: 0:00:49 (24.5150 s / it)
+[12:17:41.008414] Averaged stats: lr: 0.000009  loss: 0.2188 (0.2238)
+[12:17:41.013578] log_dir: ./output_cryoppp
+[12:18:30.438163] Epoch: [53]  [0/2]  eta: 0:01:38  lr: 0.000009  loss: 0.2200 (0.2200)  time: 49.4226  data: 49.0150  max mem: 14680
+[12:18:30.876227] Epoch: [53]  [1/2]  eta: 0:00:24  lr: 0.000009  loss: 0.2200 (0.2205)  time: 24.9294  data: 24.5310  max mem: 14680
+[12:18:30.976110] Epoch: [53] Total time: 0:00:49 (24.9810 s / it)
+[12:18:30.976964] Averaged stats: lr: 0.000009  loss: 0.2200 (0.2205)
+[12:18:30.982357] log_dir: ./output_cryoppp
+[12:19:19.724159] Epoch: [54]  [0/2]  eta: 0:01:37  lr: 0.000009  loss: 0.2258 (0.2258)  time: 48.7403  data: 48.3380  max mem: 14680
+[12:19:20.114041] Epoch: [54]  [1/2]  eta: 0:00:24  lr: 0.000009  loss: 0.2250 (0.2254)  time: 24.5645  data: 24.1690  max mem: 14680
+[12:19:20.205392] Epoch: [54] Total time: 0:00:49 (24.6113 s / it)
+[12:19:20.206034] Averaged stats: lr: 0.000009  loss: 0.2250 (0.2254)
+[12:19:20.210845] log_dir: ./output_cryoppp
+[12:20:08.458918] Epoch: [55]  [0/2]  eta: 0:01:36  lr: 0.000009  loss: 0.2276 (0.2276)  time: 48.2462  data: 47.8385  max mem: 14680
+[12:20:08.893756] Epoch: [55]  [1/2]  eta: 0:00:24  lr: 0.000008  loss: 0.2165 (0.2221)  time: 24.3396  data: 23.9409  max mem: 14680
+[12:20:08.996150] Epoch: [55] Total time: 0:00:48 (24.3924 s / it)
+[12:20:08.996860] Averaged stats: lr: 0.000008  loss: 0.2165 (0.2221)
+[12:20:09.004004] log_dir: ./output_cryoppp
+[12:20:58.004743] Epoch: [56]  [0/2]  eta: 0:01:37  lr: 0.000008  loss: 0.2165 (0.2165)  time: 48.9987  data: 48.5914  max mem: 14680
+[12:20:58.396384] Epoch: [56]  [1/2]  eta: 0:00:24  lr: 0.000008  loss: 0.2165 (0.2186)  time: 24.6944  data: 24.2958  max mem: 14680
+[12:20:58.491762] Epoch: [56] Total time: 0:00:49 (24.7436 s / it)
+[12:20:58.492466] Averaged stats: lr: 0.000008  loss: 0.2165 (0.2186)
+[12:20:58.498394] log_dir: ./output_cryoppp
+[12:21:47.278483] Epoch: [57]  [0/2]  eta: 0:01:37  lr: 0.000008  loss: 0.2146 (0.2146)  time: 48.7785  data: 48.3700  max mem: 14680
+[12:21:47.667738] Epoch: [57]  [1/2]  eta: 0:00:24  lr: 0.000008  loss: 0.2118 (0.2132)  time: 24.5833  data: 24.1850  max mem: 14680
+[12:21:47.761715] Epoch: [57] Total time: 0:00:49 (24.6314 s / it)
+[12:21:47.762126] Averaged stats: lr: 0.000008  loss: 0.2118 (0.2132)
+[12:21:47.767419] log_dir: ./output_cryoppp
+[12:22:36.283274] Epoch: [58]  [0/2]  eta: 0:01:37  lr: 0.000008  loss: 0.2099 (0.2099)  time: 48.5139  data: 48.1093  max mem: 14680
+[12:22:36.670467] Epoch: [58]  [1/2]  eta: 0:00:24  lr: 0.000008  loss: 0.2099 (0.2134)  time: 24.4499  data: 24.0547  max mem: 14680
+[12:22:36.761780] Epoch: [58] Total time: 0:00:48 (24.4969 s / it)
+[12:22:36.762277] Averaged stats: lr: 0.000008  loss: 0.2099 (0.2134)
+[12:22:36.766258] log_dir: ./output_cryoppp
+[12:23:24.774826] Epoch: [59]  [0/2]  eta: 0:01:36  lr: 0.000008  loss: 0.2183 (0.2183)  time: 48.0062  data: 47.5964  max mem: 14680
+[12:23:25.164697] Epoch: [59]  [1/2]  eta: 0:00:24  lr: 0.000008  loss: 0.2079 (0.2131)  time: 24.1973  data: 23.7983  max mem: 14680
+[12:23:25.274602] Epoch: [59] Total time: 0:00:48 (24.2540 s / it)
+[12:23:25.275146] Averaged stats: lr: 0.000008  loss: 0.2079 (0.2131)
+[12:23:25.280399] log_dir: ./output_cryoppp
+[12:24:17.289803] Epoch: [60]  [0/2]  eta: 0:01:44  lr: 0.000008  loss: 0.2158 (0.2158)  time: 52.0078  data: 47.5016  max mem: 14680
+[12:24:17.677643] Epoch: [60]  [1/2]  eta: 0:00:26  lr: 0.000007  loss: 0.2158 (0.2168)  time: 26.1972  data: 23.7508  max mem: 14680
+[12:24:17.790802] Epoch: [60] Total time: 0:00:52 (26.2549 s / it)
+[12:24:18.061285] Averaged stats: lr: 0.000007  loss: 0.2158 (0.2168)
+[12:24:22.698418] log_dir: ./output_cryoppp
+[12:25:11.340165] Epoch: [61]  [0/2]  eta: 0:01:37  lr: 0.000007  loss: 0.2180 (0.2180)  time: 48.6401  data: 48.2379  max mem: 14680
+[12:25:11.732081] Epoch: [61]  [1/2]  eta: 0:00:24  lr: 0.000007  loss: 0.2076 (0.2128)  time: 24.5151  data: 24.1190  max mem: 14680
+[12:25:11.825973] Epoch: [61] Total time: 0:00:49 (24.5636 s / it)
+[12:25:11.826899] Averaged stats: lr: 0.000007  loss: 0.2076 (0.2128)
+[12:25:11.831089] log_dir: ./output_cryoppp
+[12:26:01.245940] Epoch: [62]  [0/2]  eta: 0:01:38  lr: 0.000007  loss: 0.2131 (0.2131)  time: 49.4123  data: 49.0097  max mem: 14680
+[12:26:01.774263] Epoch: [62]  [1/2]  eta: 0:00:24  lr: 0.000007  loss: 0.2095 (0.2113)  time: 24.9695  data: 24.5724  max mem: 14680
+[12:26:01.869523] Epoch: [62] Total time: 0:00:50 (25.0190 s / it)
+[12:26:01.870458] Averaged stats: lr: 0.000007  loss: 0.2095 (0.2113)
+[12:26:01.876495] log_dir: ./output_cryoppp
+[12:26:50.599235] Epoch: [63]  [0/2]  eta: 0:01:37  lr: 0.000007  loss: 0.2072 (0.2072)  time: 48.7212  data: 48.3158  max mem: 14680
+[12:26:51.068856] Epoch: [63]  [1/2]  eta: 0:00:24  lr: 0.000007  loss: 0.2050 (0.2061)  time: 24.5947  data: 24.1945  max mem: 14680
+[12:26:51.179094] Epoch: [63] Total time: 0:00:49 (24.6511 s / it)
+[12:26:51.179990] Averaged stats: lr: 0.000007  loss: 0.2050 (0.2061)
+[12:26:51.184315] log_dir: ./output_cryoppp
+[12:27:39.810017] Epoch: [64]  [0/2]  eta: 0:01:37  lr: 0.000007  loss: 0.2089 (0.2089)  time: 48.6240  data: 48.2191  max mem: 14680
+[12:27:40.195990] Epoch: [64]  [1/2]  eta: 0:00:24  lr: 0.000006  loss: 0.2089 (0.2119)  time: 24.5042  data: 24.1096  max mem: 14680
+[12:27:40.292751] Epoch: [64] Total time: 0:00:49 (24.5540 s / it)
+[12:27:40.293165] Averaged stats: lr: 0.000006  loss: 0.2089 (0.2119)
+[12:27:40.296328] log_dir: ./output_cryoppp
+[12:28:28.868633] Epoch: [65]  [0/2]  eta: 0:01:37  lr: 0.000006  loss: 0.2050 (0.2050)  time: 48.5706  data: 48.1630  max mem: 14680
+[12:28:29.257223] Epoch: [65]  [1/2]  eta: 0:00:24  lr: 0.000006  loss: 0.2027 (0.2038)  time: 24.4789  data: 24.0816  max mem: 14680
+[12:28:29.356534] Epoch: [65] Total time: 0:00:49 (24.5299 s / it)
+[12:28:29.356946] Averaged stats: lr: 0.000006  loss: 0.2027 (0.2038)
+[12:28:29.360292] log_dir: ./output_cryoppp
+[12:29:17.897686] Epoch: [66]  [0/2]  eta: 0:01:37  lr: 0.000006  loss: 0.2032 (0.2032)  time: 48.5355  data: 48.1295  max mem: 14680
+[12:29:18.424461] Epoch: [66]  [1/2]  eta: 0:00:24  lr: 0.000006  loss: 0.1972 (0.2002)  time: 24.5298  data: 24.1312  max mem: 14680
+[12:29:18.520454] Epoch: [66] Total time: 0:00:49 (24.5799 s / it)
+[12:29:18.521232] Averaged stats: lr: 0.000006  loss: 0.1972 (0.2002)
+[12:29:18.526619] log_dir: ./output_cryoppp
+[12:30:07.786918] Epoch: [67]  [0/2]  eta: 0:01:38  lr: 0.000006  loss: 0.2083 (0.2083)  time: 49.2588  data: 48.8526  max mem: 14680
+[12:30:08.177415] Epoch: [67]  [1/2]  eta: 0:00:24  lr: 0.000006  loss: 0.2078 (0.2080)  time: 24.8235  data: 24.4263  max mem: 14680
+[12:30:08.282980] Epoch: [67] Total time: 0:00:49 (24.8780 s / it)
+[12:30:08.284031] Averaged stats: lr: 0.000006  loss: 0.2078 (0.2080)
+[12:30:08.288637] log_dir: ./output_cryoppp
+[12:30:57.591040] Epoch: [68]  [0/2]  eta: 0:01:38  lr: 0.000006  loss: 0.2079 (0.2079)  time: 49.3006  data: 48.8972  max mem: 14680
+[12:30:57.979628] Epoch: [68]  [1/2]  eta: 0:00:24  lr: 0.000005  loss: 0.1999 (0.2039)  time: 24.8438  data: 24.4486  max mem: 14680
+[12:30:58.083782] Epoch: [68] Total time: 0:00:49 (24.8973 s / it)
+[12:30:58.084317] Averaged stats: lr: 0.000005  loss: 0.1999 (0.2039)
+[12:30:58.087636] log_dir: ./output_cryoppp
+[12:31:47.878551] Epoch: [69]  [0/2]  eta: 0:01:39  lr: 0.000005  loss: 0.1960 (0.1960)  time: 49.7893  data: 49.3858  max mem: 14680
+[12:31:48.265520] Epoch: [69]  [1/2]  eta: 0:00:25  lr: 0.000005  loss: 0.1960 (0.1990)  time: 25.0874  data: 24.6929  max mem: 14680
+[12:31:48.362927] Epoch: [69] Total time: 0:00:50 (25.1374 s / it)
+[12:31:48.363810] Averaged stats: lr: 0.000005  loss: 0.1960 (0.1990)
+[12:31:48.368144] log_dir: ./output_cryoppp
+[12:32:41.849643] Epoch: [70]  [0/2]  eta: 0:01:46  lr: 0.000005  loss: 0.2022 (0.2022)  time: 53.4802  data: 48.9573  max mem: 14680
+[12:32:42.235861] Epoch: [70]  [1/2]  eta: 0:00:26  lr: 0.000005  loss: 0.2022 (0.2026)  time: 26.9326  data: 24.4787  max mem: 14680
+[12:32:42.337989] Epoch: [70] Total time: 0:00:53 (26.9847 s / it)
+[12:32:42.586623] Averaged stats: lr: 0.000005  loss: 0.2022 (0.2026)
+[12:32:42.593811] log_dir: ./output_cryoppp
+[12:33:32.573209] Epoch: [71]  [0/2]  eta: 0:01:39  lr: 0.000005  loss: 0.2047 (0.2047)  time: 49.9780  data: 49.5774  max mem: 14680
+[12:33:32.964370] Epoch: [71]  [1/2]  eta: 0:00:25  lr: 0.000005  loss: 0.1998 (0.2022)  time: 25.1839  data: 24.7887  max mem: 14680
+[12:33:33.058687] Epoch: [71] Total time: 0:00:50 (25.2323 s / it)
+[12:33:33.059259] Averaged stats: lr: 0.000005  loss: 0.1998 (0.2022)
+[12:33:33.064442] log_dir: ./output_cryoppp
+[12:34:22.737482] Epoch: [72]  [0/2]  eta: 0:01:39  lr: 0.000004  loss: 0.2008 (0.2008)  time: 49.6716  data: 49.2705  max mem: 14680
+[12:34:23.128902] Epoch: [72]  [1/2]  eta: 0:00:25  lr: 0.000004  loss: 0.1974 (0.1991)  time: 25.0307  data: 24.6353  max mem: 14680
+[12:34:23.236962] Epoch: [72] Total time: 0:00:50 (25.0860 s / it)
+[12:34:23.237808] Averaged stats: lr: 0.000004  loss: 0.1974 (0.1991)
+[12:34:23.246201] log_dir: ./output_cryoppp
+[12:35:12.767308] Epoch: [73]  [0/2]  eta: 0:01:39  lr: 0.000004  loss: 0.2025 (0.2025)  time: 49.5196  data: 49.1177  max mem: 14680
+[12:35:13.156994] Epoch: [73]  [1/2]  eta: 0:00:24  lr: 0.000004  loss: 0.1993 (0.2009)  time: 24.9540  data: 24.5589  max mem: 14680
+[12:35:13.259818] Epoch: [73] Total time: 0:00:50 (25.0066 s / it)
+[12:35:13.260775] Averaged stats: lr: 0.000004  loss: 0.1993 (0.2009)
+[12:35:13.267039] log_dir: ./output_cryoppp
+[12:36:02.194130] Epoch: [74]  [0/2]  eta: 0:01:37  lr: 0.000004  loss: 0.1995 (0.1995)  time: 48.9252  data: 48.5210  max mem: 14680
+[12:36:02.581161] Epoch: [74]  [1/2]  eta: 0:00:24  lr: 0.000004  loss: 0.1986 (0.1990)  time: 24.6553  data: 24.2605  max mem: 14680
+[12:36:02.676631] Epoch: [74] Total time: 0:00:49 (24.7045 s / it)
+[12:36:02.677466] Averaged stats: lr: 0.000004  loss: 0.1986 (0.1990)
+[12:36:02.684185] log_dir: ./output_cryoppp
+[12:36:51.464448] Epoch: [75]  [0/2]  eta: 0:01:37  lr: 0.000004  loss: 0.1978 (0.1978)  time: 48.7782  data: 48.3718  max mem: 14680
+[12:36:51.966160] Epoch: [75]  [1/2]  eta: 0:00:24  lr: 0.000004  loss: 0.1978 (0.1998)  time: 24.6390  data: 24.2415  max mem: 14680
+[12:36:52.062598] Epoch: [75] Total time: 0:00:49 (24.6890 s / it)
+[12:36:52.063702] Averaged stats: lr: 0.000004  loss: 0.1978 (0.1998)
+[12:36:52.067887] log_dir: ./output_cryoppp
+[12:37:40.362421] Epoch: [76]  [0/2]  eta: 0:01:36  lr: 0.000003  loss: 0.1967 (0.1967)  time: 48.2927  data: 47.8839  max mem: 14680
+[12:37:40.755908] Epoch: [76]  [1/2]  eta: 0:00:24  lr: 0.000003  loss: 0.1953 (0.1960)  time: 24.3424  data: 23.9420  max mem: 14680
+[12:37:40.860407] Epoch: [76] Total time: 0:00:48 (24.3960 s / it)
+[12:37:40.860921] Averaged stats: lr: 0.000003  loss: 0.1953 (0.1960)
+[12:37:40.865192] log_dir: ./output_cryoppp
+[12:38:29.361050] Epoch: [77]  [0/2]  eta: 0:01:36  lr: 0.000003  loss: 0.2006 (0.2006)  time: 48.4941  data: 48.0888  max mem: 14680
+[12:38:29.747511] Epoch: [77]  [1/2]  eta: 0:00:24  lr: 0.000003  loss: 0.2006 (0.2016)  time: 24.4396  data: 24.0444  max mem: 14680
+[12:38:29.842068] Epoch: [77] Total time: 0:00:48 (24.4882 s / it)
+[12:38:29.843052] Averaged stats: lr: 0.000003  loss: 0.2006 (0.2016)
+[12:38:29.854137] log_dir: ./output_cryoppp
+[12:39:18.481510] Epoch: [78]  [0/2]  eta: 0:01:37  lr: 0.000003  loss: 0.1989 (0.1989)  time: 48.6259  data: 48.2102  max mem: 14680
+[12:39:18.873004] Epoch: [78]  [1/2]  eta: 0:00:24  lr: 0.000003  loss: 0.1989 (0.1995)  time: 24.5081  data: 24.1051  max mem: 14680
+[12:39:18.978085] Epoch: [78] Total time: 0:00:49 (24.5618 s / it)
+[12:39:18.978558] Averaged stats: lr: 0.000003  loss: 0.1989 (0.1995)
+[12:39:18.982055] log_dir: ./output_cryoppp
+[12:40:07.584107] Epoch: [79]  [0/2]  eta: 0:01:37  lr: 0.000003  loss: 0.2033 (0.2033)  time: 48.6007  data: 48.1937  max mem: 14680
+[12:40:07.975406] Epoch: [79]  [1/2]  eta: 0:00:24  lr: 0.000003  loss: 0.1910 (0.1971)  time: 24.4948  data: 24.0969  max mem: 14680
+[12:40:08.080797] Epoch: [79] Total time: 0:00:49 (24.5492 s / it)
+[12:40:08.081411] Averaged stats: lr: 0.000003  loss: 0.1910 (0.1971)
+[12:40:08.095729] log_dir: ./output_cryoppp
+[12:41:01.724370] Epoch: [80]  [0/2]  eta: 0:01:47  lr: 0.000003  loss: 0.1975 (0.1975)  time: 53.6262  data: 48.3734  max mem: 14680
+[12:41:02.115728] Epoch: [80]  [1/2]  eta: 0:00:27  lr: 0.000002  loss: 0.1975 (0.1983)  time: 27.0073  data: 24.1868  max mem: 14680
+[12:41:02.218715] Epoch: [80] Total time: 0:00:54 (27.0612 s / it)
+[12:41:02.513450] Averaged stats: lr: 0.000002  loss: 0.1975 (0.1983)
+[12:41:07.364411] log_dir: ./output_cryoppp
+[12:41:56.426570] Epoch: [81]  [0/2]  eta: 0:01:38  lr: 0.000002  loss: 0.2017 (0.2017)  time: 49.0608  data: 48.6529  max mem: 14680
+[12:41:56.818667] Epoch: [81]  [1/2]  eta: 0:00:24  lr: 0.000002  loss: 0.1942 (0.1980)  time: 24.7257  data: 24.3265  max mem: 14680
+[12:41:56.919605] Epoch: [81] Total time: 0:00:49 (24.7774 s / it)
+[12:41:56.920240] Averaged stats: lr: 0.000002  loss: 0.1942 (0.1980)
+[12:41:56.925055] log_dir: ./output_cryoppp
+[12:42:45.457347] Epoch: [82]  [0/2]  eta: 0:01:37  lr: 0.000002  loss: 0.2032 (0.2032)  time: 48.5308  data: 48.1247  max mem: 14680
+[12:42:45.847851] Epoch: [82]  [1/2]  eta: 0:00:24  lr: 0.000002  loss: 0.1985 (0.2008)  time: 24.4600  data: 24.0624  max mem: 14680
+[12:42:45.949895] Epoch: [82] Total time: 0:00:49 (24.5122 s / it)
+[12:42:45.950540] Averaged stats: lr: 0.000002  loss: 0.1985 (0.2008)
+[12:42:45.956548] log_dir: ./output_cryoppp
+[12:43:34.030617] Epoch: [83]  [0/2]  eta: 0:01:36  lr: 0.000002  loss: 0.1971 (0.1971)  time: 48.0716  data: 47.6641  max mem: 14680
+[12:43:34.532310] Epoch: [83]  [1/2]  eta: 0:00:24  lr: 0.000002  loss: 0.1971 (0.1980)  time: 24.2858  data: 23.8868  max mem: 14680
+[12:43:34.620494] Epoch: [83] Total time: 0:00:48 (24.3318 s / it)
+[12:43:34.621154] Averaged stats: lr: 0.000002  loss: 0.1971 (0.1980)
+[12:43:34.628776] log_dir: ./output_cryoppp
+[12:44:23.490626] Epoch: [84]  [0/2]  eta: 0:01:37  lr: 0.000002  loss: 0.1951 (0.1951)  time: 48.8599  data: 48.4541  max mem: 14680
+[12:44:23.876900] Epoch: [84]  [1/2]  eta: 0:00:24  lr: 0.000002  loss: 0.1951 (0.1968)  time: 24.6224  data: 24.2271  max mem: 14680
+[12:44:23.977614] Epoch: [84] Total time: 0:00:49 (24.6742 s / it)
+[12:44:23.978444] Averaged stats: lr: 0.000002  loss: 0.1951 (0.1968)
+[12:44:23.985249] log_dir: ./output_cryoppp
+[12:45:12.761326] Epoch: [85]  [0/2]  eta: 0:01:37  lr: 0.000001  loss: 0.2009 (0.2009)  time: 48.7743  data: 48.3691  max mem: 14680
+[12:45:13.153396] Epoch: [85]  [1/2]  eta: 0:00:24  lr: 0.000001  loss: 0.1918 (0.1963)  time: 24.5826  data: 24.1846  max mem: 14680
+[12:45:13.247226] Epoch: [85] Total time: 0:00:49 (24.6307 s / it)
+[12:45:13.248101] Averaged stats: lr: 0.000001  loss: 0.1918 (0.1963)
+[12:45:13.253182] log_dir: ./output_cryoppp
+[12:46:01.403442] Epoch: [86]  [0/2]  eta: 0:01:36  lr: 0.000001  loss: 0.1992 (0.1992)  time: 48.1490  data: 47.7448  max mem: 14680
+[12:46:01.788741] Epoch: [86]  [1/2]  eta: 0:00:24  lr: 0.000001  loss: 0.1985 (0.1989)  time: 24.2665  data: 23.8725  max mem: 14680
+[12:46:01.878924] Epoch: [86] Total time: 0:00:48 (24.3127 s / it)
+[12:46:01.879335] Averaged stats: lr: 0.000001  loss: 0.1985 (0.1989)
+[12:46:01.882343] log_dir: ./output_cryoppp
+[12:46:49.710936] Epoch: [87]  [0/2]  eta: 0:01:35  lr: 0.000001  loss: 0.1962 (0.1962)  time: 47.8270  data: 47.4181  max mem: 14680
+[12:46:50.462592] Epoch: [87]  [1/2]  eta: 0:00:24  lr: 0.000001  loss: 0.1962 (0.1962)  time: 24.2887  data: 23.8885  max mem: 14680
+[12:46:50.557578] Epoch: [87] Total time: 0:00:48 (24.3375 s / it)
+[12:46:50.558470] Averaged stats: lr: 0.000001  loss: 0.1962 (0.1962)
+[12:46:50.563144] log_dir: ./output_cryoppp
+[12:47:38.995090] Epoch: [88]  [0/2]  eta: 0:01:36  lr: 0.000001  loss: 0.1964 (0.1964)  time: 48.4303  data: 48.0211  max mem: 14680
+[12:47:39.384178] Epoch: [88]  [1/2]  eta: 0:00:24  lr: 0.000001  loss: 0.1964 (0.1993)  time: 24.4090  data: 24.0106  max mem: 14680
+[12:47:39.475352] Epoch: [88] Total time: 0:00:48 (24.4559 s / it)
+[12:47:39.475905] Averaged stats: lr: 0.000001  loss: 0.1964 (0.1993)
+[12:47:39.480049] log_dir: ./output_cryoppp
+[12:48:27.972943] Epoch: [89]  [0/2]  eta: 0:01:36  lr: 0.000001  loss: 0.1968 (0.1968)  time: 48.4912  data: 48.0863  max mem: 14680
+[12:48:28.359751] Epoch: [89]  [1/2]  eta: 0:00:24  lr: 0.000001  loss: 0.1968 (0.1981)  time: 24.4381  data: 24.0432  max mem: 14680
+[12:48:28.451414] Epoch: [89] Total time: 0:00:48 (24.4855 s / it)
+[12:48:28.452134] Averaged stats: lr: 0.000001  loss: 0.1968 (0.1981)
+[12:48:28.456924] log_dir: ./output_cryoppp
+[12:49:23.049554] Epoch: [90]  [0/2]  eta: 0:01:49  lr: 0.000001  loss: 0.1946 (0.1946)  time: 54.5915  data: 49.3323  max mem: 14680
+[12:49:23.440909] Epoch: [90]  [1/2]  eta: 0:00:27  lr: 0.000001  loss: 0.1946 (0.1950)  time: 27.4903  data: 24.6662  max mem: 14680
+[12:49:23.539538] Epoch: [90] Total time: 0:00:55 (27.5411 s / it)
+[12:49:23.811321] Averaged stats: lr: 0.000001  loss: 0.1946 (0.1950)
+[12:49:23.818814] log_dir: ./output_cryoppp
+[12:50:12.626593] Epoch: [91]  [0/2]  eta: 0:01:37  lr: 0.000001  loss: 0.1954 (0.1954)  time: 48.8021  data: 48.3933  max mem: 14680
+[12:50:13.020956] Epoch: [91]  [1/2]  eta: 0:00:24  lr: 0.000000  loss: 0.1954 (0.1975)  time: 24.5966  data: 24.1968  max mem: 14680
+[12:50:13.126782] Epoch: [91] Total time: 0:00:49 (24.6538 s / it)
+[12:50:13.136768] Averaged stats: lr: 0.000000  loss: 0.1954 (0.1975)
+[12:50:13.140643] log_dir: ./output_cryoppp
+[12:51:01.813477] Epoch: [92]  [0/2]  eta: 0:01:37  lr: 0.000000  loss: 0.1993 (0.1993)  time: 48.6710  data: 48.2604  max mem: 14680
+[12:51:02.308417] Epoch: [92]  [1/2]  eta: 0:00:24  lr: 0.000000  loss: 0.1889 (0.1941)  time: 24.5797  data: 24.1777  max mem: 14680
+[12:51:02.406741] Epoch: [92] Total time: 0:00:49 (24.6328 s / it)
+[12:51:02.407231] Averaged stats: lr: 0.000000  loss: 0.1889 (0.1941)
+[12:51:02.410594] log_dir: ./output_cryoppp
+[12:51:51.153208] Epoch: [93]  [0/2]  eta: 0:01:37  lr: 0.000000  loss: 0.1984 (0.1984)  time: 48.7410  data: 48.3189  max mem: 14680
+[12:51:51.547870] Epoch: [93]  [1/2]  eta: 0:00:24  lr: 0.000000  loss: 0.1961 (0.1972)  time: 24.5671  data: 24.1595  max mem: 14680
+[12:51:51.654789] Epoch: [93] Total time: 0:00:49 (24.6219 s / it)
+[12:51:51.655583] Averaged stats: lr: 0.000000  loss: 0.1961 (0.1972)
+[12:51:51.660974] log_dir: ./output_cryoppp
+[12:52:40.484016] Epoch: [94]  [0/2]  eta: 0:01:37  lr: 0.000000  loss: 0.1948 (0.1948)  time: 48.8211  data: 48.4134  max mem: 14680
+[12:52:40.875388] Epoch: [94]  [1/2]  eta: 0:00:24  lr: 0.000000  loss: 0.1867 (0.1907)  time: 24.6052  data: 24.2067  max mem: 14680
+[12:52:40.978494] Epoch: [94] Total time: 0:00:49 (24.6586 s / it)
+[12:52:40.979012] Averaged stats: lr: 0.000000  loss: 0.1867 (0.1907)
+[12:52:40.983031] log_dir: ./output_cryoppp
+[12:53:29.280658] Epoch: [95]  [0/2]  eta: 0:01:36  lr: 0.000000  loss: 0.2003 (0.2003)  time: 48.2948  data: 47.8953  max mem: 14680
+[12:53:29.782394] Epoch: [95]  [1/2]  eta: 0:00:24  lr: 0.000000  loss: 0.1947 (0.1975)  time: 24.3974  data: 24.0016  max mem: 14680
+[12:53:29.879948] Epoch: [95] Total time: 0:00:48 (24.4483 s / it)
+[12:53:29.880363] Averaged stats: lr: 0.000000  loss: 0.1947 (0.1975)
+[12:53:29.883455] log_dir: ./output_cryoppp
+[12:54:18.527657] Epoch: [96]  [0/2]  eta: 0:01:37  lr: 0.000000  loss: 0.1988 (0.1988)  time: 48.6427  data: 48.2391  max mem: 14680
+[12:54:18.917330] Epoch: [96]  [1/2]  eta: 0:00:24  lr: 0.000000  loss: 0.1918 (0.1953)  time: 24.5155  data: 24.1196  max mem: 14680
+[12:54:19.034001] Epoch: [96] Total time: 0:00:49 (24.5751 s / it)
+[12:54:19.034508] Averaged stats: lr: 0.000000  loss: 0.1918 (0.1953)
+[12:54:19.037573] log_dir: ./output_cryoppp
+[12:55:07.813882] Epoch: [97]  [0/2]  eta: 0:01:37  lr: 0.000000  loss: 0.1982 (0.1982)  time: 48.7749  data: 48.3650  max mem: 14680
+[12:55:08.203924] Epoch: [97]  [1/2]  eta: 0:00:24  lr: 0.000000  loss: 0.1947 (0.1964)  time: 24.5814  data: 24.1825  max mem: 14680
+[12:55:08.303576] Epoch: [97] Total time: 0:00:49 (24.6329 s / it)
+[12:55:08.304117] Averaged stats: lr: 0.000000  loss: 0.1947 (0.1964)
+[12:55:08.307586] log_dir: ./output_cryoppp
+[12:55:57.032789] Epoch: [98]  [0/2]  eta: 0:01:37  lr: 0.000000  loss: 0.1910 (0.1910)  time: 48.7235  data: 48.3147  max mem: 14680
+[12:55:57.424257] Epoch: [98]  [1/2]  eta: 0:00:24  lr: 0.000000  loss: 0.1910 (0.1942)  time: 24.5565  data: 24.1574  max mem: 14680
+[12:55:57.528133] Epoch: [98] Total time: 0:00:49 (24.6101 s / it)
+[12:55:57.528680] Averaged stats: lr: 0.000000  loss: 0.1910 (0.1942)
+[12:55:57.532803] log_dir: ./output_cryoppp
+wandb: uploading history steps 357-359, summary, console lines 618-622
+wandb:                                                                                
+wandb: 
+wandb: Run history:
+wandb:      epoch ▁▁▁▁▂▂▂▂▂▂▃▃▃▃▃▃▄▄▄▄▅▅▅▅▅▅▆▆▆▆▆▆▇▇▇▇▇▇██
+wandb:         lr ▁▂▂▃▄▅▅▇▇██████▇▇▇▇▆▆▆▆▅▅▄▄▄▃▃▂▂▂▂▂▁▁▁▁▁
+wandb: train_loss █▇▇▄▄▃▃▃▃▃▂▂▂▂▂▂▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+wandb:   train_lr ▁▂▂▂▃▄▄▅▅▆▆▇▇▇██████▇▇▇▇▇▆▆▆▄▄▃▃▃▃▂▂▁▁▁▁
+wandb: 
+wandb: Run summary:
+wandb:      epoch 99
+wandb:         lr 0.0
+wandb: train_loss 0.19729
+wandb:   train_lr 0.0
+wandb: 
+wandb: 🚀 View run run_20250514_112515 at: https://wandb.ai/riku359-keio-university-global-page/2dmae_cryoppp-random-crop-preprocess/runs/hinprj6e
+wandb: ⭐️ View project at: https://wandb.ai/riku359-keio-university-global-page/2dmae_cryoppp-random-crop-preprocess
+wandb: Synced 5 W&B file(s), 60 media file(s), 0 artifact file(s) and 0 other file(s)
+wandb: Find logs at: ./wandb/run-20250514_112514-hinprj6e/logs
+[12:56:46.392091] Epoch: [99]  [0/2]  eta: 0:01:37  lr: 0.000000  loss: 0.1942 (0.1942)  time: 48.8579  data: 48.4513  max mem: 14680
+[12:56:46.778034] Epoch: [99]  [1/2]  eta: 0:00:24  lr: 0.000000  loss: 0.1942 (0.1973)  time: 24.6213  data: 24.2257  max mem: 14680
+[12:56:46.874032] Epoch: [99] Total time: 0:00:49 (24.6704 s / it)
+[12:56:46.874464] Averaged stats: lr: 0.000000  loss: 0.1942 (0.1973)
+[12:56:51.279227] Training time 1:23:19
+/mnt/ssd1/riku/mae/.venv/lib/python3.10/site-packages/timm/optim/optim_factory.py:7: FutureWarning: Importing from timm.optim.optim_factory is deprecated, please import via timm.optim
+  warnings.warn(f"Importing from {__name__} is deprecated, please import via timm.optim", FutureWarning)
+wandb: Currently logged in as: riku359 (riku359-keio-university-global-page) to https://api.wandb.ai. Use `wandb login --relogin` to force relogin
+wandb: Tracking run with wandb version 0.19.10
+wandb: Run data is saved locally in /mnt/ssd1/riku/mae/wandb/run-20250514_125658-irdyvdts
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run divine-bird-10
+wandb: ⭐️ View project at https://wandb.ai/riku359-keio-university-global-page/2dmae_cryoppp-random-crop-preprocess
+wandb: 🚀 View run at https://wandb.ai/riku359-keio-university-global-page/2dmae_cryoppp-random-crop-preprocess/runs/irdyvdts
+Not using distributed mode
+[12:56:59.415872] job dir: /mnt/ssd1/riku/mae
+[12:56:59.416171] Namespace(batch_size=256,
+epochs=100,
+accum_iter=1,
+model='mae_vit_base_patch16',
+mask_ratio=0.5,
+norm_pix_loss=False,
+weight_decay=0.05,
+lr=1e-05,
+blr=0.001,
+min_lr=0.0,
+warmup_epochs=40,
+root_path='../../../ssd2/riku/cryoppp/',
+data_ids=['10077'],
+output_dir='./output_cryoppp',
+log_dir='./output_cryoppp',
+device='cuda',
+seed=0,
+resume='',
+start_epoch=0,
+num_workers=10,
+pin_mem=True,
+world_size=1,
+local_rank=-1,
+dist_on_itp=False,
+dist_url='env://',
+distributed=False)
+[13:03:00.368122] <torch.utils.data.dataset.ConcatDataset object at 0x7f68408acfd0>
+[13:03:02.737052] Model = MaskedAutoencoderViT(
+  (patch_embed): PatchEmbed(
+    (proj): Conv2d(3, 768, kernel_size=(16, 16), stride=(16, 16))
+    (norm): Identity()
+  )
+  (blocks): ModuleList(
+    (0-11): 12 x Block(
+      (norm1): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+      (attn): Attention(
+        (qkv): Linear(in_features=768, out_features=2304, bias=True)
+        (q_norm): Identity()
+        (k_norm): Identity()
+        (attn_drop): Dropout(p=0.0, inplace=False)
+        (proj): Linear(in_features=768, out_features=768, bias=True)
+        (proj_drop): Dropout(p=0.0, inplace=False)
+      )
+      (ls1): Identity()
+      (drop_path1): Identity()
+      (norm2): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+      (mlp): Mlp(
+        (fc1): Linear(in_features=768, out_features=3072, bias=True)
+        (act): GELU(approximate='none')
+        (drop1): Dropout(p=0.0, inplace=False)
+        (norm): Identity()
+        (fc2): Linear(in_features=3072, out_features=768, bias=True)
+        (drop2): Dropout(p=0.0, inplace=False)
+      )
+      (ls2): Identity()
+      (drop_path2): Identity()
+    )
+  )
+  (norm): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+  (decoder_embed): Linear(in_features=768, out_features=512, bias=True)
+  (decoder_blocks): ModuleList(
+    (0-7): 8 x Block(
+      (norm1): LayerNorm((512,), eps=1e-06, elementwise_affine=True)
+      (attn): Attention(
+        (qkv): Linear(in_features=512, out_features=1536, bias=True)
+        (q_norm): Identity()
+        (k_norm): Identity()
+        (attn_drop): Dropout(p=0.0, inplace=False)
+        (proj): Linear(in_features=512, out_features=512, bias=True)
+        (proj_drop): Dropout(p=0.0, inplace=False)
+      )
+      (ls1): Identity()
+      (drop_path1): Identity()
+      (norm2): LayerNorm((512,), eps=1e-06, elementwise_affine=True)
+      (mlp): Mlp(
+        (fc1): Linear(in_features=512, out_features=2048, bias=True)
+        (act): GELU(approximate='none')
+        (drop1): Dropout(p=0.0, inplace=False)
+        (norm): Identity()
+        (fc2): Linear(in_features=2048, out_features=512, bias=True)
+        (drop2): Dropout(p=0.0, inplace=False)
+      )
+      (ls2): Identity()
+      (drop_path2): Identity()
+    )
+  )
+  (decoder_norm): LayerNorm((512,), eps=1e-06, elementwise_affine=True)
+  (decoder_pred): Linear(in_features=512, out_features=768, bias=True)
+)
+[13:03:02.737447] base lr: 1.00e-05
+[13:03:02.737670] actual lr: 1.00e-05
+[13:03:02.737872] accumulate grad iterations: 1
+[13:03:02.738066] effective batch size: 256
+[13:03:02.739845] AdamW (
+Parameter Group 0
+    amsgrad: False
+    betas: (0.9, 0.95)
+    capturable: False
+    differentiable: False
+    eps: 1e-08
+    foreach: None
+    fused: None
+    lr: 1e-05
+    maximize: False
+    weight_decay: 0.05
+
+Parameter Group 1
+    amsgrad: False
+    betas: (0.9, 0.95)
+    capturable: False
+    differentiable: False
+    eps: 1e-08
+    foreach: None
+    fused: None
+    lr: 1e-05
+    maximize: False
+    weight_decay: 0.0
+)
+[13:03:02.740157] Start training for 100 epochs
+[13:03:02.741995] log_dir: ./output_cryoppp
+/mnt/ssd1/riku/mae/engine_pretrain.py:47: UserWarning: To copy construct from a tensor, it is recommended to use sourceTensor.clone().detach() or sourceTensor.clone().detach().requires_grad_(True), rather than torch.tensor(sourceTensor).
+  x = torch.tensor(img)
+[13:03:56.931426] Epoch: [0]  [0/2]  eta: 0:01:48  lr: 0.000000  loss: 1.1044 (1.1044)  time: 54.1883  data: 47.6448  max mem: 17935
+[13:03:57.473336] Epoch: [0]  [1/2]  eta: 0:00:27  lr: 0.000000  loss: 1.0998 (1.1021)  time: 27.3645  data: 23.8224  max mem: 18793
+[13:03:57.534776] Epoch: [0] Total time: 0:00:54 (27.3962 s / it)
+[13:03:58.180398] Averaged stats: lr: 0.000000  loss: 1.0998 (1.1021)
+[13:04:02.837069] log_dir: ./output_cryoppp
+[13:04:51.063722] Epoch: [1]  [0/2]  eta: 0:01:36  lr: 0.000000  loss: 1.0995 (1.0995)  time: 48.2250  data: 47.7033  max mem: 18793
+[13:04:51.568787] Epoch: [1]  [1/2]  eta: 0:00:24  lr: 0.000000  loss: 1.0941 (1.0968)  time: 24.3645  data: 23.8517  max mem: 18793
+[13:04:51.628039] Epoch: [1] Total time: 0:00:48 (24.3953 s / it)
+[13:04:51.628897] Averaged stats: lr: 0.000000  loss: 1.0941 (1.0968)
+[13:04:51.633704] log_dir: ./output_cryoppp
+[13:05:43.232517] Epoch: [2]  [0/2]  eta: 0:01:43  lr: 0.000001  loss: 1.0829 (1.0829)  time: 51.5974  data: 51.0733  max mem: 18793
+[13:05:43.738877] Epoch: [2]  [1/2]  eta: 0:00:26  lr: 0.000001  loss: 1.0745 (1.0787)  time: 26.0512  data: 25.5367  max mem: 18793
+[13:05:43.825285] Epoch: [2] Total time: 0:00:52 (26.0956 s / it)
+[13:05:43.826083] Averaged stats: lr: 0.000001  loss: 1.0745 (1.0787)
+[13:05:43.830876] log_dir: ./output_cryoppp
+[13:06:33.613701] Epoch: [3]  [0/2]  eta: 0:01:39  lr: 0.000001  loss: 1.0580 (1.0580)  time: 49.7814  data: 49.2595  max mem: 18793
+[13:06:34.131363] Epoch: [3]  [1/2]  eta: 0:00:25  lr: 0.000001  loss: 1.0377 (1.0479)  time: 25.1488  data: 24.6298  max mem: 18793
+[13:06:34.209910] Epoch: [3] Total time: 0:00:50 (25.1893 s / it)
+[13:06:34.210826] Averaged stats: lr: 0.000001  loss: 1.0377 (1.0479)
+[13:06:34.216670] log_dir: ./output_cryoppp
+[13:07:23.840565] Epoch: [4]  [0/2]  eta: 0:01:39  lr: 0.000001  loss: 1.0234 (1.0234)  time: 49.6217  data: 49.0960  max mem: 18793
+[13:07:24.469252] Epoch: [4]  [1/2]  eta: 0:00:25  lr: 0.000001  loss: 1.0010 (1.0122)  time: 25.1244  data: 24.6091  max mem: 18793
+[13:07:24.560691] Epoch: [4] Total time: 0:00:50 (25.1717 s / it)
+[13:07:24.561472] Averaged stats: lr: 0.000001  loss: 1.0010 (1.0122)
+[13:07:24.566126] log_dir: ./output_cryoppp
+[13:08:14.245830] Epoch: [5]  [0/2]  eta: 0:01:39  lr: 0.000001  loss: 0.9711 (0.9711)  time: 49.6781  data: 49.1546  max mem: 18793
+[13:08:14.765110] Epoch: [5]  [1/2]  eta: 0:00:25  lr: 0.000001  loss: 0.9464 (0.9587)  time: 25.0980  data: 24.5773  max mem: 18793
+[13:08:14.858798] Epoch: [5] Total time: 0:00:50 (25.1462 s / it)
+[13:08:14.859578] Averaged stats: lr: 0.000001  loss: 0.9464 (0.9587)
+[13:08:14.864911] log_dir: ./output_cryoppp
+[13:09:04.021374] Epoch: [6]  [0/2]  eta: 0:01:38  lr: 0.000002  loss: 0.9205 (0.9205)  time: 49.1545  data: 48.6226  max mem: 18793
+[13:09:04.570023] Epoch: [6]  [1/2]  eta: 0:00:24  lr: 0.000002  loss: 0.8916 (0.9061)  time: 24.8509  data: 24.3325  max mem: 18793
+[13:09:04.646257] Epoch: [6] Total time: 0:00:49 (24.8905 s / it)
+[13:09:04.646691] Averaged stats: lr: 0.000002  loss: 0.8916 (0.9061)
+[13:09:04.649753] log_dir: ./output_cryoppp
+[13:09:54.106148] Epoch: [7]  [0/2]  eta: 0:01:38  lr: 0.000002  loss: 0.8655 (0.8655)  time: 49.4551  data: 48.9271  max mem: 18793
+[13:09:54.612371] Epoch: [7]  [1/2]  eta: 0:00:24  lr: 0.000002  loss: 0.8417 (0.8536)  time: 24.9801  data: 24.4636  max mem: 18793
+[13:09:54.692334] Epoch: [7] Total time: 0:00:50 (25.0211 s / it)
+[13:09:54.692856] Averaged stats: lr: 0.000002  loss: 0.8417 (0.8536)
+[13:09:54.696848] log_dir: ./output_cryoppp
+[13:10:43.623907] Epoch: [8]  [0/2]  eta: 0:01:37  lr: 0.000002  loss: 0.8154 (0.8154)  time: 48.9252  data: 48.3985  max mem: 18793
+[13:10:44.156124] Epoch: [8]  [1/2]  eta: 0:00:24  lr: 0.000002  loss: 0.7891 (0.8022)  time: 24.7280  data: 24.2112  max mem: 18793
+[13:10:44.236889] Epoch: [8] Total time: 0:00:49 (24.7697 s / it)
+[13:10:44.237793] Averaged stats: lr: 0.000002  loss: 0.7891 (0.8022)
+[13:10:44.242920] log_dir: ./output_cryoppp
+[13:11:33.135581] Epoch: [9]  [0/2]  eta: 0:01:37  lr: 0.000002  loss: 0.7611 (0.7611)  time: 48.8910  data: 48.3634  max mem: 18793
+[13:11:33.642692] Epoch: [9]  [1/2]  eta: 0:00:24  lr: 0.000002  loss: 0.7419 (0.7515)  time: 24.6983  data: 24.1817  max mem: 18793
+[13:11:33.727961] Epoch: [9] Total time: 0:00:49 (24.7423 s / it)
+[13:11:33.728450] Averaged stats: lr: 0.000002  loss: 0.7419 (0.7515)
+[13:11:33.731727] log_dir: ./output_cryoppp
+[13:12:26.144563] Epoch: [10]  [0/2]  eta: 0:01:44  lr: 0.000003  loss: 0.7274 (0.7274)  time: 52.4113  data: 47.8885  max mem: 18793
+[13:12:26.651079] Epoch: [10]  [1/2]  eta: 0:00:26  lr: 0.000003  loss: 0.6987 (0.7130)  time: 26.4583  data: 23.9443  max mem: 18793
+[13:12:26.737266] Epoch: [10] Total time: 0:00:53 (26.5026 s / it)
+[13:12:26.998017] Averaged stats: lr: 0.000003  loss: 0.6987 (0.7130)
+[13:12:27.001071] log_dir: ./output_cryoppp
+[13:13:16.726382] Epoch: [11]  [0/2]  eta: 0:01:39  lr: 0.000003  loss: 0.6741 (0.6741)  time: 49.7239  data: 49.1940  max mem: 18793
+[13:13:17.233200] Epoch: [11]  [1/2]  eta: 0:00:25  lr: 0.000003  loss: 0.6643 (0.6692)  time: 25.1147  data: 24.5971  max mem: 18793
+[13:13:17.316505] Epoch: [11] Total time: 0:00:50 (25.1576 s / it)
+[13:13:17.317487] Averaged stats: lr: 0.000003  loss: 0.6643 (0.6692)
+[13:13:17.324099] log_dir: ./output_cryoppp
+[13:14:06.281269] Epoch: [12]  [0/2]  eta: 0:01:37  lr: 0.000003  loss: 0.6432 (0.6432)  time: 48.9555  data: 48.4273  max mem: 18793
+[13:14:06.787364] Epoch: [12]  [1/2]  eta: 0:00:24  lr: 0.000003  loss: 0.6273 (0.6353)  time: 24.7301  data: 24.2137  max mem: 18793
+[13:14:06.880382] Epoch: [12] Total time: 0:00:49 (24.7779 s / it)
+[13:14:06.880866] Averaged stats: lr: 0.000003  loss: 0.6273 (0.6353)
+[13:14:06.884718] log_dir: ./output_cryoppp
+[13:14:56.138086] Epoch: [13]  [0/2]  eta: 0:01:38  lr: 0.000003  loss: 0.6030 (0.6030)  time: 49.2517  data: 48.7279  max mem: 18793
+[13:14:56.657923] Epoch: [13]  [1/2]  eta: 0:00:24  lr: 0.000003  loss: 0.5916 (0.5973)  time: 24.8851  data: 24.3640  max mem: 18793
+[13:14:56.739437] Epoch: [13] Total time: 0:00:49 (24.9272 s / it)
+[13:14:56.739867] Averaged stats: lr: 0.000003  loss: 0.5916 (0.5973)
+[13:14:56.742883] log_dir: ./output_cryoppp
+[13:15:45.440119] Epoch: [14]  [0/2]  eta: 0:01:37  lr: 0.000004  loss: 0.5851 (0.5851)  time: 48.6960  data: 48.1693  max mem: 18793
+[13:15:45.946391] Epoch: [14]  [1/2]  eta: 0:00:24  lr: 0.000004  loss: 0.5708 (0.5780)  time: 24.6005  data: 24.0847  max mem: 18793
+[13:15:46.043162] Epoch: [14] Total time: 0:00:49 (24.6500 s / it)
+[13:15:46.043734] Averaged stats: lr: 0.000004  loss: 0.5708 (0.5780)
+[13:15:46.047968] log_dir: ./output_cryoppp
+[13:16:34.711443] Epoch: [15]  [0/2]  eta: 0:01:37  lr: 0.000004  loss: 0.5520 (0.5520)  time: 48.6619  data: 48.1321  max mem: 18793
+[13:16:35.226313] Epoch: [15]  [1/2]  eta: 0:00:24  lr: 0.000004  loss: 0.5415 (0.5467)  time: 24.5852  data: 24.0661  max mem: 18793
+[13:16:35.316430] Epoch: [15] Total time: 0:00:49 (24.6340 s / it)
+[13:16:35.317271] Averaged stats: lr: 0.000004  loss: 0.5415 (0.5467)
+[13:16:35.326475] log_dir: ./output_cryoppp
+[13:17:23.482071] Epoch: [16]  [0/2]  eta: 0:01:36  lr: 0.000004  loss: 0.5324 (0.5324)  time: 48.1535  data: 47.6303  max mem: 18793
+[13:17:24.124692] Epoch: [16]  [1/2]  eta: 0:00:24  lr: 0.000004  loss: 0.5184 (0.5254)  time: 24.3974  data: 23.8819  max mem: 18793
+[13:17:24.209990] Epoch: [16] Total time: 0:00:48 (24.4412 s / it)
+[13:17:24.212116] Averaged stats: lr: 0.000004  loss: 0.5184 (0.5254)
+[13:17:24.216265] log_dir: ./output_cryoppp
+[13:18:13.069301] Epoch: [17]  [0/2]  eta: 0:01:37  lr: 0.000004  loss: 0.5099 (0.5099)  time: 48.8517  data: 48.3220  max mem: 18793
+[13:18:13.580234] Epoch: [17]  [1/2]  eta: 0:00:24  lr: 0.000004  loss: 0.4912 (0.5005)  time: 24.6801  data: 24.1610  max mem: 18793
+[13:18:13.678866] Epoch: [17] Total time: 0:00:49 (24.7311 s / it)
+[13:18:13.679263] Averaged stats: lr: 0.000004  loss: 0.4912 (0.5005)
+[13:18:13.683729] log_dir: ./output_cryoppp
+[13:19:02.357729] Epoch: [18]  [0/2]  eta: 0:01:37  lr: 0.000005  loss: 0.4899 (0.4899)  time: 48.6712  data: 48.1473  max mem: 18793
+[13:19:02.880850] Epoch: [18]  [1/2]  eta: 0:00:24  lr: 0.000005  loss: 0.4782 (0.4840)  time: 24.5961  data: 24.0738  max mem: 18793
+[13:19:02.967847] Epoch: [18] Total time: 0:00:49 (24.6418 s / it)
+[13:19:02.968322] Averaged stats: lr: 0.000005  loss: 0.4782 (0.4840)
+[13:19:02.974166] log_dir: ./output_cryoppp
+[13:19:51.394849] Epoch: [19]  [0/2]  eta: 0:01:36  lr: 0.000005  loss: 0.4655 (0.4655)  time: 48.4155  data: 47.8887  max mem: 18793
+[13:19:51.914229] Epoch: [19]  [1/2]  eta: 0:00:24  lr: 0.000005  loss: 0.4609 (0.4632)  time: 24.4668  data: 23.9444  max mem: 18793
+[13:19:51.994153] Epoch: [19] Total time: 0:00:49 (24.5097 s / it)
+[13:19:51.994553] Averaged stats: lr: 0.000005  loss: 0.4609 (0.4632)
+[13:19:51.999314] log_dir: ./output_cryoppp
+[13:20:45.331645] Epoch: [20]  [0/2]  eta: 0:01:46  lr: 0.000005  loss: 0.4451 (0.4451)  time: 53.3310  data: 48.2242  max mem: 18793
+[13:20:45.839006] Epoch: [20]  [1/2]  eta: 0:00:26  lr: 0.000005  loss: 0.4433 (0.4442)  time: 26.9186  data: 24.1121  max mem: 18793
+[13:20:45.920122] Epoch: [20] Total time: 0:00:53 (26.9601 s / it)
+[13:20:46.200531] Averaged stats: lr: 0.000005  loss: 0.4433 (0.4442)
+[13:20:51.090512] log_dir: ./output_cryoppp
+[13:21:40.912080] Epoch: [21]  [0/2]  eta: 0:01:39  lr: 0.000005  loss: 0.4418 (0.4418)  time: 49.8198  data: 49.2903  max mem: 18793
+[13:21:41.425461] Epoch: [21]  [1/2]  eta: 0:00:25  lr: 0.000005  loss: 0.4337 (0.4377)  time: 25.1647  data: 24.6452  max mem: 18793
+[13:21:41.510179] Epoch: [21] Total time: 0:00:50 (25.2096 s / it)
+[13:21:41.510601] Averaged stats: lr: 0.000005  loss: 0.4337 (0.4377)
+[13:21:41.513700] log_dir: ./output_cryoppp
+[13:22:30.336100] Epoch: [22]  [0/2]  eta: 0:01:37  lr: 0.000005  loss: 0.4185 (0.4185)  time: 48.8211  data: 48.2982  max mem: 18793
+[13:22:30.856000] Epoch: [22]  [1/2]  eta: 0:00:24  lr: 0.000006  loss: 0.4140 (0.4162)  time: 24.6697  data: 24.1491  max mem: 18793
+[13:22:30.945429] Epoch: [22] Total time: 0:00:49 (24.7157 s / it)
+[13:22:30.946159] Averaged stats: lr: 0.000006  loss: 0.4140 (0.4162)
+[13:22:30.951833] log_dir: ./output_cryoppp
+[13:23:19.665088] Epoch: [23]  [0/2]  eta: 0:01:37  lr: 0.000006  loss: 0.4096 (0.4096)  time: 48.7115  data: 48.1866  max mem: 18793
+[13:23:20.183151] Epoch: [23]  [1/2]  eta: 0:00:24  lr: 0.000006  loss: 0.4048 (0.4072)  time: 24.6141  data: 24.0934  max mem: 18793
+[13:23:20.268790] Epoch: [23] Total time: 0:00:49 (24.6582 s / it)
+[13:23:20.269806] Averaged stats: lr: 0.000006  loss: 0.4048 (0.4072)
+[13:23:20.276181] log_dir: ./output_cryoppp
+[13:24:09.239477] Epoch: [24]  [0/2]  eta: 0:01:37  lr: 0.000006  loss: 0.3929 (0.3929)  time: 48.9617  data: 48.4325  max mem: 18793
+[13:24:09.747844] Epoch: [24]  [1/2]  eta: 0:00:24  lr: 0.000006  loss: 0.3929 (0.3934)  time: 24.7343  data: 24.2163  max mem: 18793
+[13:24:09.836214] Epoch: [24] Total time: 0:00:49 (24.7798 s / it)
+[13:24:09.837067] Averaged stats: lr: 0.000006  loss: 0.3929 (0.3934)
+[13:24:09.842174] log_dir: ./output_cryoppp
+[13:24:58.053441] Epoch: [25]  [0/2]  eta: 0:01:36  lr: 0.000006  loss: 0.3868 (0.3868)  time: 48.2099  data: 47.6863  max mem: 18793
+[13:24:58.571556] Epoch: [25]  [1/2]  eta: 0:00:24  lr: 0.000006  loss: 0.3763 (0.3816)  time: 24.3634  data: 23.8432  max mem: 18793
+[13:24:58.663967] Epoch: [25] Total time: 0:00:48 (24.4107 s / it)
+[13:24:58.664794] Averaged stats: lr: 0.000006  loss: 0.3763 (0.3816)
+[13:24:58.669712] log_dir: ./output_cryoppp
+[13:25:47.781478] Epoch: [26]  [0/2]  eta: 0:01:38  lr: 0.000007  loss: 0.3623 (0.3623)  time: 49.1103  data: 48.5863  max mem: 18793
+[13:25:48.299786] Epoch: [26]  [1/2]  eta: 0:00:24  lr: 0.000007  loss: 0.3623 (0.3647)  time: 24.8135  data: 24.2932  max mem: 18793
+[13:25:48.398593] Epoch: [26] Total time: 0:00:49 (24.8643 s / it)
+[13:25:48.399529] Averaged stats: lr: 0.000007  loss: 0.3623 (0.3647)
+[13:25:48.405889] log_dir: ./output_cryoppp
+[13:26:36.944746] Epoch: [27]  [0/2]  eta: 0:01:37  lr: 0.000007  loss: 0.3618 (0.3618)  time: 48.5371  data: 48.0124  max mem: 18793
+[13:26:37.453591] Epoch: [27]  [1/2]  eta: 0:00:24  lr: 0.000007  loss: 0.3554 (0.3586)  time: 24.5223  data: 24.0062  max mem: 18793
+[13:26:37.542752] Epoch: [27] Total time: 0:00:49 (24.5681 s / it)
+[13:26:37.543685] Averaged stats: lr: 0.000007  loss: 0.3554 (0.3586)
+[13:26:37.548360] log_dir: ./output_cryoppp
+[13:27:25.991203] Epoch: [28]  [0/2]  eta: 0:01:36  lr: 0.000007  loss: 0.3529 (0.3529)  time: 48.4411  data: 47.9186  max mem: 18793
+[13:27:26.604851] Epoch: [28]  [1/2]  eta: 0:00:24  lr: 0.000007  loss: 0.3447 (0.3488)  time: 24.5267  data: 24.0123  max mem: 18793
+[13:27:26.700859] Epoch: [28] Total time: 0:00:49 (24.5760 s / it)
+[13:27:26.701690] Averaged stats: lr: 0.000007  loss: 0.3447 (0.3488)
+[13:27:26.708398] log_dir: ./output_cryoppp
+[13:28:15.942223] Epoch: [29]  [0/2]  eta: 0:01:38  lr: 0.000007  loss: 0.3386 (0.3386)  time: 49.2323  data: 48.7103  max mem: 18793
+[13:28:16.448718] Epoch: [29]  [1/2]  eta: 0:00:24  lr: 0.000007  loss: 0.3354 (0.3370)  time: 24.8687  data: 24.3552  max mem: 18793
+[13:28:16.539702] Epoch: [29] Total time: 0:00:49 (24.9155 s / it)
+[13:28:16.540595] Averaged stats: lr: 0.000007  loss: 0.3354 (0.3370)
+[13:28:16.545527] log_dir: ./output_cryoppp
+[13:29:09.208012] Epoch: [30]  [0/2]  eta: 0:01:45  lr: 0.000008  loss: 0.3361 (0.3361)  time: 52.6612  data: 48.0467  max mem: 18793
+[13:29:09.713939] Epoch: [30]  [1/2]  eta: 0:00:26  lr: 0.000008  loss: 0.3211 (0.3286)  time: 26.5830  data: 24.0234  max mem: 18793
+[13:29:09.805046] Epoch: [30] Total time: 0:00:53 (26.6295 s / it)
+[13:29:10.080758] Averaged stats: lr: 0.000008  loss: 0.3211 (0.3286)
+[13:29:10.084318] log_dir: ./output_cryoppp
+[13:30:01.157174] Epoch: [31]  [0/2]  eta: 0:01:42  lr: 0.000008  loss: 0.3257 (0.3257)  time: 51.0712  data: 50.5410  max mem: 18793
+[13:30:01.665683] Epoch: [31]  [1/2]  eta: 0:00:25  lr: 0.000008  loss: 0.3181 (0.3219)  time: 25.7892  data: 25.2705  max mem: 18793
+[13:30:01.756932] Epoch: [31] Total time: 0:00:51 (25.8362 s / it)
+[13:30:01.757365] Averaged stats: lr: 0.000008  loss: 0.3181 (0.3219)
+[13:30:01.760546] log_dir: ./output_cryoppp
+[13:30:50.651025] Epoch: [32]  [0/2]  eta: 0:01:37  lr: 0.000008  loss: 0.3132 (0.3132)  time: 48.8888  data: 48.3594  max mem: 18793
+[13:30:51.236149] Epoch: [32]  [1/2]  eta: 0:00:24  lr: 0.000008  loss: 0.3132 (0.3150)  time: 24.7363  data: 24.2178  max mem: 18793
+[13:30:51.321369] Epoch: [32] Total time: 0:00:49 (24.7802 s / it)
+[13:30:51.322210] Averaged stats: lr: 0.000008  loss: 0.3132 (0.3150)
+[13:30:51.328931] log_dir: ./output_cryoppp
+[13:31:42.929873] Epoch: [33]  [0/2]  eta: 0:01:43  lr: 0.000008  loss: 0.3072 (0.3072)  time: 51.5994  data: 51.0750  max mem: 18793
+[13:31:43.437699] Epoch: [33]  [1/2]  eta: 0:00:26  lr: 0.000008  loss: 0.3025 (0.3048)  time: 26.0530  data: 25.5376  max mem: 18793
+[13:31:43.526350] Epoch: [33] Total time: 0:00:52 (26.0985 s / it)
+[13:31:43.526977] Averaged stats: lr: 0.000008  loss: 0.3025 (0.3048)
+[13:31:43.531460] log_dir: ./output_cryoppp
+[13:32:32.253986] Epoch: [34]  [0/2]  eta: 0:01:37  lr: 0.000008  loss: 0.3016 (0.3016)  time: 48.7210  data: 48.2022  max mem: 18793
+[13:32:32.772401] Epoch: [34]  [1/2]  eta: 0:00:24  lr: 0.000009  loss: 0.2918 (0.2967)  time: 24.6191  data: 24.1012  max mem: 18793
+[13:32:32.862356] Epoch: [34] Total time: 0:00:49 (24.6652 s / it)
+[13:32:32.862768] Averaged stats: lr: 0.000009  loss: 0.2918 (0.2967)
+[13:32:32.865747] log_dir: ./output_cryoppp
+[13:33:20.711159] Epoch: [35]  [0/2]  eta: 0:01:35  lr: 0.000009  loss: 0.2896 (0.2896)  time: 47.8438  data: 47.3232  max mem: 18793
+[13:33:21.215656] Epoch: [35]  [1/2]  eta: 0:00:24  lr: 0.000009  loss: 0.2896 (0.2902)  time: 24.1734  data: 23.6617  max mem: 18793
+[13:33:21.304378] Epoch: [35] Total time: 0:00:48 (24.2192 s / it)
+[13:33:21.305100] Averaged stats: lr: 0.000009  loss: 0.2896 (0.2902)
+[13:33:21.311296] log_dir: ./output_cryoppp
+[13:34:09.409017] Epoch: [36]  [0/2]  eta: 0:01:36  lr: 0.000009  loss: 0.2931 (0.2931)  time: 48.0962  data: 47.5715  max mem: 18793
+[13:34:09.926021] Epoch: [36]  [1/2]  eta: 0:00:24  lr: 0.000009  loss: 0.2834 (0.2883)  time: 24.3058  data: 23.7858  max mem: 18793
+[13:34:10.034215] Epoch: [36] Total time: 0:00:48 (24.3612 s / it)
+[13:34:10.034735] Averaged stats: lr: 0.000009  loss: 0.2834 (0.2883)
+[13:34:10.039330] log_dir: ./output_cryoppp
+[13:34:58.032724] Epoch: [37]  [0/2]  eta: 0:01:35  lr: 0.000009  loss: 0.2866 (0.2866)  time: 47.9904  data: 47.4658  max mem: 18793
+[13:34:58.611923] Epoch: [37]  [1/2]  eta: 0:00:24  lr: 0.000009  loss: 0.2706 (0.2786)  time: 24.2839  data: 23.7680  max mem: 18793
+[13:34:58.703818] Epoch: [37] Total time: 0:00:48 (24.3320 s / it)
+[13:34:58.704741] Averaged stats: lr: 0.000009  loss: 0.2706 (0.2786)
+[13:34:58.711224] log_dir: ./output_cryoppp
+[13:35:47.640126] Epoch: [38]  [0/2]  eta: 0:01:37  lr: 0.000010  loss: 0.2755 (0.2755)  time: 48.9264  data: 48.4046  max mem: 18793
+[13:35:48.145070] Epoch: [38]  [1/2]  eta: 0:00:24  lr: 0.000010  loss: 0.2721 (0.2738)  time: 24.7148  data: 24.2024  max mem: 18793
+[13:35:48.243474] Epoch: [38] Total time: 0:00:49 (24.7657 s / it)
+[13:35:48.244208] Averaged stats: lr: 0.000010  loss: 0.2721 (0.2738)
+[13:35:48.249989] log_dir: ./output_cryoppp
+[13:36:37.581887] Epoch: [39]  [0/2]  eta: 0:01:38  lr: 0.000010  loss: 0.2652 (0.2652)  time: 49.3303  data: 48.8047  max mem: 18793
+[13:36:38.089840] Epoch: [39]  [1/2]  eta: 0:00:24  lr: 0.000010  loss: 0.2633 (0.2642)  time: 24.9183  data: 24.4024  max mem: 18793
+[13:36:38.191513] Epoch: [39] Total time: 0:00:49 (24.9705 s / it)
+[13:36:38.198429] Averaged stats: lr: 0.000010  loss: 0.2633 (0.2642)
+[13:36:38.202322] log_dir: ./output_cryoppp
+[13:37:31.287787] Epoch: [40]  [0/2]  eta: 0:01:46  lr: 0.000010  loss: 0.2659 (0.2659)  time: 53.0843  data: 48.0661  max mem: 18793
+[13:37:31.794847] Epoch: [40]  [1/2]  eta: 0:00:26  lr: 0.000010  loss: 0.2586 (0.2622)  time: 26.7950  data: 24.0331  max mem: 18793
+[13:37:31.888610] Epoch: [40] Total time: 0:00:53 (26.8430 s / it)
+[13:37:32.167527] Averaged stats: lr: 0.000010  loss: 0.2586 (0.2622)
+[13:37:36.805529] log_dir: ./output_cryoppp
+[13:38:26.999798] Epoch: [41]  [0/2]  eta: 0:01:40  lr: 0.000010  loss: 0.2562 (0.2562)  time: 50.1929  data: 49.6695  max mem: 18793
+[13:38:27.507022] Epoch: [41]  [1/2]  eta: 0:00:25  lr: 0.000010  loss: 0.2544 (0.2553)  time: 25.3494  data: 24.8348  max mem: 18793
+[13:38:27.606115] Epoch: [41] Total time: 0:00:50 (25.4001 s / it)
+[13:38:27.606707] Averaged stats: lr: 0.000010  loss: 0.2544 (0.2553)
+[13:38:27.611239] log_dir: ./output_cryoppp
+[13:39:17.392609] Epoch: [42]  [0/2]  eta: 0:01:39  lr: 0.000010  loss: 0.2550 (0.2550)  time: 49.7799  data: 49.2578  max mem: 18793
+[13:39:18.112389] Epoch: [42]  [1/2]  eta: 0:00:25  lr: 0.000010  loss: 0.2482 (0.2516)  time: 25.2490  data: 24.7361  max mem: 18793
+[13:39:18.202340] Epoch: [42] Total time: 0:00:50 (25.2954 s / it)
+[13:39:18.203200] Averaged stats: lr: 0.000010  loss: 0.2482 (0.2516)
+[13:39:18.209275] log_dir: ./output_cryoppp
+[13:40:07.265577] Epoch: [43]  [0/2]  eta: 0:01:38  lr: 0.000010  loss: 0.2579 (0.2579)  time: 49.0544  data: 48.5348  max mem: 18793
+[13:40:08.024605] Epoch: [43]  [1/2]  eta: 0:00:24  lr: 0.000010  loss: 0.2474 (0.2526)  time: 24.9060  data: 24.3947  max mem: 18793
+[13:40:08.125319] Epoch: [43] Total time: 0:00:49 (24.9578 s / it)
+[13:40:08.125834] Averaged stats: lr: 0.000010  loss: 0.2474 (0.2526)
+[13:40:08.129805] log_dir: ./output_cryoppp
+[13:40:58.274787] Epoch: [44]  [0/2]  eta: 0:01:40  lr: 0.000010  loss: 0.2451 (0.2451)  time: 50.1434  data: 49.6241  max mem: 18793
+[13:40:58.783480] Epoch: [44]  [1/2]  eta: 0:00:25  lr: 0.000010  loss: 0.2449 (0.2450)  time: 25.3252  data: 24.8121  max mem: 18793
+[13:40:58.876966] Epoch: [44] Total time: 0:00:50 (25.3734 s / it)
+[13:40:58.877838] Averaged stats: lr: 0.000010  loss: 0.2449 (0.2450)
+[13:40:58.882535] log_dir: ./output_cryoppp
+[13:41:48.322998] Epoch: [45]  [0/2]  eta: 0:01:38  lr: 0.000010  loss: 0.2379 (0.2379)  time: 49.4388  data: 48.9148  max mem: 18793
+[13:41:48.838394] Epoch: [45]  [1/2]  eta: 0:00:24  lr: 0.000010  loss: 0.2379 (0.2393)  time: 24.9764  data: 24.4575  max mem: 18793
+[13:41:48.928535] Epoch: [45] Total time: 0:00:50 (25.0228 s / it)
+[13:41:48.928938] Averaged stats: lr: 0.000010  loss: 0.2379 (0.2393)
+[13:41:48.931930] log_dir: ./output_cryoppp
+[13:42:38.392726] Epoch: [46]  [0/2]  eta: 0:01:38  lr: 0.000010  loss: 0.2346 (0.2346)  time: 49.4595  data: 48.9414  max mem: 18793
+[13:42:38.910220] Epoch: [46]  [1/2]  eta: 0:00:24  lr: 0.000010  loss: 0.2346 (0.2368)  time: 24.9877  data: 24.4707  max mem: 18793
+[13:42:39.013145] Epoch: [46] Total time: 0:00:50 (25.0405 s / it)
+[13:42:39.013721] Averaged stats: lr: 0.000010  loss: 0.2346 (0.2368)
+[13:42:39.018326] log_dir: ./output_cryoppp
+[13:43:28.377764] Epoch: [47]  [0/2]  eta: 0:01:38  lr: 0.000010  loss: 0.2271 (0.2271)  time: 49.3574  data: 48.8245  max mem: 18793
+[13:43:28.887663] Epoch: [47]  [1/2]  eta: 0:00:24  lr: 0.000010  loss: 0.2271 (0.2340)  time: 24.9331  data: 24.4123  max mem: 18793
+[13:43:28.978627] Epoch: [47] Total time: 0:00:49 (24.9799 s / it)
+[13:43:28.979072] Averaged stats: lr: 0.000010  loss: 0.2271 (0.2340)
+[13:43:28.982200] log_dir: ./output_cryoppp
+[13:44:17.762058] Epoch: [48]  [0/2]  eta: 0:01:37  lr: 0.000010  loss: 0.2389 (0.2389)  time: 48.7783  data: 48.2540  max mem: 18793
+[13:44:18.385221] Epoch: [48]  [1/2]  eta: 0:00:24  lr: 0.000010  loss: 0.2320 (0.2354)  time: 24.7000  data: 24.1846  max mem: 18793
+[13:44:18.480112] Epoch: [48] Total time: 0:00:49 (24.7488 s / it)
+[13:44:18.480749] Averaged stats: lr: 0.000010  loss: 0.2320 (0.2354)
+[13:44:18.485763] log_dir: ./output_cryoppp
+[13:45:07.696970] Epoch: [49]  [0/2]  eta: 0:01:38  lr: 0.000009  loss: 0.2282 (0.2282)  time: 49.2095  data: 48.6871  max mem: 18793
+[13:45:08.201547] Epoch: [49]  [1/2]  eta: 0:00:24  lr: 0.000009  loss: 0.2282 (0.2298)  time: 24.8565  data: 24.3436  max mem: 18793
+[13:45:08.296582] Epoch: [49] Total time: 0:00:49 (24.9051 s / it)
+[13:45:08.297358] Averaged stats: lr: 0.000009  loss: 0.2282 (0.2298)
+[13:45:08.303654] log_dir: ./output_cryoppp
+[13:46:02.577251] Epoch: [50]  [0/2]  eta: 0:01:48  lr: 0.000009  loss: 0.2275 (0.2275)  time: 54.2721  data: 49.1372  max mem: 18793
+[13:46:03.088472] Epoch: [50]  [1/2]  eta: 0:00:27  lr: 0.000009  loss: 0.2273 (0.2274)  time: 27.3911  data: 24.5686  max mem: 18793
+[13:46:03.194752] Epoch: [50] Total time: 0:00:54 (27.4453 s / it)
+[13:46:03.458525] Averaged stats: lr: 0.000009  loss: 0.2273 (0.2274)
+[13:46:03.461660] log_dir: ./output_cryoppp
+[13:46:52.405064] Epoch: [51]  [0/2]  eta: 0:01:37  lr: 0.000009  loss: 0.2234 (0.2234)  time: 48.9419  data: 48.4139  max mem: 18793
+[13:46:52.924126] Epoch: [51]  [1/2]  eta: 0:00:24  lr: 0.000009  loss: 0.2234 (0.2242)  time: 24.7297  data: 24.2070  max mem: 18793
+[13:46:53.026405] Epoch: [51] Total time: 0:00:49 (24.7822 s / it)
+[13:46:53.026924] Averaged stats: lr: 0.000009  loss: 0.2234 (0.2242)
+[13:46:53.031519] log_dir: ./output_cryoppp
+[13:47:41.515235] Epoch: [52]  [0/2]  eta: 0:01:36  lr: 0.000009  loss: 0.2258 (0.2258)  time: 48.4820  data: 47.9558  max mem: 18793
+[13:47:42.031620] Epoch: [52]  [1/2]  eta: 0:00:24  lr: 0.000009  loss: 0.2161 (0.2209)  time: 24.4984  data: 23.9779  max mem: 18793
+[13:47:42.126713] Epoch: [52] Total time: 0:00:49 (24.5473 s / it)
+[13:47:42.127829] Averaged stats: lr: 0.000009  loss: 0.2161 (0.2209)
+[13:47:42.134269] log_dir: ./output_cryoppp
+[13:48:32.463800] Epoch: [53]  [0/2]  eta: 0:01:40  lr: 0.000009  loss: 0.2173 (0.2173)  time: 50.3270  data: 49.7975  max mem: 18793
+[13:48:32.977419] Epoch: [53]  [1/2]  eta: 0:00:25  lr: 0.000009  loss: 0.2173 (0.2179)  time: 25.4193  data: 24.8988  max mem: 18793
+[13:48:33.081200] Epoch: [53] Total time: 0:00:50 (25.4733 s / it)
+[13:48:33.081819] Averaged stats: lr: 0.000009  loss: 0.2173 (0.2179)
+[13:48:33.087429] log_dir: ./output_cryoppp
+[13:49:22.004180] Epoch: [54]  [0/2]  eta: 0:01:37  lr: 0.000009  loss: 0.2229 (0.2229)  time: 48.9147  data: 48.3902  max mem: 18793
+[13:49:22.510476] Epoch: [54]  [1/2]  eta: 0:00:24  lr: 0.000009  loss: 0.2223 (0.2226)  time: 24.7100  data: 24.1951  max mem: 18793
+[13:49:22.603213] Epoch: [54] Total time: 0:00:49 (24.7574 s / it)
+[13:49:22.603845] Averaged stats: lr: 0.000009  loss: 0.2223 (0.2226)
+[13:49:22.609299] log_dir: ./output_cryoppp
+[13:50:11.667592] Epoch: [55]  [0/2]  eta: 0:01:38  lr: 0.000009  loss: 0.2248 (0.2248)  time: 49.0564  data: 48.5287  max mem: 18793
+[13:50:12.176133] Epoch: [55]  [1/2]  eta: 0:00:24  lr: 0.000008  loss: 0.2141 (0.2195)  time: 24.7818  data: 24.2644  max mem: 18793
+[13:50:12.262071] Epoch: [55] Total time: 0:00:49 (24.8261 s / it)
+[13:50:12.262522] Averaged stats: lr: 0.000008  loss: 0.2141 (0.2195)
+[13:50:12.265763] log_dir: ./output_cryoppp
+[13:51:01.343312] Epoch: [56]  [0/2]  eta: 0:01:38  lr: 0.000008  loss: 0.2141 (0.2141)  time: 49.0759  data: 48.5536  max mem: 18793
+[13:51:01.850321] Epoch: [56]  [1/2]  eta: 0:00:24  lr: 0.000008  loss: 0.2141 (0.2161)  time: 24.7908  data: 24.2768  max mem: 18793
+[13:51:01.951548] Epoch: [56] Total time: 0:00:49 (24.8427 s / it)
+[13:51:01.952024] Averaged stats: lr: 0.000008  loss: 0.2141 (0.2161)
+[13:51:01.955862] log_dir: ./output_cryoppp
+[13:51:51.413539] Epoch: [57]  [0/2]  eta: 0:01:38  lr: 0.000008  loss: 0.2123 (0.2123)  time: 49.4560  data: 48.9339  max mem: 18793
+[13:51:51.918841] Epoch: [57]  [1/2]  eta: 0:00:24  lr: 0.000008  loss: 0.2094 (0.2108)  time: 24.9800  data: 24.4670  max mem: 18793
+[13:51:52.009873] Epoch: [57] Total time: 0:00:50 (25.0268 s / it)
+[13:51:52.010391] Averaged stats: lr: 0.000008  loss: 0.2094 (0.2108)
+[13:51:52.015049] log_dir: ./output_cryoppp
+[13:52:40.698865] Epoch: [58]  [0/2]  eta: 0:01:37  lr: 0.000008  loss: 0.2075 (0.2075)  time: 48.6825  data: 48.1641  max mem: 18793
+[13:52:41.214083] Epoch: [58]  [1/2]  eta: 0:00:24  lr: 0.000008  loss: 0.2075 (0.2113)  time: 24.5983  data: 24.0821  max mem: 18793
+[13:52:41.311028] Epoch: [58] Total time: 0:00:49 (24.6478 s / it)
+[13:52:41.311466] Averaged stats: lr: 0.000008  loss: 0.2075 (0.2113)
+[13:52:41.314567] log_dir: ./output_cryoppp
+[13:53:29.540778] Epoch: [59]  [0/2]  eta: 0:01:36  lr: 0.000008  loss: 0.2165 (0.2165)  time: 48.2247  data: 47.7037  max mem: 18793
+[13:53:30.177429] Epoch: [59]  [1/2]  eta: 0:00:24  lr: 0.000008  loss: 0.2058 (0.2111)  time: 24.4301  data: 23.9179  max mem: 18793
+[13:53:30.273378] Epoch: [59] Total time: 0:00:48 (24.4792 s / it)
+[13:53:30.274056] Averaged stats: lr: 0.000008  loss: 0.2058 (0.2111)
+[13:53:30.279724] log_dir: ./output_cryoppp
+[13:54:23.324291] Epoch: [60]  [0/2]  eta: 0:01:46  lr: 0.000008  loss: 0.2139 (0.2139)  time: 53.0425  data: 48.0961  max mem: 18793
+[13:54:23.829050] Epoch: [60]  [1/2]  eta: 0:00:26  lr: 0.000007  loss: 0.2139 (0.2148)  time: 26.7726  data: 24.0481  max mem: 18793
+[13:54:23.922628] Epoch: [60] Total time: 0:00:53 (26.8212 s / it)
+[13:54:24.296772] Averaged stats: lr: 0.000007  loss: 0.2139 (0.2148)
+[13:54:29.104206] log_dir: ./output_cryoppp
+[13:55:19.425371] Epoch: [61]  [0/2]  eta: 0:01:40  lr: 0.000007  loss: 0.2158 (0.2158)  time: 50.3195  data: 49.7918  max mem: 18793
+[13:55:19.929583] Epoch: [61]  [1/2]  eta: 0:00:25  lr: 0.000007  loss: 0.2061 (0.2110)  time: 25.4112  data: 24.8960  max mem: 18793
+[13:55:20.004219] Epoch: [61] Total time: 0:00:50 (25.4498 s / it)
+[13:55:20.004619] Averaged stats: lr: 0.000007  loss: 0.2061 (0.2110)
+[13:55:20.007524] log_dir: ./output_cryoppp
+[13:56:08.608575] Epoch: [62]  [0/2]  eta: 0:01:37  lr: 0.000007  loss: 0.2111 (0.2111)  time: 48.5996  data: 48.0739  max mem: 18793
+[13:56:09.125826] Epoch: [62]  [1/2]  eta: 0:00:24  lr: 0.000007  loss: 0.2078 (0.2094)  time: 24.5577  data: 24.0370  max mem: 18793
+[13:56:09.211659] Epoch: [62] Total time: 0:00:49 (24.6019 s / it)
+[13:56:09.212605] Averaged stats: lr: 0.000007  loss: 0.2078 (0.2094)
+[13:56:09.219042] log_dir: ./output_cryoppp
+[13:56:57.493127] Epoch: [63]  [0/2]  eta: 0:01:36  lr: 0.000007  loss: 0.2054 (0.2054)  time: 48.2721  data: 47.7486  max mem: 18793
+[13:56:58.110982] Epoch: [63]  [1/2]  eta: 0:00:24  lr: 0.000007  loss: 0.2030 (0.2042)  time: 24.4444  data: 23.9311  max mem: 18793
+[13:56:58.193584] Epoch: [63] Total time: 0:00:48 (24.4869 s / it)
+[13:56:58.194301] Averaged stats: lr: 0.000007  loss: 0.2030 (0.2042)
+[13:56:58.198853] log_dir: ./output_cryoppp
+[13:57:46.518287] Epoch: [64]  [0/2]  eta: 0:01:36  lr: 0.000007  loss: 0.2075 (0.2075)  time: 48.3180  data: 47.8014  max mem: 18793
+[13:57:47.024132] Epoch: [64]  [1/2]  eta: 0:00:24  lr: 0.000006  loss: 0.2075 (0.2103)  time: 24.4112  data: 23.9007  max mem: 18793
+[13:57:47.106611] Epoch: [64] Total time: 0:00:48 (24.4536 s / it)
+[13:57:47.107080] Averaged stats: lr: 0.000006  loss: 0.2075 (0.2103)
+[13:57:47.110710] log_dir: ./output_cryoppp
+[13:58:35.662173] Epoch: [65]  [0/2]  eta: 0:01:37  lr: 0.000006  loss: 0.2033 (0.2033)  time: 48.5500  data: 48.0306  max mem: 18793
+[13:58:36.178433] Epoch: [65]  [1/2]  eta: 0:00:24  lr: 0.000006  loss: 0.2010 (0.2021)  time: 24.5325  data: 24.0153  max mem: 18793
+[13:58:36.270080] Epoch: [65] Total time: 0:00:49 (24.5795 s / it)
+[13:58:36.270608] Averaged stats: lr: 0.000006  loss: 0.2010 (0.2021)
+[13:58:36.273782] log_dir: ./output_cryoppp
+[13:59:25.081918] Epoch: [66]  [0/2]  eta: 0:01:37  lr: 0.000006  loss: 0.2013 (0.2013)  time: 48.8066  data: 48.2884  max mem: 18793
+[13:59:25.596395] Epoch: [66]  [1/2]  eta: 0:00:24  lr: 0.000006  loss: 0.1955 (0.1984)  time: 24.6599  data: 24.1442  max mem: 18793
+[13:59:25.679365] Epoch: [66] Total time: 0:00:49 (24.7026 s / it)
+[13:59:25.679860] Averaged stats: lr: 0.000006  loss: 0.1955 (0.1984)
+[13:59:25.684582] log_dir: ./output_cryoppp
+[14:00:14.205713] Epoch: [67]  [0/2]  eta: 0:01:37  lr: 0.000006  loss: 0.2071 (0.2071)  time: 48.5190  data: 47.9980  max mem: 18793
+[14:00:14.708285] Epoch: [67]  [1/2]  eta: 0:00:24  lr: 0.000006  loss: 0.2062 (0.2066)  time: 24.5102  data: 23.9990  max mem: 18793
+[14:00:14.789455] Epoch: [67] Total time: 0:00:49 (24.5522 s / it)
+[14:00:14.789999] Averaged stats: lr: 0.000006  loss: 0.2062 (0.2066)
+[14:00:14.794836] log_dir: ./output_cryoppp
+[14:01:02.860589] Epoch: [68]  [0/2]  eta: 0:01:36  lr: 0.000006  loss: 0.2063 (0.2063)  time: 48.0643  data: 47.5458  max mem: 18793
+[14:01:04.465118] Epoch: [68]  [1/2]  eta: 0:00:24  lr: 0.000005  loss: 0.1984 (0.2023)  time: 24.8337  data: 24.3233  max mem: 18793
+[14:01:04.546321] Epoch: [68] Total time: 0:00:49 (24.8755 s / it)
+[14:01:04.547342] Averaged stats: lr: 0.000005  loss: 0.1984 (0.2023)
+[14:01:04.553965] log_dir: ./output_cryoppp
+[14:01:52.748095] Epoch: [69]  [0/2]  eta: 0:01:36  lr: 0.000005  loss: 0.1946 (0.1946)  time: 48.1914  data: 47.6700  max mem: 18793
+[14:01:53.281776] Epoch: [69]  [1/2]  eta: 0:00:24  lr: 0.000005  loss: 0.1946 (0.1975)  time: 24.3617  data: 23.8502  max mem: 18793
+[14:01:53.367633] Epoch: [69] Total time: 0:00:48 (24.4065 s / it)
+[14:01:53.368166] Averaged stats: lr: 0.000005  loss: 0.1946 (0.1975)
+[14:01:53.372179] log_dir: ./output_cryoppp
+[14:02:45.678277] Epoch: [70]  [0/2]  eta: 0:01:44  lr: 0.000005  loss: 0.2009 (0.2009)  time: 52.3048  data: 47.7526  max mem: 18793
+[14:02:46.183518] Epoch: [70]  [1/2]  eta: 0:00:26  lr: 0.000005  loss: 0.2009 (0.2012)  time: 26.4044  data: 23.8763  max mem: 18793
+[14:02:46.261659] Epoch: [70] Total time: 0:00:52 (26.4446 s / it)
+[14:02:46.513552] Averaged stats: lr: 0.000005  loss: 0.2009 (0.2012)
+[14:02:46.519475] log_dir: ./output_cryoppp
+[14:03:37.420110] Epoch: [71]  [0/2]  eta: 0:01:41  lr: 0.000005  loss: 0.2030 (0.2030)  time: 50.8991  data: 50.3816  max mem: 18793
+[14:03:37.926622] Epoch: [71]  [1/2]  eta: 0:00:25  lr: 0.000005  loss: 0.1987 (0.2008)  time: 25.7022  data: 25.1908  max mem: 18793
+[14:03:38.012444] Epoch: [71] Total time: 0:00:51 (25.7463 s / it)
+[14:03:38.012912] Averaged stats: lr: 0.000005  loss: 0.1987 (0.2008)
+[14:03:38.016301] log_dir: ./output_cryoppp
+[14:04:28.207811] Epoch: [72]  [0/2]  eta: 0:01:40  lr: 0.000004  loss: 0.1996 (0.1996)  time: 50.1893  data: 49.6625  max mem: 18793
+[14:04:30.065445] Epoch: [72]  [1/2]  eta: 0:00:26  lr: 0.000004  loss: 0.1959 (0.1978)  time: 26.0226  data: 25.5080  max mem: 18793
+[14:04:30.182609] Epoch: [72] Total time: 0:00:52 (26.0830 s / it)
+[14:04:30.183418] Averaged stats: lr: 0.000004  loss: 0.1959 (0.1978)
+[14:04:30.187488] log_dir: ./output_cryoppp
+[14:05:19.332378] Epoch: [73]  [0/2]  eta: 0:01:38  lr: 0.000004  loss: 0.2008 (0.2008)  time: 49.1436  data: 48.6247  max mem: 18793
+[14:05:19.849374] Epoch: [73]  [1/2]  eta: 0:00:24  lr: 0.000004  loss: 0.1982 (0.1995)  time: 24.8290  data: 24.3124  max mem: 18793
+[14:05:19.939016] Epoch: [73] Total time: 0:00:49 (24.8756 s / it)
+[14:05:19.939436] Averaged stats: lr: 0.000004  loss: 0.1982 (0.1995)
+[14:05:19.943730] log_dir: ./output_cryoppp
+[14:06:09.127578] Epoch: [74]  [0/2]  eta: 0:01:38  lr: 0.000004  loss: 0.1983 (0.1983)  time: 49.1823  data: 48.6561  max mem: 18793
+[14:06:09.632729] Epoch: [74]  [1/2]  eta: 0:00:24  lr: 0.000004  loss: 0.1973 (0.1978)  time: 24.8430  data: 24.3281  max mem: 18793
+[14:06:09.740429] Epoch: [74] Total time: 0:00:49 (24.8981 s / it)
+[14:06:09.741062] Averaged stats: lr: 0.000004  loss: 0.1973 (0.1978)
+[14:06:09.748189] log_dir: ./output_cryoppp
+[14:06:58.920483] Epoch: [75]  [0/2]  eta: 0:01:38  lr: 0.000004  loss: 0.1965 (0.1965)  time: 49.1689  data: 48.6440  max mem: 18793
+[14:06:59.425807] Epoch: [75]  [1/2]  eta: 0:00:24  lr: 0.000004  loss: 0.1965 (0.1985)  time: 24.8363  data: 24.3221  max mem: 18793
+[14:06:59.511984] Epoch: [75] Total time: 0:00:49 (24.8816 s / it)
+[14:06:59.512432] Averaged stats: lr: 0.000004  loss: 0.1965 (0.1985)
+[14:06:59.515699] log_dir: ./output_cryoppp
+[14:07:48.522681] Epoch: [76]  [0/2]  eta: 0:01:38  lr: 0.000003  loss: 0.1952 (0.1952)  time: 49.0053  data: 48.4889  max mem: 18793
+[14:07:49.188132] Epoch: [76]  [1/2]  eta: 0:00:24  lr: 0.000003  loss: 0.1939 (0.1945)  time: 24.8346  data: 24.3249  max mem: 18793
+[14:07:49.286607] Epoch: [76] Total time: 0:00:49 (24.8853 s / it)
+[14:07:49.287403] Averaged stats: lr: 0.000003  loss: 0.1939 (0.1945)
+[14:07:49.299212] log_dir: ./output_cryoppp
+[14:08:38.441777] Epoch: [77]  [0/2]  eta: 0:01:38  lr: 0.000003  loss: 0.1994 (0.1994)  time: 49.1396  data: 48.6127  max mem: 18793
+[14:08:38.951795] Epoch: [77]  [1/2]  eta: 0:00:24  lr: 0.000003  loss: 0.1994 (0.2003)  time: 24.8222  data: 24.3064  max mem: 18793
+[14:08:39.052065] Epoch: [77] Total time: 0:00:49 (24.8762 s / it)
+[14:08:39.052809] Averaged stats: lr: 0.000003  loss: 0.1994 (0.2003)
+[14:08:39.064703] log_dir: ./output_cryoppp
+[14:09:28.171280] Epoch: [78]  [0/2]  eta: 0:01:38  lr: 0.000003  loss: 0.1976 (0.1976)  time: 49.1043  data: 48.5877  max mem: 18793
+[14:09:28.688360] Epoch: [78]  [1/2]  eta: 0:00:24  lr: 0.000003  loss: 0.1976 (0.1983)  time: 24.8098  data: 24.2939  max mem: 18793
+[14:09:28.778629] Epoch: [78] Total time: 0:00:49 (24.8568 s / it)
+[14:09:28.779206] Averaged stats: lr: 0.000003  loss: 0.1976 (0.1983)
+[14:09:28.784326] log_dir: ./output_cryoppp
+[14:10:17.844988] Epoch: [79]  [0/2]  eta: 0:01:38  lr: 0.000003  loss: 0.2019 (0.2019)  time: 49.0589  data: 48.5384  max mem: 18793
+[14:10:18.362251] Epoch: [79]  [1/2]  eta: 0:00:24  lr: 0.000003  loss: 0.1898 (0.1958)  time: 24.7874  data: 24.2692  max mem: 18793
+[14:10:18.454513] Epoch: [79] Total time: 0:00:49 (24.8349 s / it)
+[14:10:18.454947] Averaged stats: lr: 0.000003  loss: 0.1898 (0.1958)
+[14:10:18.458240] log_dir: ./output_cryoppp
+[14:11:12.652765] Epoch: [80]  [0/2]  eta: 0:01:48  lr: 0.000003  loss: 0.1965 (0.1965)  time: 54.1930  data: 49.1642  max mem: 18793
+[14:11:13.157692] Epoch: [80]  [1/2]  eta: 0:00:27  lr: 0.000002  loss: 0.1965 (0.1970)  time: 27.3484  data: 24.5821  max mem: 18793
+[14:11:13.248486] Epoch: [80] Total time: 0:00:54 (27.3950 s / it)
+[14:11:13.603367] Averaged stats: lr: 0.000002  loss: 0.1965 (0.1970)
+[14:11:18.795489] log_dir: ./output_cryoppp
+[14:12:08.158772] Epoch: [81]  [0/2]  eta: 0:01:38  lr: 0.000002  loss: 0.2008 (0.2008)  time: 49.3605  data: 48.8248  max mem: 18793
+[14:12:08.667368] Epoch: [81]  [1/2]  eta: 0:00:24  lr: 0.000002  loss: 0.1929 (0.1969)  time: 24.9332  data: 24.4125  max mem: 18793
+[14:12:08.792774] Epoch: [81] Total time: 0:00:49 (24.9984 s / it)
+[14:12:08.793797] Averaged stats: lr: 0.000002  loss: 0.1929 (0.1969)
+[14:12:08.798872] log_dir: ./output_cryoppp
+[14:12:59.822094] Epoch: [82]  [0/2]  eta: 0:01:42  lr: 0.000002  loss: 0.2021 (0.2021)  time: 51.0215  data: 50.5030  max mem: 18793
+[14:13:00.336711] Epoch: [82]  [1/2]  eta: 0:00:25  lr: 0.000002  loss: 0.1973 (0.1997)  time: 25.7674  data: 25.2515  max mem: 18793
+[14:13:00.422121] Epoch: [82] Total time: 0:00:51 (25.8113 s / it)
+[14:13:00.422531] Averaged stats: lr: 0.000002  loss: 0.1973 (0.1997)
+[14:13:00.425654] log_dir: ./output_cryoppp
+[14:13:50.905880] Epoch: [83]  [0/2]  eta: 0:01:40  lr: 0.000002  loss: 0.1960 (0.1960)  time: 50.4786  data: 49.9571  max mem: 18793
+[14:13:51.410911] Epoch: [83]  [1/2]  eta: 0:00:25  lr: 0.000002  loss: 0.1960 (0.1969)  time: 25.4911  data: 24.9786  max mem: 18793
+[14:13:51.514310] Epoch: [83] Total time: 0:00:51 (25.5442 s / it)
+[14:13:51.515354] Averaged stats: lr: 0.000002  loss: 0.1960 (0.1969)
+[14:13:51.521332] log_dir: ./output_cryoppp
+[14:14:41.758079] Epoch: [84]  [0/2]  eta: 0:01:40  lr: 0.000002  loss: 0.1941 (0.1941)  time: 50.2353  data: 49.7149  max mem: 18793
+[14:14:42.272232] Epoch: [84]  [1/2]  eta: 0:00:25  lr: 0.000002  loss: 0.1941 (0.1956)  time: 25.3740  data: 24.8575  max mem: 18793
+[14:14:42.372743] Epoch: [84] Total time: 0:00:50 (25.4255 s / it)
+[14:14:42.373512] Averaged stats: lr: 0.000002  loss: 0.1941 (0.1956)
+[14:14:42.380063] log_dir: ./output_cryoppp
+[14:15:32.726479] Epoch: [85]  [0/2]  eta: 0:01:40  lr: 0.000001  loss: 0.1996 (0.1996)  time: 50.3446  data: 49.8235  max mem: 18793
+[14:15:33.269201] Epoch: [85]  [1/2]  eta: 0:00:25  lr: 0.000001  loss: 0.1908 (0.1952)  time: 25.4425  data: 24.9317  max mem: 18793
+[14:15:33.361327] Epoch: [85] Total time: 0:00:50 (25.4905 s / it)
+[14:15:33.362018] Averaged stats: lr: 0.000001  loss: 0.1908 (0.1952)
+[14:15:33.366679] log_dir: ./output_cryoppp
+[14:16:23.340179] Epoch: [86]  [0/2]  eta: 0:01:39  lr: 0.000001  loss: 0.1981 (0.1981)  time: 49.9713  data: 49.4530  max mem: 18793
+[14:16:24.113979] Epoch: [86]  [1/2]  eta: 0:00:25  lr: 0.000001  loss: 0.1976 (0.1979)  time: 25.3718  data: 24.8615  max mem: 18793
+[14:16:24.201458] Epoch: [86] Total time: 0:00:50 (25.4171 s / it)
+[14:16:24.201979] Averaged stats: lr: 0.000001  loss: 0.1976 (0.1979)
+[14:16:24.205461] log_dir: ./output_cryoppp
+[14:17:13.587832] Epoch: [87]  [0/2]  eta: 0:01:38  lr: 0.000001  loss: 0.1953 (0.1953)  time: 49.3804  data: 48.8582  max mem: 18793
+[14:17:14.321172] Epoch: [87]  [1/2]  eta: 0:00:25  lr: 0.000001  loss: 0.1948 (0.1950)  time: 25.0561  data: 24.5434  max mem: 18793
+[14:17:14.418569] Epoch: [87] Total time: 0:00:50 (25.1064 s / it)
+[14:17:14.419007] Averaged stats: lr: 0.000001  loss: 0.1948 (0.1950)
+[14:17:14.422789] log_dir: ./output_cryoppp
+[14:18:04.593087] Epoch: [88]  [0/2]  eta: 0:01:40  lr: 0.000001  loss: 0.1952 (0.1952)  time: 50.1687  data: 49.6520  max mem: 18793
+[14:18:05.100059] Epoch: [88]  [1/2]  eta: 0:00:25  lr: 0.000001  loss: 0.1952 (0.1980)  time: 25.3372  data: 24.8260  max mem: 18793
+[14:18:05.199154] Epoch: [88] Total time: 0:00:50 (25.3880 s / it)
+[14:18:05.200146] Averaged stats: lr: 0.000001  loss: 0.1952 (0.1980)
+[14:18:05.205532] log_dir: ./output_cryoppp
+[14:18:55.065483] Epoch: [89]  [0/2]  eta: 0:01:39  lr: 0.000001  loss: 0.1956 (0.1956)  time: 49.8580  data: 49.3398  max mem: 18793
+[14:18:55.581046] Epoch: [89]  [1/2]  eta: 0:00:25  lr: 0.000001  loss: 0.1956 (0.1969)  time: 25.1862  data: 24.6760  max mem: 18793
+[14:18:55.665160] Epoch: [89] Total time: 0:00:50 (25.2296 s / it)
+[14:18:55.665564] Averaged stats: lr: 0.000001  loss: 0.1956 (0.1969)
+[14:18:55.668641] log_dir: ./output_cryoppp
+[14:19:49.360496] Epoch: [90]  [0/2]  eta: 0:01:47  lr: 0.000001  loss: 0.1935 (0.1935)  time: 53.6906  data: 49.0252  max mem: 18793
+[14:19:49.865404] Epoch: [90]  [1/2]  eta: 0:00:27  lr: 0.000001  loss: 0.1935 (0.1940)  time: 27.0970  data: 24.5127  max mem: 18793
+[14:19:49.957397] Epoch: [90] Total time: 0:00:54 (27.1442 s / it)
+[14:19:50.224139] Averaged stats: lr: 0.000001  loss: 0.1935 (0.1940)
+[14:19:50.231863] log_dir: ./output_cryoppp
+[14:20:40.222957] Epoch: [91]  [0/2]  eta: 0:01:39  lr: 0.000001  loss: 0.1945 (0.1945)  time: 49.9892  data: 49.4690  max mem: 18793
+[14:20:40.847030] Epoch: [91]  [1/2]  eta: 0:00:25  lr: 0.000000  loss: 0.1945 (0.1963)  time: 25.3059  data: 24.7947  max mem: 18793
+[14:20:40.927185] Epoch: [91] Total time: 0:00:50 (25.3475 s / it)
+[14:20:40.927997] Averaged stats: lr: 0.000000  loss: 0.1945 (0.1963)
+[14:20:40.933276] log_dir: ./output_cryoppp
+[14:21:30.350998] Epoch: [92]  [0/2]  eta: 0:01:38  lr: 0.000000  loss: 0.1980 (0.1980)  time: 49.4154  data: 48.8967  max mem: 18793
+[14:21:30.978792] Epoch: [92]  [1/2]  eta: 0:00:25  lr: 0.000000  loss: 0.1877 (0.1928)  time: 25.0207  data: 24.5066  max mem: 18793
+[14:21:31.054427] Epoch: [92] Total time: 0:00:50 (25.0604 s / it)
+[14:21:31.054879] Averaged stats: lr: 0.000000  loss: 0.1877 (0.1928)
+[14:21:31.058157] log_dir: ./output_cryoppp
+[14:22:19.992426] Epoch: [93]  [0/2]  eta: 0:01:37  lr: 0.000000  loss: 0.1968 (0.1968)  time: 48.9324  data: 48.4093  max mem: 18793
+[14:22:20.830405] Epoch: [93]  [1/2]  eta: 0:00:24  lr: 0.000000  loss: 0.1951 (0.1960)  time: 24.8844  data: 24.3714  max mem: 18793
+[14:22:20.911976] Epoch: [93] Total time: 0:00:49 (24.9268 s / it)
+[14:22:20.912500] Averaged stats: lr: 0.000000  loss: 0.1951 (0.1960)
+[14:22:20.915709] log_dir: ./output_cryoppp
+[14:23:09.912174] Epoch: [94]  [0/2]  eta: 0:01:37  lr: 0.000000  loss: 0.1939 (0.1939)  time: 48.9943  data: 48.4709  max mem: 18793
+[14:23:10.527809] Epoch: [94]  [1/2]  eta: 0:00:24  lr: 0.000000  loss: 0.1854 (0.1897)  time: 24.8042  data: 24.2913  max mem: 18793
+[14:23:10.609652] Epoch: [94] Total time: 0:00:49 (24.8468 s / it)
+[14:23:10.610073] Averaged stats: lr: 0.000000  loss: 0.1854 (0.1897)
+[14:23:10.613195] log_dir: ./output_cryoppp
+[14:23:59.759495] Epoch: [95]  [0/2]  eta: 0:01:38  lr: 0.000000  loss: 0.1993 (0.1993)  time: 49.1446  data: 48.6215  max mem: 18793
+[14:24:00.531316] Epoch: [95]  [1/2]  eta: 0:00:24  lr: 0.000000  loss: 0.1938 (0.1965)  time: 24.9575  data: 24.4452  max mem: 18793
+[14:24:00.634253] Epoch: [95] Total time: 0:00:50 (25.0104 s / it)
+[14:24:00.634917] Averaged stats: lr: 0.000000  loss: 0.1938 (0.1965)
+[14:24:00.640387] log_dir: ./output_cryoppp
+[14:24:50.584658] Epoch: [96]  [0/2]  eta: 0:01:39  lr: 0.000000  loss: 0.1981 (0.1981)  time: 49.9416  data: 49.4186  max mem: 18793
+[14:24:51.088937] Epoch: [96]  [1/2]  eta: 0:00:25  lr: 0.000000  loss: 0.1906 (0.1943)  time: 25.2219  data: 24.7094  max mem: 18793
+[14:24:51.164502] Epoch: [96] Total time: 0:00:50 (25.2618 s / it)
+[14:24:51.165115] Averaged stats: lr: 0.000000  loss: 0.1906 (0.1943)
+[14:24:51.169549] log_dir: ./output_cryoppp
+[14:25:40.629488] Epoch: [97]  [0/2]  eta: 0:01:38  lr: 0.000000  loss: 0.1972 (0.1972)  time: 49.4581  data: 48.9352  max mem: 18793
+[14:25:41.136026] Epoch: [97]  [1/2]  eta: 0:00:24  lr: 0.000000  loss: 0.1936 (0.1954)  time: 24.9816  data: 24.4676  max mem: 18793
+[14:25:41.214703] Epoch: [97] Total time: 0:00:50 (25.0224 s / it)
+[14:25:41.215111] Averaged stats: lr: 0.000000  loss: 0.1936 (0.1954)
+[14:25:41.220131] log_dir: ./output_cryoppp
+[14:26:29.826279] Epoch: [98]  [0/2]  eta: 0:01:37  lr: 0.000000  loss: 0.1900 (0.1900)  time: 48.6040  data: 48.0832  max mem: 18793
+[14:26:30.461544] Epoch: [98]  [1/2]  eta: 0:00:24  lr: 0.000000  loss: 0.1900 (0.1930)  time: 24.6190  data: 24.1068  max mem: 18793
+[14:26:30.538868] Epoch: [98] Total time: 0:00:49 (24.6591 s / it)
+[14:26:30.539295] Averaged stats: lr: 0.000000  loss: 0.1900 (0.1930)
+[14:26:30.543149] log_dir: ./output_cryoppp
+wandb:                                                                                
+wandb: 
+wandb: Run history:
+wandb:      epoch ▁▁▁▂▂▂▂▂▃▃▃▃▃▃▄▄▄▄▅▅▅▅▅▅▅▅▆▆▆▆▇▇▇▇▇▇▇▇██
+wandb:         lr ▁▁▁▁▂▃▄▅▅▅▆▆▇▇██████▇▇▇▆▆▆▆▅▅▄▃▃▃▂▂▂▂▂▁▁
+wandb: train_loss █▇▇▇▆▄▄▃▃▃▂▂▂▂▂▂▂▂▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+wandb:   train_lr ▁▁▂▂▂▃▃▄▅▆▆▆▇▇██████▇▇▇▇▇▆▅▅▅▄▄▃▃▃▂▂▂▂▁▁
+wandb: 
+wandb: Run summary:
+wandb:      epoch 99
+wandb:         lr 0.0
+wandb: train_loss 0.19622
+wandb:   train_lr 0.0
+wandb: 
+wandb: 🚀 View run run_20250514_125659 at: https://wandb.ai/riku359-keio-university-global-page/2dmae_cryoppp-random-crop-preprocess/runs/irdyvdts
+wandb: ⭐️ View project at: https://wandb.ai/riku359-keio-university-global-page/2dmae_cryoppp-random-crop-preprocess
+wandb: Synced 5 W&B file(s), 60 media file(s), 0 artifact file(s) and 0 other file(s)
+wandb: Find logs at: ./wandb/run-20250514_125658-irdyvdts/logs
+[14:27:19.667444] Epoch: [99]  [0/2]  eta: 0:01:38  lr: 0.000000  loss: 0.1932 (0.1932)  time: 49.1228  data: 48.6004  max mem: 18793
+[14:27:20.195915] Epoch: [99]  [1/2]  eta: 0:00:24  lr: 0.000000  loss: 0.1932 (0.1962)  time: 24.8243  data: 24.3081  max mem: 18793
+[14:27:20.281079] Epoch: [99] Total time: 0:00:49 (24.8688 s / it)
+[14:27:20.281723] Averaged stats: lr: 0.000000  loss: 0.1932 (0.1962)
+[14:27:24.902581] Training time 1:24:22
+/mnt/ssd1/riku/mae/.venv/lib/python3.10/site-packages/timm/optim/optim_factory.py:7: FutureWarning: Importing from timm.optim.optim_factory is deprecated, please import via timm.optim
+  warnings.warn(f"Importing from {__name__} is deprecated, please import via timm.optim", FutureWarning)
+wandb: Currently logged in as: riku359 (riku359-keio-university-global-page) to https://api.wandb.ai. Use `wandb login --relogin` to force relogin
+wandb: Tracking run with wandb version 0.19.10
+wandb: Run data is saved locally in /mnt/ssd1/riku/mae/wandb/run-20250514_142732-iqkys21j
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run rose-haze-11
+wandb: ⭐️ View project at https://wandb.ai/riku359-keio-university-global-page/2dmae_cryoppp-random-crop-preprocess
+wandb: 🚀 View run at https://wandb.ai/riku359-keio-university-global-page/2dmae_cryoppp-random-crop-preprocess/runs/iqkys21j
+Not using distributed mode
+[14:27:32.833322] job dir: /mnt/ssd1/riku/mae
+[14:27:32.833625] Namespace(batch_size=256,
+epochs=100,
+accum_iter=1,
+model='mae_vit_base_patch16',
+mask_ratio=0.25,
+norm_pix_loss=False,
+weight_decay=0.05,
+lr=1e-05,
+blr=0.001,
+min_lr=0.0,
+warmup_epochs=40,
+root_path='../../../ssd2/riku/cryoppp/',
+data_ids=['10077'],
+output_dir='./output_cryoppp',
+log_dir='./output_cryoppp',
+device='cuda',
+seed=0,
+resume='',
+start_epoch=0,
+num_workers=10,
+pin_mem=True,
+world_size=1,
+local_rank=-1,
+dist_on_itp=False,
+dist_url='env://',
+distributed=False)
+[14:33:23.026673] <torch.utils.data.dataset.ConcatDataset object at 0x7f9126cc62c0>
+[14:33:25.354300] Model = MaskedAutoencoderViT(
+  (patch_embed): PatchEmbed(
+    (proj): Conv2d(3, 768, kernel_size=(16, 16), stride=(16, 16))
+    (norm): Identity()
+  )
+  (blocks): ModuleList(
+    (0-11): 12 x Block(
+      (norm1): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+      (attn): Attention(
+        (qkv): Linear(in_features=768, out_features=2304, bias=True)
+        (q_norm): Identity()
+        (k_norm): Identity()
+        (attn_drop): Dropout(p=0.0, inplace=False)
+        (proj): Linear(in_features=768, out_features=768, bias=True)
+        (proj_drop): Dropout(p=0.0, inplace=False)
+      )
+      (ls1): Identity()
+      (drop_path1): Identity()
+      (norm2): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+      (mlp): Mlp(
+        (fc1): Linear(in_features=768, out_features=3072, bias=True)
+        (act): GELU(approximate='none')
+        (drop1): Dropout(p=0.0, inplace=False)
+        (norm): Identity()
+        (fc2): Linear(in_features=3072, out_features=768, bias=True)
+        (drop2): Dropout(p=0.0, inplace=False)
+      )
+      (ls2): Identity()
+      (drop_path2): Identity()
+    )
+  )
+  (norm): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+  (decoder_embed): Linear(in_features=768, out_features=512, bias=True)
+  (decoder_blocks): ModuleList(
+    (0-7): 8 x Block(
+      (norm1): LayerNorm((512,), eps=1e-06, elementwise_affine=True)
+      (attn): Attention(
+        (qkv): Linear(in_features=512, out_features=1536, bias=True)
+        (q_norm): Identity()
+        (k_norm): Identity()
+        (attn_drop): Dropout(p=0.0, inplace=False)
+        (proj): Linear(in_features=512, out_features=512, bias=True)
+        (proj_drop): Dropout(p=0.0, inplace=False)
+      )
+      (ls1): Identity()
+      (drop_path1): Identity()
+      (norm2): LayerNorm((512,), eps=1e-06, elementwise_affine=True)
+      (mlp): Mlp(
+        (fc1): Linear(in_features=512, out_features=2048, bias=True)
+        (act): GELU(approximate='none')
+        (drop1): Dropout(p=0.0, inplace=False)
+        (norm): Identity()
+        (fc2): Linear(in_features=2048, out_features=512, bias=True)
+        (drop2): Dropout(p=0.0, inplace=False)
+      )
+      (ls2): Identity()
+      (drop_path2): Identity()
+    )
+  )
+  (decoder_norm): LayerNorm((512,), eps=1e-06, elementwise_affine=True)
+  (decoder_pred): Linear(in_features=512, out_features=768, bias=True)
+)
+[14:33:25.354721] base lr: 1.00e-05
+[14:33:25.354970] actual lr: 1.00e-05
+[14:33:25.355176] accumulate grad iterations: 1
+[14:33:25.355342] effective batch size: 256
+[14:33:25.357184] AdamW (
+Parameter Group 0
+    amsgrad: False
+    betas: (0.9, 0.95)
+    capturable: False
+    differentiable: False
+    eps: 1e-08
+    foreach: None
+    fused: None
+    lr: 1e-05
+    maximize: False
+    weight_decay: 0.05
+
+Parameter Group 1
+    amsgrad: False
+    betas: (0.9, 0.95)
+    capturable: False
+    differentiable: False
+    eps: 1e-08
+    foreach: None
+    fused: None
+    lr: 1e-05
+    maximize: False
+    weight_decay: 0.0
+)
+[14:33:25.357504] Start training for 100 epochs
+[14:33:25.359321] log_dir: ./output_cryoppp
+/mnt/ssd1/riku/mae/engine_pretrain.py:47: UserWarning: To copy construct from a tensor, it is recommended to use sourceTensor.clone().detach() or sourceTensor.clone().detach().requires_grad_(True), rather than torch.tensor(sourceTensor).
+  x = torch.tensor(img)
+[14:34:19.228864] Epoch: [0]  [0/2]  eta: 0:01:47  lr: 0.000000  loss: 1.1106 (1.1106)  time: 53.8684  data: 47.4508  max mem: 22041
+[14:34:20.172467] Epoch: [0]  [1/2]  eta: 0:00:27  lr: 0.000000  loss: 1.1052 (1.1079)  time: 27.4054  data: 23.7254  max mem: 22904
+[14:34:20.229217] Epoch: [0] Total time: 0:00:54 (27.4348 s / it)
+[14:34:20.844707] Averaged stats: lr: 0.000000  loss: 1.1052 (1.1079)
+[14:34:25.581241] log_dir: ./output_cryoppp
+[14:35:14.338489] Epoch: [1]  [0/2]  eta: 0:01:37  lr: 0.000000  loss: 1.1053 (1.1053)  time: 48.7560  data: 48.0007  max mem: 22904
+[14:35:15.002665] Epoch: [1]  [1/2]  eta: 0:00:24  lr: 0.000000  loss: 1.0980 (1.1016)  time: 24.7095  data: 24.0004  max mem: 22904
+[14:35:15.069958] Epoch: [1] Total time: 0:00:49 (24.7442 s / it)
+[14:35:15.070994] Averaged stats: lr: 0.000000  loss: 1.0980 (1.1016)
+[14:35:15.075441] log_dir: ./output_cryoppp
+[14:36:04.249879] Epoch: [2]  [0/2]  eta: 0:01:38  lr: 0.000001  loss: 1.0851 (1.0851)  time: 49.1726  data: 48.4916  max mem: 22904
+[14:36:04.970030] Epoch: [2]  [1/2]  eta: 0:00:24  lr: 0.000001  loss: 1.0747 (1.0799)  time: 24.9456  data: 24.2880  max mem: 22904
+[14:36:05.034879] Epoch: [2] Total time: 0:00:49 (24.9795 s / it)
+[14:36:05.035811] Averaged stats: lr: 0.000001  loss: 1.0747 (1.0799)
+[14:36:05.041178] log_dir: ./output_cryoppp
+Traceback (most recent call last):
+  File "/mnt/ssd1/riku/mae/main_pretrain_cryoppp.py", line 272, in <module>
+    main(args)
+  File "/mnt/ssd1/riku/mae/main_pretrain_cryoppp.py", line 230, in main
+    train_stats = train_one_epoch(
+  File "/mnt/ssd1/riku/mae/engine_pretrain.py", line 149, in train_one_epoch
+    loss_scaler(loss, optimizer, parameters=model.parameters(),
+  File "/mnt/ssd1/riku/mae/util/misc.py", line 258, in __call__
+    self._scaler.scale(loss).backward(create_graph=create_graph)
+  File "/mnt/ssd1/riku/mae/.venv/lib/python3.10/site-packages/torch/_tensor.py", line 487, in backward
+    torch.autograd.backward(
+  File "/mnt/ssd1/riku/mae/.venv/lib/python3.10/site-packages/torch/autograd/__init__.py", line 200, in backward
+    Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+torch.cuda.OutOfMemoryError: CUDA out of memory. Tried to allocate 148.00 MiB (GPU 0; 23.58 GiB total capacity; 22.21 GiB already allocated; 48.06 MiB free; 23.22 GiB reserved in total by PyTorch) If reserved memory is >> allocated memory try setting max_split_size_mb to avoid fragmentation.  See documentation for Memory Management and PYTORCH_CUDA_ALLOC_CONF
+[1;34mwandb[0m: 
+[1;34mwandb[0m: 🚀 View run [33mrose-haze-11[0m at: [34mhttps://wandb.ai/riku359-keio-university-global-page/2dmae_cryoppp-random-crop-preprocess/runs/iqkys21j[0m
+[1;34mwandb[0m: Find logs at: [1;35mwandb/run-20250514_142732-iqkys21j/logs[0m
+[14:36:53.579233] [14:36:53.580725] [14:36:53.581552] [14:36:53.582264] [14:36:53.582930] [14:36:53.583449] [14:36:53.583978] [14:36:53.584312] /mnt/ssd1/riku/mae/.venv/lib/python3.10/site-packages/timm/optim/optim_factory.py:7: FutureWarning: Importing from timm.optim.optim_factory is deprecated, please import via timm.optim
+  warnings.warn(f"Importing from {__name__} is deprecated, please import via timm.optim", FutureWarning)
+wandb: Currently logged in as: riku359 (riku359-keio-university-global-page) to https://api.wandb.ai. Use `wandb login --relogin` to force relogin
+wandb: Tracking run with wandb version 0.19.10
+wandb: Run data is saved locally in /mnt/ssd1/riku/mae/wandb/run-20250514_143700-tg0k7j3v
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run copper-vortex-12
+wandb: ⭐️ View project at https://wandb.ai/riku359-keio-university-global-page/2dmae_cryoppp-random-crop-preprocess
+wandb: 🚀 View run at https://wandb.ai/riku359-keio-university-global-page/2dmae_cryoppp-random-crop-preprocess/runs/tg0k7j3v
+Not using distributed mode
+[14:37:01.100220] job dir: /mnt/ssd1/riku/mae
+[14:37:01.100650] Namespace(batch_size=256,
+epochs=100,
+accum_iter=1,
+model='mae_vit_base_patch16',
+mask_ratio=0.0,
+norm_pix_loss=False,
+weight_decay=0.05,
+lr=1e-05,
+blr=0.001,
+min_lr=0.0,
+warmup_epochs=40,
+root_path='../../../ssd2/riku/cryoppp/',
+data_ids=['10077'],
+output_dir='./output_cryoppp',
+log_dir='./output_cryoppp',
+device='cuda',
+seed=0,
+resume='',
+start_epoch=0,
+num_workers=10,
+pin_mem=True,
+world_size=1,
+local_rank=-1,
+dist_on_itp=False,
+dist_url='env://',
+distributed=False)
+[14:42:55.856494] <torch.utils.data.dataset.ConcatDataset object at 0x7fb70fa08fd0>
+[14:42:58.233244] Model = MaskedAutoencoderViT(
+  (patch_embed): PatchEmbed(
+    (proj): Conv2d(3, 768, kernel_size=(16, 16), stride=(16, 16))
+    (norm): Identity()
+  )
+  (blocks): ModuleList(
+    (0-11): 12 x Block(
+      (norm1): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+      (attn): Attention(
+        (qkv): Linear(in_features=768, out_features=2304, bias=True)
+        (q_norm): Identity()
+        (k_norm): Identity()
+        (attn_drop): Dropout(p=0.0, inplace=False)
+        (proj): Linear(in_features=768, out_features=768, bias=True)
+        (proj_drop): Dropout(p=0.0, inplace=False)
+      )
+      (ls1): Identity()
+      (drop_path1): Identity()
+      (norm2): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+      (mlp): Mlp(
+        (fc1): Linear(in_features=768, out_features=3072, bias=True)
+        (act): GELU(approximate='none')
+        (drop1): Dropout(p=0.0, inplace=False)
+        (norm): Identity()
+        (fc2): Linear(in_features=3072, out_features=768, bias=True)
+        (drop2): Dropout(p=0.0, inplace=False)
+      )
+      (ls2): Identity()
+      (drop_path2): Identity()
+    )
+  )
+  (norm): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+  (decoder_embed): Linear(in_features=768, out_features=512, bias=True)
+  (decoder_blocks): ModuleList(
+    (0-7): 8 x Block(
+      (norm1): LayerNorm((512,), eps=1e-06, elementwise_affine=True)
+      (attn): Attention(
+        (qkv): Linear(in_features=512, out_features=1536, bias=True)
+        (q_norm): Identity()
+        (k_norm): Identity()
+        (attn_drop): Dropout(p=0.0, inplace=False)
+        (proj): Linear(in_features=512, out_features=512, bias=True)
+        (proj_drop): Dropout(p=0.0, inplace=False)
+      )
+      (ls1): Identity()
+      (drop_path1): Identity()
+      (norm2): LayerNorm((512,), eps=1e-06, elementwise_affine=True)
+      (mlp): Mlp(
+        (fc1): Linear(in_features=512, out_features=2048, bias=True)
+        (act): GELU(approximate='none')
+        (drop1): Dropout(p=0.0, inplace=False)
+        (norm): Identity()
+        (fc2): Linear(in_features=2048, out_features=512, bias=True)
+        (drop2): Dropout(p=0.0, inplace=False)
+      )
+      (ls2): Identity()
+      (drop_path2): Identity()
+    )
+  )
+  (decoder_norm): LayerNorm((512,), eps=1e-06, elementwise_affine=True)
+  (decoder_pred): Linear(in_features=512, out_features=768, bias=True)
+)
+[14:42:58.233643] base lr: 1.00e-05
+[14:42:58.233880] actual lr: 1.00e-05
+[14:42:58.234141] accumulate grad iterations: 1
+[14:42:58.234330] effective batch size: 256
+[14:42:58.236153] AdamW (
+Parameter Group 0
+    amsgrad: False
+    betas: (0.9, 0.95)
+    capturable: False
+    differentiable: False
+    eps: 1e-08
+    foreach: None
+    fused: None
+    lr: 1e-05
+    maximize: False
+    weight_decay: 0.05
+
+Parameter Group 1
+    amsgrad: False
+    betas: (0.9, 0.95)
+    capturable: False
+    differentiable: False
+    eps: 1e-08
+    foreach: None
+    fused: None
+    lr: 1e-05
+    maximize: False
+    weight_decay: 0.0
+)
+[14:42:58.236477] Start training for 100 epochs
+[14:42:58.238320] log_dir: ./output_cryoppp
+Traceback (most recent call last):
+  File "/mnt/ssd1/riku/mae/main_pretrain_cryoppp.py", line 272, in <module>
+    main(args)
+  File "/mnt/ssd1/riku/mae/main_pretrain_cryoppp.py", line 230, in main
+    train_stats = train_one_epoch(
+  File "/mnt/ssd1/riku/mae/engine_pretrain.py", line 125, in train_one_epoch
+    loss, y, mask = model(inputs, targets, mask_ratio=args.mask_ratio)
+  File "/mnt/ssd1/riku/mae/.venv/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1501, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/mnt/ssd1/riku/mae/models_mae.py", line 296, in forward
+    pred = self.forward_decoder(latent, ids_restore)  # [N, L, p*p*3]
+  File "/mnt/ssd1/riku/mae/models_mae.py", line 261, in forward_decoder
+    x = blk(x)
+  File "/mnt/ssd1/riku/mae/.venv/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1501, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/mnt/ssd1/riku/mae/.venv/lib/python3.10/site-packages/timm/models/vision_transformer.py", line 170, in forward
+    x = x + self.drop_path2(self.ls2(self.mlp(self.norm2(x))))
+  File "/mnt/ssd1/riku/mae/.venv/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1501, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/mnt/ssd1/riku/mae/.venv/lib/python3.10/site-packages/timm/layers/mlp.py", line 44, in forward
+    x = self.fc1(x)
+  File "/mnt/ssd1/riku/mae/.venv/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1501, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/mnt/ssd1/riku/mae/.venv/lib/python3.10/site-packages/torch/nn/modules/linear.py", line 114, in forward
+    return F.linear(input, self.weight, self.bias)
+torch.cuda.OutOfMemoryError: CUDA out of memory. Tried to allocate 198.00 MiB (GPU 0; 23.58 GiB total capacity; 23.22 GiB already allocated; 54.06 MiB free; 23.24 GiB reserved in total by PyTorch) If reserved memory is >> allocated memory try setting max_split_size_mb to avoid fragmentation.  See documentation for Memory Management and PYTORCH_CUDA_ALLOC_CONF
+[1;34mwandb[0m: 
+[1;34mwandb[0m: 🚀 View run [33mcopper-vortex-12[0m at: [34mhttps://wandb.ai/riku359-keio-university-global-page/2dmae_cryoppp-random-crop-preprocess/runs/tg0k7j3v[0m
+[1;34mwandb[0m: Find logs at: [1;35mwandb/run-20250514_143700-tg0k7j3v/logs[0m
+[14:43:46.654373] [14:43:46.655188] [14:43:46.655616] [14:43:46.655951] [14:43:46.656320] [14:43:46.656689] [14:43:46.657073] [14:43:46.657455] [14:43:46.657805] [14:43:46.658180] [14:43:46.658533] [14:43:46.658879] [14:43:46.659257] [14:43:46.659662] 
