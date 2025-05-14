@@ -52,9 +52,6 @@ def get_args_parser():
     parser.add_argument('--model', default='mae_vit_base_patch16', type=str, metavar='MODEL',
                         help='Name of model to train')
 
-    parser.add_argument('--input_size', default=32, type=int,
-                        help='images input size')
-
     parser.add_argument('--mask_ratio', default=0.75, type=float,
                         help='Masking ratio (percentage of removed patches).')
 
@@ -116,7 +113,7 @@ def main(args):
 
     # wandbの初期化
     if misc.is_main_process():
-        wandb.init(project="2dmae_cryoppp", config=vars(args))
+        wandb.init(project="2dmae_cryoppp-random-crop-preprocess", config=vars(args))
         wandb.run.name = f"run_{datetime.datetime.now().strftime('%Y%m%d_%H%M%S')}"
 
     print('job dir: {}'.format(os.path.dirname(os.path.realpath(__file__))))
@@ -133,12 +130,12 @@ def main(args):
 
     # simple augmentation
     transform = transforms.Compose([
-            transforms.Resize(224), # Resize to 224 for MAE
-            transforms.RandomResizedCrop(224, scale=(0.2, 1.0), interpolation=3),  # 3 is bicubic
-            transforms.RandomHorizontalFlip(),
-            transforms.ToTensor(),
-            # transforms.Normalize([0.4914, 0.4822, 0.4465], [0.2470, 0.2435, 0.2616]) # CIFAR-10 mean and std
-        ])
+        transforms.RandomResizedCrop(224, scale=(1/16, 1/4)),
+        transforms.RandomHorizontalFlip(),
+        transforms.RandomVerticalFlip(),
+        transforms.ToTensor(),
+        # NormalizeはDataset側で元画像のmean, stdを使って適用
+    ])
 
     if args.data_ids == ['all']:
         args.data_ids = [
@@ -148,11 +145,18 @@ def main(args):
             '10059', '10093', '10291', '10444', '10669', '10852', '11183',
             '10061', '10096', '10345', '10526', '10671', '10947'
         ] # 10389は構造が違って面倒なので一旦除外
+    else:
+        if isinstance(args.data_ids, int):
+            args.data_ids = [str(args.data_ids)]
+        else:
+            args.data_ids = [str(data_id) for data_id in args.data_ids]
 
     dataset_paths = [os.path.join(args.root_path, data_id) for data_id in args.data_ids]
+    # num_crops = 16  # 1エポックで各画像を何回サンプリングするか
+    num_crops = 2  # とりあえず2回
     datasets = []
     for path in dataset_paths:
-        datasets.append(CryoPPPDataset(os.path.join(path, 'micrographs'), transform=transform))
+        datasets.extend([CryoPPPDataset(os.path.join(path, 'micrographs'), transform=transform)] * num_crops)
     dataset = torch.utils.data.ConcatDataset(datasets)
     print(dataset)
 
