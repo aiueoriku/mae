@@ -8,14 +8,19 @@ from torchvision.transforms.functional import resize
 from tqdm import tqdm
 
 class CryoPPPDataset(Dataset):
-    def __init__(self, root_dir, transform=None):
+    def __init__(self, root_dir, particle_csv_root, transform=None):
         self.root_dir = root_dir
         self.transform = transform
+        self.particle_csv_root = particle_csv_root
         self.image_patches = []
 
         # micrographsディレクトリと対応するground_truth/particle_coordinatesディレクトリを取得
         micrographs_dir = root_dir
-        csv_dir = os.path.join(os.path.dirname(root_dir), 'ground_truth', 'particle_coordinates')
+        csv_dir = self.particle_csv_root
+        csv_dir = os.path.join(csv_dir, 'ground_truth', 'particle_coordinates')
+        
+        # import pdb; pdb.set_trace()
+        
         # micrographs内の画像ファイル一覧
         image_files = sorted([f for f in os.listdir(micrographs_dir) if f.lower().endswith(('.jpg', '.jpeg', '.png'))])
         # csvファイル一覧
@@ -42,7 +47,6 @@ class CryoPPPDataset(Dataset):
                     lower = min(lower, image.height)
                     patch = image.crop((left, upper, right, lower))
                     self.image_patches.append(patch)
-                    import pdb; p = pdb.Pdb(); p.set_trace()
         print(f"Loaded {len(self.image_patches)} particles from {len(image_files)} images.")
         
     def __len__(self):

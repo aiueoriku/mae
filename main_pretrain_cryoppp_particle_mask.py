@@ -74,8 +74,10 @@ def get_args_parser():
                         help='epochs to warmup LR')
 
     # Dataset parameters
-    parser.add_argument('--root_path',default='../../../ssd2/riku/cryoppp/', type=str,
-                        help='Root path for datasets')
+    parser.add_argument('--micrograph_root', default='../../../ssd2/riku/cryoppp/', type=str,
+                        help='Root path for micrograph images')
+    parser.add_argument('--particle_csv_root', default='../../../ssd2/riku/cryoppp/', type=str,
+                        help='Root path for particle CSVs')
     parser.add_argument('--data_ids', type=str, nargs='+', default=10005,
                         help='List of dataset IDs to use (e.g., 10005 10075). Use "all" to include all datasets.')
 
@@ -104,6 +106,11 @@ def get_args_parser():
     parser.add_argument('--dist_on_itp', action='store_true')
     parser.add_argument('--dist_url', default='env://',
                         help='url used to set up distributed training')
+    
+    # Denoise option (bool)
+    parser.add_argument('--denoise', action='store_true',
+                        help='Use denoising model')
+    parser.set_defaults(denoise=False)
 
     return parser
 
@@ -151,11 +158,24 @@ def main(args):
         else:
             args.data_ids = [str(data_id) for data_id in args.data_ids]
 
-    dataset_paths = [os.path.join(args.root_path, data_id) for data_id in args.data_ids]
-    datasets = []
-    for path in dataset_paths:
-        datasets.append(CryoPPPDataset(os.path.join(path, 'micrographs'), transform=transform))
-    dataset = torch.utils.data.ConcatDataset(datasets)
+    # データセットの読み込みをdenoiseオプションで分岐
+    if args.denoise:
+        micrograph_root = "../cryoppp_denoised"
+        particle_csv_root = args.particle_csv_root
+        dataset_paths = [os.path.join(micrograph_root, data_id) for data_id in args.data_ids] # ['../cryoppp_denoised/10005']
+        particle_csv_roots = [os.path.join(particle_csv_root, data_id) for data_id in args.data_ids] #  ['../../../ssd2/riku/cryoppp/10005']
+        datasets = []
+        for path, particle_csv_root in zip(dataset_paths, particle_csv_roots):
+            datasets.append(CryoPPPDataset(path, particle_csv_root, transform=transform))
+        dataset = torch.utils.data.ConcatDataset(datasets)
+    else:
+        micrograph_root = args.micrograph_root
+        particle_csv_root = args.particle_csv_root
+        dataset_paths = [os.path.join(micrograph_root, data_id) for data_id in args.data_ids]
+        datasets = []
+        for path in dataset_paths:
+            datasets.append(CryoPPPDataset(os.path.join(path, 'micrographs'), particle_csv_root, transform=transform))
+        dataset = torch.utils.data.ConcatDataset(datasets)
     print(dataset)
 
     num_tasks = misc.get_world_size()

@@ -104,6 +104,11 @@ def get_args_parser():
     parser.add_argument('--dist_on_itp', action='store_true')
     parser.add_argument('--dist_url', default='env://',
                         help='url used to set up distributed training')
+    
+    # Denoise option (bool)
+    parser.add_argument('--denoise', action='store_true',
+                        help='Use denoising model')
+    parser.set_defaults(denoise=False)
 
     return parser
 
@@ -151,11 +156,20 @@ def main(args):
         else:
             args.data_ids = [str(data_id) for data_id in args.data_ids]
 
-    dataset_paths = [os.path.join(args.root_path, data_id) for data_id in args.data_ids]
-    datasets = []
-    for path in dataset_paths:
-        datasets.append(CryoPPPDataset(os.path.join(path, 'micrographs'), transform=transform))
-    dataset = torch.utils.data.ConcatDataset(datasets)
+    # データセットの読み込みをdenoiseオプションで分岐
+    if args.denoise:
+        root_path = "../cryoppp_denoised"
+        dataset_paths = [os.path.join(root_path, data_id) for data_id in args.data_ids]
+        datasets = []
+        for path in dataset_paths:
+            datasets.append(CryoPPPDataset(path, transform=transform))
+        dataset = torch.utils.data.ConcatDataset(datasets)
+    else:
+        dataset_paths = [os.path.join(args.root_path, data_id) for data_id in args.data_ids]
+        datasets = []
+        for path in dataset_paths:
+            datasets.append(CryoPPPDataset(os.path.join(path, 'micrographs'), transform=transform))
+        dataset = torch.utils.data.ConcatDataset(datasets)
     print(dataset)
 
     num_tasks = misc.get_world_size()
